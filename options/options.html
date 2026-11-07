@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scam Detector settings</title>
+  <style>
+    :root { color-scheme: light dark; --border: rgba(127,127,127,.3); --muted: #777; }
+    body { margin: 0 auto; max-width: 720px; padding: 24px 16px 48px; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 16px; margin: 28px 0 8px; }
+    p.muted, small { color: var(--muted); }
+    label { display: block; margin: 10px 0; }
+    input[type=number] { width: 70px; } textarea { width: 100%; min-height: 90px; font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; }
+    .row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    button { font: inherit; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: inherit; cursor: pointer; }
+    button.primary { background: #1565c0; color: #fff; border-color: #1565c0; }
+    ul.list { list-style: none; padding: 0; margin: 6px 0; } ul.list li { display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--border); }
+    #status { margin-left: 12px; color: #2e7d32; }
+  </style>
+</head>
+<body>
+  <h1>Scam Detector settings</h1>
+  <p class="muted">All analysis runs locally in your browser. The only network request is an optional domain-registration lookup.</p>
+
+  <h2>Thresholds</h2>
+  <label>Show the red "likely scam" banner at risk score ≥ <input type="number" id="dangerThreshold" min="1" max="100"></label>
+  <label>Show the amber "suspicious" banner at risk score ≥ <input type="number" id="warnThreshold" min="1" max="100"></label>
+  <label><input type="checkbox" id="showWarnBanner"> Show the amber banner (the toolbar badge always shows the score)</label>
+
+  <h2>Domain age lookup</h2>
+  <label><input type="checkbox" id="rdapEnabled"> Look up when a domain was registered (RDAP)</label>
+  <p class="muted">Sends the site's domain name (never the full URL) to <code>rdap.org</code>, which redirects to the registry's public RDAP service. Results are cached for 7 days. Freshly registered domains are one of the strongest scam indicators, so this is on by default.</p>
+  <button id="clearCache">Clear cached lookups</button>
+
+  <h2>Trusted domains</h2>
+  <p class="muted">Domains you have chosen to trust are never flagged.</p>
+  <ul class="list" id="allowlist"></ul>
+  <div class="row"><input type="text" id="newAllow" placeholder="example.com"><button id="addAllow">Add</button></div>
+
+  <h2>Extra brands to protect</h2>
+  <p class="muted">One per line: <code>Brand name | keyword1, keyword2 | realdomain.com, other.com</code>. Keywords are matched inside hostnames; real domains are never flagged. Useful for your bank, employer or local services.</p>
+  <textarea id="customBrands" placeholder="My Bank | mybank, my-bank | mybank.com"></textarea>
+
+  <div class="row" style="margin-top:20px"><button class="primary" id="save">Save</button><span id="status"></span></div>
+  <script src="options.js"></script>
+</body>
+</html>
