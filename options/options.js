@@ -1,15 +1,17 @@
 (async function () {
   const $ = (id) => document.getElementById(id);
+  const { t } = self.SD.i18n;
+  self.SD.i18n.applyToDocument(document);
   let settings = await chrome.runtime.sendMessage({ type: 'GET_SETTINGS' });
 
   function renderAllowlist() {
     const ul = $('allowlist');
     ul.innerHTML = '';
-    if (!settings.allowlist.length) { const li = document.createElement('li'); li.textContent = 'None yet.'; li.style.color = '#777'; ul.appendChild(li); }
+    if (!settings.allowlist.length) { const li = document.createElement('li'); li.textContent = t('opt_trusted_none', [], 'None yet.'); li.style.color = '#777'; ul.appendChild(li); }
     for (const d of settings.allowlist) {
       const li = document.createElement('li');
       const span = document.createElement('span'); span.textContent = d;
-      const btn = document.createElement('button'); btn.textContent = 'Remove';
+      const btn = document.createElement('button'); btn.textContent = t('btn_remove', [], 'Remove');
       btn.addEventListener('click', () => { settings.allowlist = settings.allowlist.filter((x) => x !== d); renderAllowlist(); });
       li.appendChild(span); li.appendChild(btn); ul.appendChild(li);
     }
@@ -39,10 +41,10 @@
   async function feedStatus() {
     const st = await chrome.runtime.sendMessage({ type: 'FEED_STATUS' });
     if (!st) return;
-    $('feedStatus').textContent = !st.enabled ? 'Feed disabled.' : st.updating ? 'Updating…' : st.updatedAt ? `${st.count.toLocaleString()} reported addresses, updated ${new Date(st.updatedAt).toLocaleString()}${st.lastError ? ' (last attempt failed: ' + st.lastError + ')' : ''}` : st.lastError ? 'Not downloaded yet: ' + st.lastError : 'Not downloaded yet.';
+    $('feedStatus').textContent = !st.enabled ? t('feed_status_disabled', [], 'Feed disabled.') : st.updating ? t('feed_status_updating', [], 'Updating…') : st.updatedAt ? t('feed_status_ok', [st.count.toLocaleString(), new Date(st.updatedAt).toLocaleString()], `${st.count.toLocaleString()} reported addresses, updated ${new Date(st.updatedAt).toLocaleString()}`) + (st.lastError ? t('feed_status_fail', [st.lastError], ` (last attempt failed: ${st.lastError})`) : '') : st.lastError ? t('feed_status_none_err', [st.lastError], 'Not downloaded yet: ' + st.lastError) : t('feed_status_none', [], 'Not downloaded yet.');
   }
   feedStatus();
-  $('feedUpdate').addEventListener('click', async () => { $('feedStatus').textContent = 'Updating…'; await chrome.runtime.sendMessage({ type: 'FEED_UPDATE' }); feedStatus(); });
+  $('feedUpdate').addEventListener('click', async () => { $('feedStatus').textContent = t('feed_status_updating', [], 'Updating…'); await chrome.runtime.sendMessage({ type: 'FEED_UPDATE' }); feedStatus(); });
   $('chatMonitorEnabled').checked = !!settings.chatMonitorEnabled;
   $('chatMonitorDomains').value = (settings.chatMonitorDomains || []).join('\n');
   renderAllowlist();
@@ -53,7 +55,7 @@
     $('newAllow').value = '';
     renderAllowlist();
   });
-  $('clearCache').addEventListener('click', async () => { await chrome.runtime.sendMessage({ type: 'CLEAR_CACHE' }); $('status').textContent = 'Cache cleared.'; });
+  $('clearCache').addEventListener('click', async () => { await chrome.runtime.sendMessage({ type: 'CLEAR_CACHE' }); $('status').textContent = t('opt_cache_cleared', [], 'Cache cleared.'); });
   $('save').addEventListener('click', async () => {
     const danger = Math.max(1, Math.min(100, Number($('dangerThreshold').value) || 60));
     const warn = Math.max(1, Math.min(danger, Number($('warnThreshold').value) || 35));
@@ -66,7 +68,7 @@
       chatMonitorDomains: $('chatMonitorDomains').value.split('\n').map((l) => l.trim().toLowerCase().replace(/^https?:\/\//, '').split('/')[0]).filter(Boolean),
     } });
     $('dangerThreshold').value = settings.dangerThreshold; $('warnThreshold').value = settings.warnThreshold;
-    $('status').textContent = 'Saved.';
+    $('status').textContent = t('opt_saved', [], 'Saved.');
     feedStatus();
     setTimeout(() => { $('status').textContent = ''; }, 2000);
   });

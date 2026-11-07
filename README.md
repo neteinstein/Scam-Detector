@@ -7,8 +7,9 @@
 **A Chrome extension that warns you before a scam website gets your passwords, card details or money.**
 
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
-[![Tests](https://img.shields.io/badge/tests-60%20passing-2e7d32)](test/)
-[![Languages](https://img.shields.io/badge/detects-EN%20%C2%B7%20PT%20%C2%B7%20ES%20%C2%B7%20FR-b45309)](src/lib/phrases.js)
+[![CI](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/neteinstein/Scam-Detector?label=release&color=2e7d32)](https://github.com/neteinstein/Scam-Detector/releases/latest)
+[![Languages](https://img.shields.io/badge/UI%20%26%20detection-EN%20%C2%B7%20PT%20%C2%B7%20ES%20%C2%B7%20FR-b45309)](_locales/)
 [![No build step](https://img.shields.io/badge/build-none%20needed-6c757d)](#development)
 [![License](https://img.shields.io/badge/license-MIT-blue)](package.json)
 
@@ -46,6 +47,25 @@ Everything runs inside the browser. The only network traffic is a domain-registr
 <tr>
 <td><img src="docs/scenario-chat-monitor.png" alt="Marketplace chat monitor"><br><b>Marketplace chat monitor (opt-in).</b> On OLX, Vinted, Wallapop, Leboncoin and ~100 other classified sites, the classic "I'm abroad, my courier will collect it, click the link to receive the payment" script is recognised in the conversation itself, including the fake OLX payment link.</td>
 <td><img src="docs/scenario-reported-page.png" alt="Reported page on a shared host"><br><b>Verified phishing report on a shared host.</b> A credential-harvesting form hosted on Google Forms is flagged because that exact page is in PhishTank's verified feed, matched locally. Other Google Docs pages stay trusted.</td>
+</tr>
+</table>
+
+### In your language
+
+The interface follows the browser language. Every banner, button, popup line, settings text, signal explanation and chat-scam advice ships in **English, Portuguese, Spanish and French** (`_locales/`), and the same four languages are used for detecting scam wording on pages and in chats.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/scenario-parcel-fee-pt-ui.png" alt="Portuguese interface"><br><b>Português.</b> The CTT parcel-fee scam with the banner and explanations in Portuguese.</td>
+<td width="50%"><img src="docs/scenario-phishing-login-fr-ui.png" alt="French interface"><br><b>Français.</b> The fake PayPal login seen from a French browser.</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td width="33%"><img src="docs/popup-pt.png" alt="Popup in Portuguese"><br><b>Popup, Portuguese.</b></td>
+<td width="33%"><img src="docs/popup-es.png" alt="Popup in Spanish"><br><b>Popup, Spanish.</b></td>
+<td width="33%"><img src="docs/popup-fr.png" alt="Popup in French"><br><b>Popup, French.</b></td>
 </tr>
 </table>
 
@@ -152,11 +172,14 @@ The chat text never leaves the browser. On sites without a recognisable chat are
 
 ## Install
 
-Until the Chrome Web Store listing is live:
+Until the Chrome Web Store listing is live, install the latest build from the
+[Releases page](https://github.com/neteinstein/Scam-Detector/releases/latest):
 
-1. Clone this repository.
+1. Download `scam-detector-<version>.zip` and unzip it (check it against `SHA256SUMS.txt` if you like).
 2. Open `chrome://extensions`, enable **Developer mode** (top right).
-3. Click **Load unpacked** and select the repository folder (the one containing `manifest.json`).
+3. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
+
+Developers can load the repository folder directly the same way.
 
 The shield icon shows the risk score of the current tab (red, amber, or a green tick for known and trusted sites). Click it for the full list of findings, to re-scan, or to trust a site.
 
@@ -209,12 +232,15 @@ src/lib/tlds.js        TLD risk weights
 src/lib/phrases.js     scam language + money-claim patterns (en/pt/es/fr, accent-insensitive)
 src/lib/chatSchemes.js marketplace chat scam scripts (en/pt/es/fr) and marketplace list
 src/lib/urlmatch.js    phishing-feed index (hashed) and local URL/host matching
+src/lib/i18n.js        chrome.i18n wrapper; signals and chat schemes carry message keys
+_locales/              UI strings in en, pt, es, fr
 src/lib/pageSignals.js DOM observation collector
 src/lib/scoring.js     signals → score → verdict
 popup/, options/       UI
 tools/                 icon generator, packager, screenshot generators, catalogue report, e2e script
 test/                  unit tests
 catalogue/             review log for the scam catalogue
+.github/workflows/     CI and release pipelines
 store-listing/         Chrome Web Store submission kit
 .claude/skills/        update-scam-catalogue skill
 ```
@@ -222,6 +248,13 @@ store-listing/         Chrome Web Store submission kit
 ### Keeping the catalogue current
 
 Detection is only as good as the lists it ships. The `update-scam-catalogue` skill ([`.claude/skills/update-scam-catalogue/SKILL.md`](.claude/skills/update-scam-catalogue/SKILL.md)) walks an agent through reviewing current reports from Banco de Portugal, PJ, CNCS, DECO, INCIBE, cybermalveillance.gouv.fr, Action Fraud, the FTC, APWG, Spamhaus and PhishTank's own target statistics, adding what is missing with tests in all four languages, and logging the review in [`catalogue/last-review.json`](catalogue/last-review.json). [`AGENTS.md`](AGENTS.md) requires it before finishing any change, and `npm test` warns when the last review is older than 30 days.
+
+## Build pipeline
+
+Two GitHub Actions workflows in `.github/workflows/`:
+
+- **CI** (`ci.yml`) runs on every push and pull request: unit tests, the store-listing consistency check, the catalogue report, a package build attached as an artifact, and the Playwright end-to-end scenarios in Chromium with their screenshots.
+- **Release** (`release.yml`) runs when `manifest.json` changes on `main` (or on manual dispatch). If no tag exists for the manifest version it runs the tests, builds `scam-detector-<version>.zip`, writes `SHA256SUMS.txt`, takes the release notes from the *What's new* section of `store-listing/listing.md`, tags `v<version>` and publishes a GitHub Release with the zip and install instructions. Bumping the version is therefore the whole release procedure.
 
 ## Publishing to the Chrome Web Store
 

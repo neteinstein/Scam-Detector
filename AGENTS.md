@@ -22,6 +22,7 @@ kit and the code disagree.
 | Anything visible in the banner, popup or options page (`popup/`, `options/`, banner code in `src/content.js`, `icons/`) | Regenerate the screenshots and tiles: `npm run store-assets`. Commit the new PNGs. |
 | The packaged file set (new runtime file or folder) | `tools/package.js` → `INCLUDE`, and confirm `npm run package` lists the file. |
 | Supported browsers / Chrome minimum version | `store-listing/listing.md` and `distribution.md`. |
+| Any user-visible string (banner, popup, options, signal labels, chat advice) | `_locales/en/messages.json` **and** the same key in `pt`, `es`, `fr` with identical `$n` placeholders. Code must reference strings through `SD.i18n.t` / message keys, never hard-coded English only. `test/i18n.test.js` enforces parity. |
 
 Nothing in `store-listing/` may promise behaviour the code does not have, and the code
 must not do anything the privacy policy does not disclose. When in doubt, disclose.
@@ -47,5 +48,8 @@ review older than 30 days; `npm test` prints a warning in that case.
   diacritic-stripped before matching) and must be added for all four languages
   (en, pt, es, fr) when a category is added or changed.
 - Never load remote code; the store declaration says the extension has none.
+- Releases: bumping `version` in `manifest.json` on `main` triggers `.github/workflows/release.yml`,
+  which tags `v<version>` and publishes the installable zip. Bump the version in the same
+  commit as the *What's new* entry in `store-listing/listing.md`.
 - Do not put model identifiers or tool names in commit messages, code comments or
   store text.

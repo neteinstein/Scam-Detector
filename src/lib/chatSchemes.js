@@ -383,7 +383,7 @@
       for (const lang of phrases.LANGS) {
         for (const re of (s[lang] || [])) {
           const m = t.match(re);
-          if (m) { hit = { id: s.id, title: s.title, advice: s.advice, weight: s.weight, match: m[0].slice(0, 140), lang }; break; }
+          if (m) { const k = 'chat_' + s.id.replace(/-/g, '_'); hit = { id: s.id, title: s.title, advice: s.advice, titleKey: k + '_title', adviceKey: k + '_advice', titleArgs: [], adviceArgs: [], weight: s.weight, match: m[0].slice(0, 140), lang }; break; }
         }
         if (hit) break;
       }
@@ -400,11 +400,11 @@
       }
     }
     if (links.length) {
-      schemes.unshift({ id: 'phishing-link', title: `Link in chat imitates ${links[0].brand}`, advice: `"${links[0].host}" is not a real ${links[0].brand} address. Opening it will lead to a fake payment or login page.`, weight: 30, match: links[0].host, lang: '-' });
+      schemes.unshift({ id: 'phishing-link', title: `Link in chat imitates ${links[0].brand}`, advice: `"${links[0].host}" is not a real ${links[0].brand} address. Opening it will lead to a fake payment or login page.`, titleKey: 'chat_phishing_link_title', titleArgs: [links[0].brand], adviceKey: 'chat_phishing_link_advice', adviceArgs: [links[0].host, links[0].brand], weight: 30, match: links[0].host, lang: '-' });
     } else if (source === 'chat') {
       const external = linksInText(text).filter((h) => !(currentReg && domain.isSubdomainOf(h, currentReg)) && !/^(wa\.me|t\.me|youtu\.be|youtube\.com|google\.com|maps\.app\.goo\.gl|goo\.gl)$/.test(h));
       const moneyWords = /\b(pay|payment|paid|card|cartao|pago|pagar|tarjeta|paiement|payer|carte|receive|receber|recibir|recevoir|deliver|entrega|livraison|envio|courier|estafeta|transport)/.test(t);
-      if (external.length && moneyWords) schemes.push({ id: 'external-link', title: 'External link sent alongside payment or delivery talk', advice: `Links to ${external[0]} should not be needed to pay or ship. Stay on the platform.`, weight: 10, match: external[0], lang: '-' });
+      if (external.length && moneyWords) schemes.push({ id: 'external-link', title: 'External link sent alongside payment or delivery talk', advice: `Links to ${external[0]} should not be needed to pay or ship. Stay on the platform.`, titleKey: 'chat_external_link_title', titleArgs: [], adviceKey: 'chat_external_link_advice', adviceArgs: [external[0]], weight: 10, match: external[0], lang: '-' });
     }
 
     const score = schemes.reduce((a, s) => a + s.weight, 0);

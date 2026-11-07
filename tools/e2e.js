@@ -164,6 +164,45 @@ async function main() {
   } finally {
     await ctx.close();
   }
+
+  // 5. Localisation: with the browser UI in Portuguese the popup must be in Portuguese.
+  const ctxPt = await chromium.launchPersistentContext('', {
+    headless: true, channel: 'chromium', locale: 'pt-PT',
+    args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, '--lang=pt'],
+    viewport: { width: 1100, height: 700 },
+  });
+  try {
+    let [swPt] = ctxPt.serviceWorkers();
+    if (!swPt) swPt = await ctxPt.waitForEvent('serviceworker', { timeout: 15000 });
+    const uiLang = await swPt.evaluate(() => chrome.i18n.getUILanguage());
+    const msg = await swPt.evaluate(() => [chrome.i18n.getMessage('verdict_danger'), chrome.i18n.getMessage('banner_risk', ['42']), chrome.runtime.getManifest().name]);
+    console.log(`ui language: ${uiLang}; messages: ${JSON.stringify(msg)}`);
+    // getUILanguage() reports the browser build language in headless runs; message resolution is what matters.
+    check(msg[0] === 'Provavelmente uma burla', 'verdict message is localised to Portuguese');
+    check(msg[1] === 'risco 42/100', 'substitutions work in localised messages');
+    check(msg[2] === 'Scam Detector', 'manifest name resolves through __MSG_extName__');
+    const pPt = await ctxPt.newPage();
+    await pPt.route('**/*', (route) => {
+      const url = route.request().url();
+      if (url.startsWith('https://paypal-secure-login-2026.xyz/')) return route.fulfill({ contentType: 'text/html; charset=utf-8', body: PHISH_HTML });
+      if (url.startsWith('https://www.paypalobjects.com/')) return route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) });
+      return route.abort();
+    });
+    await pPt.goto('https://paypal-secure-login-2026.xyz/signin', { waitUntil: 'domcontentloaded' });
+    await pPt.waitForSelector('#scam-detector-banner-host', { timeout: 20000 });
+    const tabId = await swPt.evaluate(async () => (await chrome.tabs.query({ url: 'https://paypal-secure-login-2026.xyz/*' }))[0].id);
+    const popupPt = await ctxPt.newPage();
+    await popupPt.goto(`chrome-extension://${swPt.url().split('/')[2]}/popup/popup.html?tabId=${tabId}`);
+    await popupPt.waitForTimeout(1000);
+    const titlePt = await popupPt.textContent('#title');
+    const firstSignal = await popupPt.textContent('#signals li div');
+    console.log(`pt popup: "${titlePt}" / first signal "${firstSignal}"`);
+    check(titlePt === 'Provavelmente uma burla', 'popup verdict rendered in Portuguese');
+    check(/imita PayPal|O domínio imita/.test(firstSignal || ''), 'signal label rendered in Portuguese with the brand substituted');
+    await popupPt.screenshot({ path: path.join(OUT, 'popup-pt.png') });
+  } finally {
+    await ctxPt.close();
+  }
   console.log(failures ? `${failures} check(s) failed` : 'all checks passed');
   process.exit(failures ? 1 : 0);
 }

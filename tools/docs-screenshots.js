@@ -137,9 +137,43 @@ async function main() {
     await options.waitForTimeout(800);
     await options.screenshot({ path: path.join(OUT, 'options.png'), fullPage: true });
     await sw.evaluate(async () => { await chrome.storage.local.remove(['feed:phishtank', 'feedmeta:phishtank']); feedIndexCache = null; });
-    console.log('written to ' + OUT);
   } finally {
     await ctx.close();
   }
+
+  // Portuguese UI: same scenarios, browser language set to pt
+  for (const [lang, file, url, popupFile] of [['pt', 'scenario-parcel-fee-pt-ui.png', 'https://ctt-entregas-reagendar.sbs/encomenda/88213', 'popup-pt.png'], ['fr', 'scenario-phishing-login-fr-ui.png', 'https://paypal-secure-login-2026.xyz/signin', 'popup-fr.png'], ['es', 'scenario-crypto-investment-es-ui.png', 'https://crypto-profit-now.xyz/', 'popup-es.png']]) {
+    const c = await chromium.launchPersistentContext('', {
+      headless: true, channel: 'chromium', deviceScaleFactor: 2, locale: lang,
+      args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, `--lang=${lang}`],
+      viewport: { width: 1000, height: 640 },
+    });
+    try {
+      let [swL] = c.serviceWorkers(); if (!swL) swL = await c.waitForEvent('serviceworker', { timeout: 15000 });
+      const pl = await c.newPage();
+      await pl.route('**/*', (route) => {
+        const u = route.request().url();
+        for (const [k, html] of Object.entries(SCENARIOS)) if (u === k || u.startsWith(k + (k.endsWith('/') ? '' : '?'))) return route.fulfill({ contentType: 'text/html; charset=utf-8', body: html });
+        if (u.startsWith('https://www.paypalobjects.com/')) return route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) });
+        return route.abort();
+      });
+      await pl.goto(url, { waitUntil: 'domcontentloaded' });
+      await pl.waitForSelector('#scam-detector-banner-host', { timeout: 20000 });
+      await pl.waitForTimeout(600);
+      await swL.evaluate(async (u) => { const [tb] = await chrome.tabs.query({ url: u + '*' }); await chrome.tabs.sendMessage(tb.id, { type: 'EXPAND_DETAILS' }); }, url.split('?')[0]);
+      await pl.waitForTimeout(300);
+      await pl.screenshot({ path: path.join(OUT, file) });
+      const tabId = await swL.evaluate(async (u) => (await chrome.tabs.query({ url: u + '*' }))[0].id, url.split('?')[0]);
+      const pp = await c.newPage();
+      await pp.setViewportSize({ width: 360, height: 600 });
+      await pp.goto(`chrome-extension://${swL.url().split('/')[2]}/popup/popup.html?tabId=${tabId}`);
+      await pp.waitForTimeout(1000);
+      await pp.screenshot({ path: path.join(OUT, popupFile), fullPage: true });
+      console.log(`${file}, ${popupFile}: ${lang} UI`);
+    } finally {
+      await c.close();
+    }
+  }
+  console.log('written to ' + OUT);
 }
 main().catch((e) => { console.error(e); process.exit(1); });

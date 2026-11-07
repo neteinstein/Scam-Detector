@@ -14,7 +14,7 @@ Privacy & Security
 
 ## Language
 
-English (the extension's detection also covers Portuguese, Spanish and French text)
+English (default). The interface (banner, popup, settings) and all explanations also ship in Portuguese, Spanish and French and follow the browser language; detection covers text in the same four languages. The store listing itself can be localised per language in the dashboard (Store listing → Add language) using translations of this file.
 
 ## Detailed description
 
@@ -46,6 +46,9 @@ If you enter your own Google API key, the extension also asks Google's Safe Brow
 MARKETPLACE CHAT MONITOR (optional, off by default)
 On OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista and many other classified sites, the extension can watch the conversation for the standard scam scripts: "I'll send a courier, click the link to receive the payment", "enter your card details to receive the money", "the payment is held until you pay the insurance", "send me the SMS code", "pay the deposit before the viewing", overpayment refunds and look-alike payment links. A banner explains the scheme and what to do.
 
+IN YOUR LANGUAGE
+The banner, popup, settings and every explanation are available in English, Portuguese, Spanish and French and follow your browser's language.
+
 HOW THE WARNING WORKS
 Each finding adds to a 0–100 risk score. From 60 you get a red "likely a scam" banner, from 35 an amber "suspicious" one. The toolbar badge shows the score for the current tab and the popup lists every finding with its weight. You can dismiss a banner, leave the site in one click, or trust a site so it is never flagged again. Thresholds, the domain-age lookup, trusted sites, the chat monitor and extra brands you want protected are all configurable.
 
@@ -57,7 +60,12 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.1.0)
+## What's new (version 1.2.0)
+
+• The whole interface now follows your browser language: English, Portuguese, Spanish and French.
+• Every warning explanation, chat-scam advice and settings text is translated.
+
+Version 1.1.0:
 
 • Verified phishing reports: a local copy of PhishTank's feed flags reported pages and sites, with no browsing data sent out.
 • Optional Google Safe Browsing check with your own API key.

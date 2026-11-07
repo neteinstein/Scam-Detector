@@ -96,7 +96,7 @@
       for (const kw of b.keywords) {
         // 1. IDN / homoglyph: skeleton of the registrable SLD equals the brand keyword
         if (sldSkeleton === kw && (unicodeParsed.sld || parsed.sld) !== kw) {
-          findings.push({ brand: b.name, reason: 'homoglyph', confidence: 0.95, evidence: `"${unicodeParsed.sld || parsed.sld}" looks like "${kw}"` });
+          findings.push({ brand: b.name, reason: 'homoglyph', confidence: 0.95, evidence: `"${unicodeParsed.sld || parsed.sld}" looks like "${kw}"`, evidenceKey: 'ev_homoglyph', evidenceArgs: [unicodeParsed.sld || parsed.sld, kw] });
           continue;
         }
         // 2. Keyword embedded in any host token (subdomain or registrable)
@@ -104,7 +104,7 @@
           const how = tokenEmbedsKeyword(t, kw);
           if (how) {
             const inSubdomain = parsed.subdomain && tokens(parsed.subdomain).includes(t);
-            findings.push({ brand: b.name, reason: inSubdomain ? 'brand-in-subdomain' : 'brand-in-domain', confidence: how === 'exact' ? 0.9 : 0.85, evidence: `hostname contains "${kw}" but is not a ${b.name} domain` });
+            findings.push({ brand: b.name, reason: inSubdomain ? 'brand-in-subdomain' : 'brand-in-domain', confidence: how === 'exact' ? 0.9 : 0.85, evidence: `hostname contains "${kw}" but is not a ${b.name} domain`, evidenceKey: 'ev_contains', evidenceArgs: [kw, b.name] });
             break;
           }
         }
@@ -113,7 +113,7 @@
           if (t !== kw && hostTokens.includes(t)) continue; // already handled above
           const how = tokenEmbedsKeyword(t, kw);
           if (how && !hostTokens.includes(t)) {
-            findings.push({ brand: b.name, reason: 'homoglyph', confidence: 0.9, evidence: `hostname token normalises to "${kw}"` });
+            findings.push({ brand: b.name, reason: 'homoglyph', confidence: 0.9, evidence: `hostname token normalises to "${kw}"`, evidenceKey: 'ev_normalises', evidenceArgs: [kw] });
             break;
           }
         }
@@ -123,12 +123,12 @@
           const dist = domain.levenshtein(sldSkeleton, kw);
           const maxDist = kw.length >= 9 ? 2 : 1;
           if (dist > 0 && dist <= maxDist) {
-            findings.push({ brand: b.name, reason: 'typosquat', confidence: dist === 1 ? 0.85 : 0.7, evidence: `"${sld}" is ${dist} edit${dist > 1 ? 's' : ''} away from "${kw}"` });
+            findings.push({ brand: b.name, reason: 'typosquat', confidence: dist === 1 ? 0.85 : 0.7, evidence: `"${sld}" is ${dist} edit${dist > 1 ? 's' : ''} away from "${kw}"`, evidenceKey: 'ev_typosquat', evidenceArgs: [sld, String(dist), kw] });
           }
           // "paypal-com", "paypalcom", "amazon-de" style: SLD = brand + tld glued
           const glued = sld.replace(/-/g, '');
           if (glued !== kw && glued.startsWith(kw) && /^(com|net|org|co|uk|de|fr|es|pt|it|nl|app|io|us|ca|au|br)$/.test(glued.slice(kw.length))) {
-            findings.push({ brand: b.name, reason: 'brand-in-domain', confidence: 0.9, evidence: `"${sld}" mimics "${kw}.${glued.slice(kw.length)}"` });
+            findings.push({ brand: b.name, reason: 'brand-in-domain', confidence: 0.9, evidence: `"${sld}" mimics "${kw}.${glued.slice(kw.length)}"`, evidenceKey: 'ev_glued', evidenceArgs: [sld, kw + '.' + glued.slice(kw.length)] });
           }
         }
       }
