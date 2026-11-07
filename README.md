@@ -147,9 +147,14 @@ copy), data-usage answers, distribution settings and generated 1280×800 screens
 promo tiles.
 
 ```
-npm run package       # dist/scam-detector-<version>.zip, runtime files only
-npm run store-assets  # regenerate store-listing/assets/*.png
+npm run package        # dist/scam-detector-<version>.zip, runtime files only
+npm run store-assets   # regenerate store-listing/assets/*.png
+npm run check-listing  # fails if the kit disagrees with the code (also runs in npm test)
 ```
+
+`AGENTS.md` (imported by `CLAUDE.md`) tells coding agents to update the kit in the same
+commit as any change that affects it: permissions, description, version, features,
+data handling or UI.
 
 ## Limitations
 
