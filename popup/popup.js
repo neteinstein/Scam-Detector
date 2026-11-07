@@ -12,6 +12,10 @@
   };
 
   function weightClass(w) { return w >= 20 ? 'hi' : w >= 10 ? 'mid' : 'lo'; }
+  function ago(ts) {
+    const m = Math.round((Date.now() - ts) / 60000);
+    return m < 2 ? 'just updated' : m < 90 ? `updated ${m} min ago` : m < 48 * 60 ? `updated ${Math.round(m / 60)} h ago` : `updated ${Math.round(m / 1440)} days ago`;
+  }
 
   function render(result) {
     const verdict = result ? result.verdict : 'skipped';
@@ -48,6 +52,12 @@
       else rows.push(['Registered', { ok: 'unknown', 'no-date': 'registry does not publish', 'not-found': 'not in RDAP', disabled: 'lookup disabled in settings', 'free-hosting': 'shared hosting platform', timeout: 'lookup timed out', error: 'lookup failed', skipped: 'n/a', unknown: 'unknown' }[result.rdapStatus] || result.rdapStatus]);
       if (result.registrar) rows.push(['Registrar', result.registrar]);
       if (result.lookalike) rows.push(['Impersonates', `${result.lookalike.brand} (${result.lookalike.reason})`]);
+      if (result.feed) {
+        if (!result.feed.enabled) rows.push(['Phishing reports', 'feed disabled in settings']);
+        else if (!result.feed.updatedAt) rows.push(['Phishing reports', result.feed.lastError ? 'feed not downloaded yet (' + result.feed.lastError + ')' : 'feed downloading…']);
+        else rows.push(['Phishing reports', `${result.phishReport ? (result.phishReport.kind === 'url' ? 'this page is reported' : result.phishReport.count + ' report(s) on this host') : 'none for this page'} · feed of ${result.feed.count.toLocaleString()} sites, ${ago(result.feed.updatedAt)}`]);
+      }
+      if (result.safeBrowsing) rows.push(['Safe Browsing', result.safeBrowsing.error ? 'lookup failed (' + result.safeBrowsing.error + ')' : result.safeBrowsing.threats.length ? 'listed: ' + result.safeBrowsing.threats.join(', ').toLowerCase() + ' (advisory provided by Google)' : 'not listed (advisory provided by Google)']);
       for (const [k, v] of rows) {
         const dt = document.createElement('dt'); dt.textContent = k;
         const dd = document.createElement('dd'); dd.textContent = v;

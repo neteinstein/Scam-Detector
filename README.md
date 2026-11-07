@@ -39,6 +39,16 @@ score. Independent strong signals reinforce each other. Default thresholds:
 | Structure | Many hyphens, deep subdomains, very long host, mixed digits, random-looking names | 4–8 each |
 | No HTTPS | Unencrypted page; much worse if it asks for credentials | 10 / 25 |
 
+### Reputation sources
+
+| Signal | Description | Weight |
+| --- | --- | --- |
+| Verified phishing report | The page (or a path prefix of it) is in PhishTank's verified-online feed. A local copy of the feed (~50k addresses, refreshed every 6 hours, stored as truncated SHA-256 hashes) is matched in the browser, so visited URLs never leave the device. Works on shared platforms such as Google Docs, Sites and link shorteners, where only exact-page matches count | 75 |
+| Phishing reports on this host | The host has one or more verified reports and is not a shared platform | 45 |
+| Google Safe Browsing (opt-in) | With the user's own API key, the Lookup API is asked about each page; warnings carry the "Advisory provided by Google" attribution and links Google's terms require, and answers are cached at most 30 minutes | 75 |
+
+These run before the "known brand domain" shortcut, so a phishing page hosted on `docs.google.com` still warns.
+
 ### Page-level signals
 
 | Signal | Description | Weight |
@@ -92,6 +102,8 @@ Open the popup → **Settings** (or the extension's options page):
 
 - Danger / warning thresholds, and whether the amber banner is shown.
 - Toggle the RDAP domain-age lookup and clear its cache.
+- Phishing-reports feed on/off, optional PhishTank app key, manual update.
+- Google Safe Browsing on/off with your own API key (restrict the key to the extension's origin in Google Cloud).
 - Marketplace chat monitor on/off and extra sites to monitor.
 - Trusted domains list.
 - **Extra brands to protect**: add your own bank, employer or local services as
@@ -104,6 +116,9 @@ Open the popup → **Settings** (or the extension's options page):
   URL, never page content) sent to `https://rdap.org/domain/<domain>`, which redirects to
   the registry's public RDAP service to find the registration date. Results are cached
   locally for 7 days. This can be switched off in settings.
+- The PhishTank feed download (`data.phishtank.com`) carries no user data; matching is local.
+- The optional Google Safe Browsing check sends the page URL to Google. It is off unless you
+  enable it and provide your own key.
 - No analytics, no remote blocklists, no accounts.
 - Settings sync through `chrome.storage.sync`; per-tab results live in session storage only.
 
@@ -128,6 +143,7 @@ src/lib/lookalike.js   typosquat / homoglyph / embedded-brand detection
 src/lib/tlds.js        TLD risk weights
 src/lib/phrases.js     scam language + money-claim patterns (en/pt/es/fr, accent-insensitive)
 src/lib/chatSchemes.js marketplace chat scam scripts (en/pt/es/fr) and marketplace list
+src/lib/urlmatch.js    phishing-feed index (hashed) and local URL/host matching
 src/lib/pageSignals.js DOM observation collector
 src/lib/scoring.js     signals → score → verdict
 popup/, options/       UI
@@ -147,6 +163,7 @@ copy), data-usage answers, distribution settings and generated 1280×800 screens
 promo tiles.
 
 ```
+node tools/catalogue-report.js [--feed online-valid.csv]   # catalogue stats, stale-review warning, brands missing vs. PhishTank targets
 npm run package        # dist/scam-detector-<version>.zip, runtime files only
 npm run store-assets   # regenerate store-listing/assets/*.png
 npm run check-listing  # fails if the kit disagrees with the code (also runs in npm test)
@@ -154,7 +171,18 @@ npm run check-listing  # fails if the kit disagrees with the code (also runs in 
 
 `AGENTS.md` (imported by `CLAUDE.md`) tells coding agents to update the kit in the same
 commit as any change that affects it: permissions, description, version, features,
-data handling or UI.
+data handling or UI. It also requires running the `update-scam-catalogue` skill
+(`.claude/skills/update-scam-catalogue/SKILL.md`) before finishing any change, so the
+brand, TLD, phrase, chat-scheme and shared-host lists are reviewed against current scam
+reporting; the review is logged in `catalogue/last-review.json`.
+
+## Third-party sources and their terms
+
+Only sources whose published terms allow this use are called. ScamAdviser (paid B2B API
+only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish
+(non-commercial, no redistribution) and the VirusTotal public API (no products) are
+deliberately not used. PhishTank data is free for use including commercial use per its
+published terms; Google Safe Browsing is free for non-commercial use with attribution.
 
 ## Limitations
 

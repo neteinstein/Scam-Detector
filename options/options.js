@@ -32,6 +32,17 @@
   $('showWarnBanner').checked = !!settings.showWarnBanner;
   $('rdapEnabled').checked = !!settings.rdapEnabled;
   $('customBrands').value = brandsToText(settings.customBrands);
+  $('phishFeedEnabled').checked = settings.phishFeedEnabled !== false;
+  $('phishtankAppKey').value = settings.phishtankAppKey || '';
+  $('safeBrowsingEnabled').checked = !!settings.safeBrowsingEnabled;
+  $('safeBrowsingApiKey').value = settings.safeBrowsingApiKey || '';
+  async function feedStatus() {
+    const st = await chrome.runtime.sendMessage({ type: 'FEED_STATUS' });
+    if (!st) return;
+    $('feedStatus').textContent = !st.enabled ? 'Feed disabled.' : st.updating ? 'Updating…' : st.updatedAt ? `${st.count.toLocaleString()} reported addresses, updated ${new Date(st.updatedAt).toLocaleString()}${st.lastError ? ' (last attempt failed: ' + st.lastError + ')' : ''}` : st.lastError ? 'Not downloaded yet: ' + st.lastError : 'Not downloaded yet.';
+  }
+  feedStatus();
+  $('feedUpdate').addEventListener('click', async () => { $('feedStatus').textContent = 'Updating…'; await chrome.runtime.sendMessage({ type: 'FEED_UPDATE' }); feedStatus(); });
   $('chatMonitorEnabled').checked = !!settings.chatMonitorEnabled;
   $('chatMonitorDomains').value = (settings.chatMonitorDomains || []).join('\n');
   renderAllowlist();
@@ -49,11 +60,14 @@
     settings = await chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', patch: {
       dangerThreshold: danger, warnThreshold: warn, showWarnBanner: $('showWarnBanner').checked, rdapEnabled: $('rdapEnabled').checked,
       allowlist: settings.allowlist, customBrands: textToBrands($('customBrands').value),
+      phishFeedEnabled: $('phishFeedEnabled').checked, phishtankAppKey: $('phishtankAppKey').value.trim(),
+      safeBrowsingEnabled: $('safeBrowsingEnabled').checked && !!$('safeBrowsingApiKey').value.trim(), safeBrowsingApiKey: $('safeBrowsingApiKey').value.trim(),
       chatMonitorEnabled: $('chatMonitorEnabled').checked,
       chatMonitorDomains: $('chatMonitorDomains').value.split('\n').map((l) => l.trim().toLowerCase().replace(/^https?:\/\//, '').split('/')[0]).filter(Boolean),
     } });
     $('dangerThreshold').value = settings.dangerThreshold; $('warnThreshold').value = settings.warnThreshold;
     $('status').textContent = 'Saved.';
+    feedStatus();
     setTimeout(() => { $('status').textContent = ''; }, 2000);
   });
 })();

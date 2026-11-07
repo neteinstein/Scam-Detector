@@ -1,0 +1,19 @@
+{
+  "reviewedAt": "2026-11-07",
+  "sources": [
+    "https://4gnews.pt/banco-de-portugal-deixa-alerta-aos-utilizadores-do-olx-e-vinted/",
+    "https://ovilaverdense.pt/rede-de-burlas-no-olx-e-marketplace-lesou-mais-de-20-vitimas-no-minho/",
+    "https://www.deco.proteste.pt/tecnologia/ciberseguranca/noticias/portugueses-alvo-tentativa-burla-online-chegaram-77-por-cento-2025",
+    "https://theportugalpost.com/posts/world-cup-2026-scams-hit-portugal-how-to-spot-fake-tickets-and-panini-stickers-before-you-lose-money",
+    "https://lisboeta.news/story/2026-05-12/internet-fraud-and-spoofing-scams-rising-across-portugal",
+    "PhishTank online-valid feed, 2026-11-07 (48,552 verified URLs; top hosts qrco.de, docs.google.com, q-r.to, l.ead.me, bit.ly, sites.google.com)"
+  ],
+  "added": [
+    "Shared-host list seeded from PhishTank host statistics: QR/link shorteners (qrco.de, q-r.to, l.ead.me, l.wl.co, did.li, zpr.io, surl.li, flowcode, qr-codes.io), form builders (hsforms, powr.io), link-in-bio (linkin.bio, linqapp), Google Docs/Sites, Adobe Express, Dropbox, WeTransfer, Mockplus, ipfs gateways",
+    "Brands from PhishTank most-targeted list: Allegro, Bradesco, Banco do Brasil, Itau, Nubank, Optus, Societe Generale, La Banque Postale, Credit Agricole, BNP Paribas, Free Mobile, Ameli, impots.gouv.fr, ANTAI, SMBC, Interactive Brokers, ABN AMRO, Rabobank, DBS, Scotiabank, Raiffeisen, Swiss Post, Intesa Sanpaolo, UniCredit, Poste Italiane, ABSA, Huntington, AEON, Sparkasse, Commerzbank, Postbank, DKB, Hermes DE",
+    "Marketplace list and PT banks/couriers/public bodies from Banco de Portugal, PJ and DECO reporting"
+  ],
+  "notes": [
+    "Imovirtual, Standvirtual, Continente, Pingo Doce, Worten, Via Verde and the MB WAY request-vs-send chat pattern are known gaps (see README limitations)"
+  ]
+}

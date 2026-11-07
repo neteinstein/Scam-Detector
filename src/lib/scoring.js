@@ -6,7 +6,7 @@
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./domain.js'), require('./brands.js'), require('./tlds.js'), require('./lookalike.js'), require('./punycode.js'));
   else { root.SD = root.SD || {}; root.SD.scoring = factory(root.SD.domain, root.SD.brands, root.SD.tlds, root.SD.lookalike, root.SD.punycode); }
 })(typeof self !== 'undefined' ? self : this, function (domain, brands, tlds, lookalike, punycode) {
-  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [] };
+  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [], phishFeedEnabled: true, phishtankAppKey: '', safeBrowsingEnabled: false, safeBrowsingApiKey: '' };
 
   const HOST_RED_FLAG_TOKENS = new Set([
     'login', 'signin', 'logon', 'secure', 'security', 'verify', 'verification', 'account', 'accounts', 'update', 'support', 'auth',
@@ -40,8 +40,23 @@
 
     if (!hostname || domain.isLocalHost(hostname)) { result.verdict = 'skipped'; result.reason = 'local'; return result; }
     if ((settings.allowlist || []).some((d) => domain.isSubdomainOf(hostname, d))) { result.verdict = 'trusted'; result.reason = 'allowlist'; return result; }
+
+    // ---- Reputation sources (evaluated before the brand shortcut: a phishing
+    // page hosted on a big platform like docs.google.com must still warn) ----
+    const report = domainInfo.phishReport || null;
+    if (report && report.kind === 'url') signals.push(signal('phish-report-url', 'Reported and verified as a phishing page by the PhishTank community', 75, report.target ? `impersonating ${report.target}` : '', 'reputation'));
+    else if (report && report.kind === 'host') signals.push(signal('phish-report-host', `This site has ${report.count} verified phishing report${report.count === 1 ? '' : 's'} on PhishTank`, 45, '', 'reputation'));
+    const sb = domainInfo.safeBrowsing || null;
+    if (sb && Array.isArray(sb.threats) && sb.threats.length) {
+      const names = { SOCIAL_ENGINEERING: 'suspected phishing / deceptive site', MALWARE: 'site that may distribute malware', UNWANTED_SOFTWARE: 'site that may install unwanted software', POTENTIALLY_HARMFUL_APPLICATION: 'potentially harmful application' };
+      const label = names[sb.threats[0]] || 'potentially unsafe site';
+      signals.push(signal('safe-browsing', `Google Safe Browsing lists this page as a ${label}`, 75, 'Advisory provided by Google', 'reputation'));
+    }
+    const urlLevelHit = (report && report.kind === 'url') || (sb && sb.threats && sb.threats.length);
+
     const ownBrand = brands.findByDomain(parsed.registrable) || (settings.customBrands || []).find((b) => (b.domains || []).some((d) => domain.isSubdomainOf(hostname, d)));
-    if (ownBrand) { result.verdict = 'trusted'; result.reason = `known ${ownBrand.name} domain`; result.brand = ownBrand.name; return result; }
+    if (ownBrand && !urlLevelHit) { result.verdict = 'trusted'; result.reason = `known ${ownBrand.name} domain`; result.brand = ownBrand.name; return result; }
+    if (ownBrand) result.brand = ownBrand.name;
 
     const hasCredentialForm = !!(pageInfo && (pageInfo.hasPasswordField || pageInfo.hasCardField || pageInfo.hasSeedPhraseField));
     const https = pageInfo ? pageInfo.isHttps : true;
@@ -49,7 +64,7 @@
     // ---- Domain-level --------------------------------------------------
     if (parsed.isIP) signals.push(signal('ip-host', 'Site is addressed by a raw IP address instead of a domain name', 25, hostname, 'domain'));
 
-    const la = lookalike.detect(hostname, settings.customBrands);
+    const la = ownBrand ? null : lookalike.detect(hostname, settings.customBrands);
     if (la) {
       result.lookalike = la;
       const w = { homoglyph: 35, 'brand-in-domain': 30, 'brand-in-subdomain': 32, typosquat: 28 }[la.reason] || 25;

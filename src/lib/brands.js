@@ -164,11 +164,45 @@
     { name: 'Lydia', keywords: ['lydia'], domains: ['lydia-app.com'] },
     { name: 'Western Union', keywords: ['westernunion'], domains: ['westernunion.com'] },
     { name: 'MoneyGram', keywords: ['moneygram'], domains: ['moneygram.com'] },
+    // Added from PhishTank most-targeted brands (2026-11 review)
+    { name: 'Allegro', keywords: ['allegro', 'allegrolokalnie'], domains: ['allegro.pl', 'allegrolokalnie.pl', 'allegro.cz', 'allegro.sk', 'allegro.hu', 'allegroimg.com', 'allegrostatic.com', 'allegro.com'] },
+    { name: 'Bradesco', keywords: ['bradesco'], domains: ['bradesco.com.br', 'bradesco.com', 'bradescoseguros.com.br', 'next.me'] },
+    { name: 'Banco do Brasil', keywords: ['bancodobrasil'], domains: ['bb.com.br', 'bancodobrasil.com.br'] },
+    { name: 'Itaú', keywords: ['itau'], domains: ['itau.com.br', 'itau.com', 'itaucard.com.br'] },
+    { name: 'Nubank', keywords: ['nubank'], domains: ['nubank.com.br', 'nu.com.br'] },
+    { name: 'Optus', keywords: ['optus'], domains: ['optus.com.au', 'optusnet.com.au'] },
+    { name: 'Société Générale', keywords: ['societegenerale'], domains: ['societegenerale.fr', 'societegenerale.com', 'particuliers.societegenerale.fr'] },
+    { name: 'La Banque Postale', keywords: ['labanquepostale', 'banquepostale'], domains: ['labanquepostale.fr', 'labanquepostale.com'] },
+    { name: 'Crédit Agricole', keywords: ['creditagricole', 'credit-agricole'], domains: ['credit-agricole.fr', 'credit-agricole.com', 'ca-cb.com'] },
+    { name: 'BNP Paribas', keywords: ['bnpparibas'], domains: ['bnpparibas.com', 'bnpparibas.net', 'mabanque.bnpparibas'] },
+    { name: 'Free Mobile', keywords: ['freemobile', 'free-mobile'], domains: ['free.fr', 'free-mobile.fr', 'mobile.free.fr'] },
+    { name: 'Ameli (Assurance Maladie)', keywords: ['ameli'], domains: ['ameli.fr', 'assurance-maladie.ameli.fr'] },
+    { name: 'impots.gouv.fr', keywords: ['impots', 'impotsgouv'], domains: ['impots.gouv.fr', 'gouv.fr'] },
+    { name: 'ANTAI (amendes)', keywords: ['antai', 'amendes'], domains: ['antai.gouv.fr', 'amendes.gouv.fr', 'gouv.fr'] },
+    { name: 'SMBC', keywords: ['smbc'], domains: ['smbc.co.jp', 'smbc-card.com', 'smbcgroup.com'] },
+    { name: 'Interactive Brokers', keywords: ['interactivebrokers', 'ibkr'], domains: ['interactivebrokers.com', 'ibkr.com', 'interactivebrokers.co.uk', 'interactivebrokers.ie'] },
+    { name: 'ABN AMRO', keywords: ['abnamro'], domains: ['abnamro.nl', 'abnamro.com'] },
+    { name: 'Rabobank', keywords: ['rabobank'], domains: ['rabobank.nl', 'rabobank.com'] },
+    { name: 'DBS', keywords: ['dbsbank', 'posb'], domains: ['dbs.com.sg', 'dbs.com', 'posb.com.sg'] },
+    { name: 'Scotiabank', keywords: ['scotiabank', 'scotia'], domains: ['scotiabank.com', 'scotiabank.ca', 'scotiaonline.scotiabank.com'] },
+    { name: 'Raiffeisen', keywords: ['raiffeisen'], domains: ['raiffeisen.at', 'raiffeisen.ch', 'raiffeisen.ru', 'rbinternational.com', 'raiffeisenbank.cz', 'raiffeisen.hu', 'raiffeisen.ro', 'raiffeisen.rs', 'raiffeisen.ba', 'raiffeisen.ua', 'volksbank.de', 'vr.de'] },
+    { name: 'Swiss Post', keywords: ['swisspost', 'postfinance'], domains: ['post.ch', 'postfinance.ch'] },
+    { name: 'Intesa Sanpaolo', keywords: ['intesasanpaolo', 'intesa'], domains: ['intesasanpaolo.com', 'intesasanpaolo.it'] },
+    { name: 'UniCredit', keywords: ['unicredit'], domains: ['unicredit.it', 'unicredit.eu', 'unicreditgroup.eu'] },
+    { name: 'Poste Italiane', keywords: ['posteitaliane', 'postepay'], domains: ['poste.it', 'postepay.it', 'posteitaliane.it'] },
+    { name: 'ABSA', keywords: ['absa'], domains: ['absa.co.za', 'absa.africa'] },
+    { name: 'Huntington', keywords: ['huntington'], domains: ['huntington.com'] },
+    { name: 'AEON', keywords: ['aeon'], domains: ['aeon.co.jp', 'aeoncard.co.jp'] },
+    { name: 'Sparkasse', keywords: ['sparkasse'], domains: ['sparkasse.de', 'sparkasse.at'] },
+    { name: 'Commerzbank', keywords: ['commerzbank'], domains: ['commerzbank.de', 'commerzbank.com'] },
+    { name: 'Postbank', keywords: ['postbank'], domains: ['postbank.de'] },
+    { name: 'DKB', keywords: ['dkb'], domains: ['dkb.de'] },
+    { name: 'Hermes (DE)', keywords: ['myhermes'], domains: ['myhermes.de'] },
   ];
 
   // Keywords this short or this generic only count when they are a whole
   // hostname label, never when they are merely embedded inside one.
-  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy']);
+  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus']);
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [

@@ -76,24 +76,46 @@
     'ActivoBank': /\bactivo ?bank\b/,
     'OLX': /\bolx\b/,
     'Ticketmaster': /\bticketmaster\b/,
+    'Allegro': /\ballegro\s*(lokalnie|pay|smart|konto|logowanie)\b|\ballegrolokalnie\b/,
+    'Optus': /\boptus\s+(bill|account|my ?optus|sign)/,
+    'Free Mobile': /\bfree\s+mobile\b/,
+    'Société Générale': /\bsociete generale\b/,
+    'La Banque Postale': /\bbanque postale\b/,
+    'Crédit Agricole': /\bcredit agricole\b/,
+    'BNP Paribas': /\bbnp paribas\b/,
+    'Ameli (Assurance Maladie)': /\b(ameli|assurance maladie)\b/,
+    'impots.gouv.fr': /\bimpots\.gouv\b|\bdirection generale des finances publiques\b|\bdgfip\b/,
+    'ANTAI (amendes)': /\bantai\b|\bamendes\.gouv\b/,
+    'Interactive Brokers': /\binteractive brokers\b|\bibkr\b/,
+    'ABN AMRO': /\babn amro\b/,
+    'Banco do Brasil': /\bbanco do brasil\b/,
+    'Swiss Post': /\bswiss post\b|\bpostfinance\b|\bdie post\b|\bla poste suisse\b/,
+    'Intesa Sanpaolo': /\bintesa sanpaolo\b/,
+    'Poste Italiane': /\bposte italiane\b|\bpostepay\b/,
   };
   // Brands whose names are too generic to look for in page text at all.
-  const SKIP_IN_TEXT = new Set(['Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
+  const SKIP_IN_TEXT = new Set(['Allegro', 'Optus', 'SMBC', 'DBS', 'AEON', 'ABSA', 'Huntington', 'Raiffeisen', 'Hermes (DE)', 'Free Mobile', 'Postbank', 'DKB', 'Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
   // ...except these get the simple word-boundary check on their name.
   const SIMPLE_NAME = new Set(['PayPal', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram', 'Spotify', 'eBay', 'Walmart', 'Costco', 'AliExpress', 'Netflix', 'Okta', 'Kraken', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Klarna', 'Stripe', 'Zoom', 'Slack']);
 
   function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
+  function plainName(name) {
+    let n = String(name).toLowerCase();
+    try { n = n.normalize('NFKD').replace(/[\u0300-\u036f]/g, ''); } catch (e) { /* ignore */ }
+    return n;
+  }
+
   function brandPattern(b) {
     if (TITLE_PATTERNS[b.name]) return TITLE_PATTERNS[b.name];
-    if (SIMPLE_NAME.has(b.name)) return new RegExp('\\b' + escapeRe(b.name.toLowerCase()) + '\\b');
+    if (SIMPLE_NAME.has(b.name)) return new RegExp('\\b' + escapeRe(plainName(b.name)) + '\\b');
     if (SKIP_IN_TEXT.has(b.name)) return null;
-    return new RegExp('\\b' + escapeRe(b.name.toLowerCase()) + '\\b');
+    return new RegExp('\\b' + escapeRe(plainName(b.name)) + '\\b');
   }
 
   function brandsInText(text, allBrands) {
     allBrands = allBrands || brands.BRANDS;
-    const t = String(text || '').toLowerCase();
+    const t = plainName(text || '');
     const out = [];
     for (const b of allBrands) {
       const re = brandPattern(b);
@@ -104,7 +126,7 @@
 
   function countBrandMentions(text, allBrands) {
     allBrands = allBrands || brands.BRANDS;
-    const t = String(text || '').toLowerCase();
+    const t = plainName(text || '');
     const out = {};
     for (const b of allBrands) {
       const re = brandPattern(b);

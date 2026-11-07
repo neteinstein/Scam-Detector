@@ -74,7 +74,9 @@ if (!/Remote code/i.test(practices)) fail('privacy-practices.md: missing remote-
 if (!/Data usage/i.test(practices)) fail('privacy-practices.md: missing data-usage section');
 
 // Network hosts the code talks to must be disclosed.
-const code = ['src/background.js', 'src/content.js', ...fs.readdirSync(path.join(ROOT, 'src/lib')).map((f) => 'src/lib/' + f)].map(read).join('\n');
+// Only URLs the code *requests* count: lines that merely assign a hyperlink (href) are user-facing links, not network calls.
+const code = ['src/background.js', 'src/content.js', ...fs.readdirSync(path.join(ROOT, 'src/lib')).map((f) => 'src/lib/' + f)]
+  .map(read).join('\n').split('\n').filter((line) => !/\.href\s*=|href:/.test(line)).join('\n');
 const hosts = new Set([...code.matchAll(/https:\/\/([a-z0-9.-]+\.[a-z]{2,})\//gi)].map((m) => m[1].toLowerCase()));
 for (const h of hosts) {
   if (/^(www\.)?(github\.com|paypalobjects\.com)$/.test(h)) continue; // not contacted by the extension

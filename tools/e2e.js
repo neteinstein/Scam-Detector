@@ -104,6 +104,32 @@ async function main() {
     check(benign.verdict === 'ok' || benign.verdict === 'trusted', 'benign page is ok');
     await page.screenshot({ path: path.join(OUT, 'benign.png') });
 
+    // 2b. Phishing-reports feed: inject a tiny index and confirm a reported page is flagged even on a brand host
+    const feedPage = 'https://docs.google.com/forms/d/e/phish-test-123/viewform';
+    await sw.evaluate(async (url) => {
+      if (feedUpdating) { try { await feedUpdating; } catch (e) { /* ignore */ } } // let any real download finish first
+      const idx = await self.SD.urlmatch.buildIndex([{ url, target: 'Microsoft' }]);
+      await chrome.storage.local.set({ 'feed:phishtank': idx, 'feedmeta:phishtank': { updatedAt: Date.now(), count: 1, hosts: 0, etag: 'test', lastError: '' } });
+      feedIndexCache = idx; // the worker keeps an in-memory copy
+    }, feedPage);
+    await page.route('https://docs.google.com/**', (route) => route.fulfill({ contentType: 'text/html; charset=utf-8', body: '<!doctype html><html><head><title>Sign in</title></head><body><h1>Microsoft 365</h1><form><input type="password" name="p"></form></body></html>' }));
+    await page.goto(feedPage, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('#scam-detector-banner-host', { timeout: 20000 });
+    const feedResult = await sw.evaluate(async () => {
+      const all = await chrome.storage.session.get(null);
+      return Object.entries(all).filter(([k]) => k.startsWith('result:')).map(([, v]) => v).sort((a, b) => b.analyzedAt - a.analyzedAt)[0];
+    });
+    console.log(`feed page: verdict=${feedResult.verdict} score=${feedResult.score} signals=${feedResult.signals.map((s) => s.id).join(',')}`);
+    check(feedResult.verdict === 'danger' && feedResult.signals.some((s) => s.id === 'phish-report-url'), 'reported page on docs.google.com is flagged from the local feed');
+    await page.goto('https://docs.google.com/forms/d/e/another/viewform', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(2500);
+    const otherDoc = await sw.evaluate(async () => {
+      const all = await chrome.storage.session.get(null);
+      return Object.entries(all).filter(([k]) => k.startsWith('result:')).map(([, v]) => v).sort((a, b) => b.analyzedAt - a.analyzedAt)[0];
+    });
+    check(otherDoc.verdict === 'trusted', 'other docs.google.com page stays trusted (shared host, no host-level match)');
+    await sw.evaluate(async () => { await chrome.storage.local.remove(['feed:phishtank', 'feedmeta:phishtank']); feedIndexCache = null; });
+
     // 3. Marketplace chat monitor: off by default, on when enabled in settings
     await page.goto('https://www.olx.pt/mensagens/123', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(3000);

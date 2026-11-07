@@ -139,6 +139,7 @@
           li { margin: 2px 0; }
           li small { color: #555; }
           .advice { margin: 6px 0 0; color: #333; }
+          .advice a { color: #1d4ed8; }
           .actions { flex: 0 0 auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
           button { cursor: pointer; border-radius: 6px; padding: 7px 12px; font-size: 13px; font-weight: 600; border: 1px solid var(--c); background: #fff; color: var(--c); }
           button.primary { background: var(--c); color: #fff; }
@@ -192,6 +193,14 @@
     const details = el('div', 'details'); const ul = el('ul'); details.appendChild(ul); body.appendChild(details);
     for (const s of topSignals) { const li = el('li', '', s.label); if (s.detail) li.appendChild(el('small', '', ' — ' + s.detail)); ul.appendChild(li); }
     if ((result.signals || []).length > topSignals.length) { const li = el('li'); li.appendChild(el('small', '', `+ ${result.signals.length - topSignals.length} more (see the extension popup)`)); ul.appendChild(li); }
+    if ((result.signals || []).some((s) => s.id === 'safe-browsing')) {
+      // Required by the Safe Browsing API terms: attribution and a link to help resources.
+      const p = el('p', 'advice');
+      const a1 = el('a', '', 'Advisory provided by Google'); a1.href = 'https://developers.google.com/safe-browsing/v4/advisory'; a1.target = '_blank'; a1.rel = 'noopener';
+      const a2 = el('a', '', 'Learn about phishing (APWG)'); a2.href = 'https://apwg.org/'; a2.target = '_blank'; a2.rel = 'noopener';
+      p.append(a1, ' · ', a2, ' · Google cannot guarantee its information is complete or error-free.');
+      body.appendChild(p);
+    }
 
     const actions = el('div', 'actions'); row.appendChild(actions);
     const leave = el('button', 'primary', 'Leave this site'); leave.id = 'leave';

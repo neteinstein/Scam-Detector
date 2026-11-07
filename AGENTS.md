@@ -26,7 +26,17 @@ kit and the code disagree.
 Nothing in `store-listing/` may promise behaviour the code does not have, and the code
 must not do anything the privacy policy does not disclose. When in doubt, disclose.
 
-## 2. General
+## 2. Keep the scam catalogue current
+
+The detection is only as good as the lists it ships: brands, TLDs, phrases, chat schemes,
+marketplaces, shared hosts. **Before finishing any change to this repository, run the
+`update-scam-catalogue` skill** (`.claude/skills/update-scam-catalogue/SKILL.md`; other
+agents follow the same file by hand). It reviews current public scam reporting, adds what
+is missing with tests in all four languages, and records the review in
+`catalogue/last-review.json`. `node tools/catalogue-report.js` shows the state and flags a
+review older than 30 days; `npm test` prints a warning in that case.
+
+## 3. General
 
 - Run `npm test` before committing. Add or adjust unit tests in `test/` for every change
   to `src/lib/`.

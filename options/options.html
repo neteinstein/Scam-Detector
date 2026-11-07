@@ -31,6 +31,18 @@
   <p class="muted">Sends the site's domain name (never the full URL) to <code>rdap.org</code>, which redirects to the registry's public RDAP service. Results are cached for 7 days. Freshly registered domains are one of the strongest scam indicators, so this is on by default.</p>
   <button id="clearCache">Clear cached lookups</button>
 
+  <h2>Phishing reports feed</h2>
+  <label><input type="checkbox" id="phishFeedEnabled"> Keep a local copy of PhishTank's verified phishing reports and warn when a page or site is in it</label>
+  <p class="muted">A list of about 50,000 community-reported, verified phishing addresses is downloaded from <code>data.phishtank.com</code> a few times a day (about 2 MB each time) and stored on this device as hashes. Pages are matched locally: the addresses you visit are never sent anywhere. Reports are community data and are not guaranteed to be accurate.</p>
+  <label>PhishTank application key (optional, raises the download limit; get one at phishtank.org): <input type="text" id="phishtankAppKey" placeholder="optional" size="40"></label>
+  <div class="row"><button id="feedUpdate">Update now</button><span id="feedStatus" class="muted"></span></div>
+
+  <h2>Google Safe Browsing (optional)</h2>
+  <label><input type="checkbox" id="safeBrowsingEnabled"> Also ask Google Safe Browsing about each page</label>
+  <p class="muted">Off by default. When on, the <strong>full address of every page you open</strong> is sent to Google's Safe Browsing Lookup service using <strong>your own API key</strong> (create one in Google Cloud, enable the Safe Browsing API and restrict the key to this extension). Google's terms allow non-commercial use only. Results are cached for up to 30 minutes.</p>
+  <p class="muted">Google works to provide the most accurate and up-to-date information about unsafe web resources. However, Google cannot guarantee that its information is comprehensive and error-free: some risky sites may not be identified, and some safe sites may be identified in error. Warnings based on this data are marked "Advisory provided by Google".</p>
+  <label>API key: <input type="text" id="safeBrowsingApiKey" placeholder="AIza…" size="44"></label>
+
   <h2>Marketplace chat monitor</h2>
   <label><input type="checkbox" id="chatMonitorEnabled"> Watch conversations on selling sites (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) for known scam scripts</label>
   <p class="muted">Off by default. When on, chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as "I'll send a courier, click the link to receive the payment", "forward me the SMS code", "the payment is held until you pay the insurance", "send the deposit before the viewing" or overpayment refunds, in English, Portuguese, Spanish and French. A blue banner explains the scheme when one appears.</p>

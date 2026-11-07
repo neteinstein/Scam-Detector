@@ -101,3 +101,30 @@ test('a single money phrase on an old site stays below the warning threshold', (
   const r = scoring.evaluate({ hostname: 'bank-blog.com', ageDays: 4000, rdapStatus: 'ok' }, page({ phrases: phrases.scan('Guaranteed returns are a myth, says our analyst') }), {});
   assert.equal(r.verdict, 'ok');
 });
+
+test('a verified PhishTank report alone makes the page danger, even on a brand host', () => {
+  const r = scoring.evaluate({ hostname: 'docs.google.com', phishReport: { kind: 'url', count: 1, target: 'Microsoft' } }, page({ hasPasswordField: true }), {});
+  assert.equal(r.verdict, 'danger');
+  assert.ok(ids(r).includes('phish-report-url'));
+  assert.ok(!ids(r).includes('lookalike'), 'no impersonation signal for the brand\'s own host');
+  assert.equal(r.brand, 'Google');
+});
+
+test('host-level reports add weight but need company to reach danger', () => {
+  const r = scoring.evaluate({ hostname: 'some-shop.com', ageDays: 3000, rdapStatus: 'ok', phishReport: { kind: 'host', count: 3 } }, page(), {});
+  assert.equal(r.verdict, 'warning');
+  assert.ok(ids(r).includes('phish-report-host'));
+});
+
+test('Safe Browsing match carries the Google attribution and hedged wording', () => {
+  const r = scoring.evaluate({ hostname: 'example-shop.net', safeBrowsing: { threats: ['SOCIAL_ENGINEERING'] } }, page(), {});
+  const s = r.signals.find((x) => x.id === 'safe-browsing');
+  assert.ok(s);
+  assert.match(s.label, /suspected/);
+  assert.equal(s.detail, 'Advisory provided by Google');
+  assert.equal(r.verdict, 'danger');
+});
+
+test('brand domains stay trusted without a reputation hit', () => {
+  assert.equal(scoring.evaluate({ hostname: 'docs.google.com', phishReport: null, safeBrowsing: { threats: [] } }, page(), {}).verdict, 'trusted');
+});

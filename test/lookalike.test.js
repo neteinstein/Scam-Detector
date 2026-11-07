@@ -64,3 +64,11 @@ test('detect result is JSON-serialisable (no cycles)', () => {
   const r = lookalike.detect('paypal-secure-login.com');
   assert.doesNotThrow(() => JSON.stringify(r));
 });
+
+test('brands added from feed statistics', () => {
+  assert.equal(brandOf('allegrolokalnie.pl-smart236784.sbs'), 'Allegro');
+  assert.equal(brandOf('www.allegrolokalnie.search0046.cfd'), 'Allegro');
+  assert.equal(lookalike.detect('allegro.pl'), null);
+  assert.equal(brandOf('societegenerale-secure.com'), 'Société Générale');
+  assert.equal(lookalike.detect('particuliers.societegenerale.fr'), null);
+});
