@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Scam Detector</title>
+  <title data-i18n="extName">Scam Detector</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -10,7 +10,7 @@
     <div class="verdict" id="verdict">
       <div class="badge" id="badge">–</div>
       <div>
-        <div class="title" id="title">Analysing…</div>
+        <div class="title" id="title" data-i18n="popup_analysing">Analysing…</div>
         <div class="host" id="host"></div>
       </div>
     </div>
@@ -22,11 +22,12 @@
     <dl class="meta" id="meta"></dl>
   </main>
   <footer>
-    <button id="rescan" class="btn">Re-scan</button>
-    <button id="trust" class="btn">Trust this site</button>
-    <button id="untrust" class="btn hidden">Stop trusting</button>
-    <a id="options" class="btn link" href="#">Settings</a>
+    <button id="rescan" class="btn" data-i18n="btn_rescan">Re-scan</button>
+    <button id="trust" class="btn" data-i18n="btn_trust">Trust this site</button>
+    <button id="untrust" class="btn hidden" data-i18n="btn_untrust">Stop trusting</button>
+    <a id="options" class="btn link" href="#" data-i18n="btn_settings">Settings</a>
   </footer>
+  <script src="../src/lib/i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,0 +1,67 @@
+# Builds an installable package for every version and publishes it as a
+# GitHub Release. Runs when manifest.json changes on main (or manually); the
+# release is created only if a tag for that version does not exist yet.
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: ['manifest.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read version
+        id: v
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then echo "exists=true" >> "$GITHUB_OUTPUT"; else echo "exists=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Tests and checks
+        if: steps.v.outputs.exists == 'false'
+        run: npm test
+
+      - name: Build package
+        if: steps.v.outputs.exists == 'false'
+        run: |
+          npm run package
+          cd dist && sha256sum *.zip > SHA256SUMS.txt && cat SHA256SUMS.txt
+
+      - name: Release notes from store-listing/listing.md
+        if: steps.v.outputs.exists == 'false'
+        run: |
+          node -e "
+            const fs = require('fs');
+            const v = '${{ steps.v.outputs.version }}';
+            const md = fs.readFileSync('store-listing/listing.md', 'utf8');
+            const m = md.match(new RegExp('## What\\\\'s new \\\\(version ' + v.replace(/\\./g, '\\\\.') + '\\\\)\\\\n([\\\\s\\\\S]*?)(?=\\\\n## |\\\\s*$)'));
+            const notes = (m ? m[1].trim() : 'Version ' + v) + '\n\n## Install\n\n1. Download **scam-detector-' + v + '.zip** below and unzip it.\n2. Open chrome://extensions, enable **Developer mode**.\n3. Click **Load unpacked** and select the unzipped folder.\n\nVerify the download with SHA256SUMS.txt.';
+            fs.writeFileSync('dist/RELEASE_NOTES.md', notes);
+          "
+          cat dist/RELEASE_NOTES.md
+
+      - name: Tag and publish release
+        if: steps.v.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V=${{ steps.v.outputs.version }}
+          git tag "v$V" && git push origin "v$V"
+          gh release create "v$V" dist/scam-detector-$V.zip dist/SHA256SUMS.txt --title "Scam Detector $V" --notes-file dist/RELEASE_NOTES.md
+
+      - name: Already released
+        if: steps.v.outputs.exists == 'true'
+        run: echo "Tag v${{ steps.v.outputs.version }} already exists; bump manifest.json version to publish a new build."

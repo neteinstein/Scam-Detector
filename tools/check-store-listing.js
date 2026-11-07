@@ -13,6 +13,13 @@ const problems = [];
 const fail = (msg) => problems.push(msg);
 
 const manifest = JSON.parse(read('manifest.json'));
+// Resolve __MSG_key__ placeholders from the default locale, as Chrome does.
+const defaultLocale = manifest.default_locale || 'en';
+const messages = exists(`_locales/${defaultLocale}/messages.json`) ? JSON.parse(read(`_locales/${defaultLocale}/messages.json`)) : {};
+for (const field of ['name', 'description']) {
+  const m = String(manifest[field] || '').match(/^__MSG_(\w+)__$/);
+  if (m) { if (!messages[m[1]]) fail(`manifest.json: ${field} references message "${m[1]}" missing from _locales/${defaultLocale}`); else manifest[field] = messages[m[1]].message; }
+}
 const listing = read('store-listing/listing.md');
 const practices = read('store-listing/privacy-practices.md');
 const policyMd = read('store-listing/privacy-policy.md');

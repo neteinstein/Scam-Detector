@@ -568,7 +568,7 @@
       for (const { re, lang } of patternsOf(cfg)) {
         const m = t.match(re);
         if (m) {
-          found.push({ category, label: cfg.label, weight: cfg.weight, match: m[0].slice(0, 120), lang, money: MONEY_CATEGORIES.includes(category) });
+          found.push({ category, label: cfg.label, key: 'phrase_' + category, weight: cfg.weight, match: m[0].slice(0, 120), lang, money: MONEY_CATEGORIES.includes(category) });
           if (++n >= MAX_MATCHES_PER_CATEGORY) break;
         }
       }

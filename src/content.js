@@ -11,6 +11,7 @@
   if (window.top !== window) return; // top frame only (manifest also sets all_frames:false)
   const SD = self.SD;
   if (!SD || !SD.pageSignals) return;
+  const { t, signalLabel, signalDetail, chatTitle, chatAdvice } = SD.i18n;
 
   const HOST_ID = 'scam-detector-banner-host';
   const MAX_RESCANS = 6;
@@ -187,28 +188,28 @@
     const row = el('div', 'row'); bar.appendChild(row);
     row.appendChild(el('div', 'icon', '!'));
     const body = el('div', 'body'); row.appendChild(body);
-    const title = el('p', 'title', danger ? 'This website is likely a scam' : 'This website looks suspicious');
-    title.appendChild(el('span', 'score', `risk ${result.score}/100`)); body.appendChild(title);
-    body.appendChild(el('p', 'sub', (danger ? 'Do not enter passwords, card numbers or personal details here. ' : 'Be careful before entering any personal or payment information. ') + `(${result.hostname})`));
+    const title = el('p', 'title', danger ? t('banner_danger_title', [], 'This website is likely a scam') : t('banner_warn_title', [], 'This website looks suspicious'));
+    title.appendChild(el('span', 'score', t('banner_risk', [result.score], `risk ${result.score}/100`))); body.appendChild(title);
+    body.appendChild(el('p', 'sub', (danger ? t('banner_danger_sub', [], 'Do not enter passwords, card numbers or personal details here.') : t('banner_warn_sub', [], 'Be careful before entering any personal or payment information.')) + ` (${result.hostname})`));
     const details = el('div', 'details'); const ul = el('ul'); details.appendChild(ul); body.appendChild(details);
-    for (const s of topSignals) { const li = el('li', '', s.label); if (s.detail) li.appendChild(el('small', '', ' — ' + s.detail)); ul.appendChild(li); }
-    if ((result.signals || []).length > topSignals.length) { const li = el('li'); li.appendChild(el('small', '', `+ ${result.signals.length - topSignals.length} more (see the extension popup)`)); ul.appendChild(li); }
+    for (const s of topSignals) { const li = el('li', '', signalLabel(s)); const d = signalDetail(s); if (d) li.appendChild(el('small', '', ' — ' + d)); ul.appendChild(li); }
+    if ((result.signals || []).length > topSignals.length) { const li = el('li'); const n = result.signals.length - topSignals.length; li.appendChild(el('small', '', t('banner_more', [n], `+ ${n} more (see the extension popup)`))); ul.appendChild(li); }
     if ((result.signals || []).some((s) => s.id === 'safe-browsing')) {
       // Required by the Safe Browsing API terms: attribution and a link to help resources.
       const p = el('p', 'advice');
-      const a1 = el('a', '', 'Advisory provided by Google'); a1.href = 'https://developers.google.com/safe-browsing/v4/advisory'; a1.target = '_blank'; a1.rel = 'noopener';
-      const a2 = el('a', '', 'Learn about phishing (APWG)'); a2.href = 'https://apwg.org/'; a2.target = '_blank'; a2.rel = 'noopener';
-      p.append(a1, ' · ', a2, ' · Google cannot guarantee its information is complete or error-free.');
+      const a1 = el('a', '', t('sb_advisory', [], 'Advisory provided by Google')); a1.href = 'https://developers.google.com/safe-browsing/v4/advisory'; a1.target = '_blank'; a1.rel = 'noopener';
+      const a2 = el('a', '', t('sb_learn', [], 'Learn about phishing (APWG)')); a2.href = 'https://apwg.org/'; a2.target = '_blank'; a2.rel = 'noopener';
+      p.append(a1, ' · ', a2, ' · ' + t('sb_disclaimer', [], 'Google cannot guarantee its information is complete or error-free.'));
       body.appendChild(p);
     }
 
     const actions = el('div', 'actions'); row.appendChild(actions);
-    const leave = el('button', 'primary', 'Leave this site'); leave.id = 'leave';
+    const leave = el('button', 'primary', t('btn_leave', [], 'Leave this site')); leave.id = 'leave';
     leave.addEventListener('click', () => { if (history.length > 1) history.back(); else location.replace('about:blank'); });
-    const why = el('button', '', 'Why?'); why.id = 'why'; why.addEventListener('click', () => details.classList.toggle('open'));
-    const trust = el('button', 'link', 'Trust this site'); trust.id = 'trust'; trust.title = 'Never warn again for this domain';
+    const why = el('button', '', t('btn_why', [], 'Why?')); why.id = 'why'; why.addEventListener('click', () => details.classList.toggle('open'));
+    const trust = el('button', 'link', t('btn_trust', [], 'Trust this site')); trust.id = 'trust'; trust.title = t('btn_trust_tip', [], 'Never warn again for this domain');
     trust.addEventListener('click', async () => { try { await chrome.runtime.sendMessage({ type: 'TRUST_DOMAIN', hostname: location.hostname }); } catch (e) { /* ignore */ } pageDismissed = true; render(); });
-    const close = el('button', 'link', 'Dismiss'); close.id = 'close'; close.setAttribute('aria-label', 'Dismiss warning');
+    const close = el('button', 'link', t('btn_dismiss', [], 'Dismiss')); close.id = 'close'; close.setAttribute('aria-label', t('btn_dismiss', [], 'Dismiss'));
     close.addEventListener('click', () => { pageDismissed = true; render(); });
     actions.append(leave, why, trust, close);
     root.getElementById('page-bar').replaceChildren(bar);
@@ -228,16 +229,17 @@
     const row = el('div', 'row'); bar.appendChild(row);
     row.appendChild(el('div', 'icon', '💬'));
     const body = el('div', 'body'); row.appendChild(body);
-    const title = el('p', 'title', 'This conversation matches a known scam pattern');
-    title.appendChild(el('span', 'score', `${r.schemes.length} pattern${r.schemes.length > 1 ? 's' : ''}`)); body.appendChild(title);
-    body.appendChild(el('p', 'sub', main.title));
-    body.appendChild(el('p', 'advice', main.advice));
+    const title = el('p', 'title', t('chat_title', [], 'This conversation matches a known scam pattern'));
+    const n = r.schemes.length;
+    title.appendChild(el('span', 'score', n === 1 ? t('chat_pattern_one', [], '1 pattern') : t('chat_pattern_many', [n], `${n} patterns`))); body.appendChild(title);
+    body.appendChild(el('p', 'sub', chatTitle(main)));
+    body.appendChild(el('p', 'advice', chatAdvice(main)));
     const details = el('div', 'details'); const ul = el('ul'); details.appendChild(ul); body.appendChild(details);
-    for (const s of r.schemes) { const li = el('li', '', s.title); li.appendChild(el('small', '', ` — "${s.match}"`)); ul.appendChild(li); }
+    for (const s of r.schemes) { const li = el('li', '', chatTitle(s)); li.appendChild(el('small', '', ` — "${s.match}"`)); ul.appendChild(li); }
 
     const actions = el('div', 'actions'); row.appendChild(actions);
-    const why = el('button', '', 'Details'); why.id = 'chat-why'; why.addEventListener('click', () => details.classList.toggle('open'));
-    const close = el('button', 'link', 'Dismiss'); close.id = 'chat-close';
+    const why = el('button', '', t('btn_details', [], 'Details')); why.id = 'chat-why'; why.addEventListener('click', () => details.classList.toggle('open'));
+    const close = el('button', 'link', t('btn_dismiss', [], 'Dismiss')); close.id = 'chat-close';
     close.addEventListener('click', () => { chatDismissedSignature = sig; render(); });
     actions.append(why, close);
     root.getElementById('chat-bar').replaceChildren(bar);
