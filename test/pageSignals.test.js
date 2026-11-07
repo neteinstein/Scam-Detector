@@ -18,3 +18,21 @@ test('countBrandMentions counts occurrences', () => {
   assert.equal(c.PayPal, 3);
   assert.equal(c.Netflix, 1);
 });
+
+function fakeDoc(favicon) {
+  const el = (attrs) => ({ getAttribute: (n) => attrs[n] || null });
+  return {
+    title: 'Broker', body: { innerText: 'Welcome', getAttribute: () => null }, documentElement: { getAttribute: () => null },
+    querySelector: () => null,
+    querySelectorAll: (sel) => (sel.includes('icon') && !sel.includes('stylesheet') ? [el({ href: favicon })] : []),
+  };
+}
+const loc = { href: 'https://www.broker.example/', hostname: 'www.broker.example', protocol: 'https:' };
+
+test('a favicon on customer cloud storage is not a hot-linked brand asset', () => {
+  assert.deepEqual(pageSignals.collect(fakeDoc('https://storage.googleapis.com/broker-assets/favicon.ico'), loc).brandAssets, []);
+  assert.deepEqual(pageSignals.collect(fakeDoc('https://my-bucket.s3.amazonaws.com/favicon.ico'), loc).brandAssets, []);
+  const hot = pageSignals.collect(fakeDoc('https://www.paypal.com/favicon.ico'), loc).brandAssets;
+  assert.equal(hot.length, 1);
+  assert.equal(hot[0].brand, 'PayPal');
+});
