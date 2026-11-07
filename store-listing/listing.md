@@ -60,10 +60,14 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.3.0)
+## What's new (version 1.3.1)
+
+• The toolbar shield itself now changes colour, with no dot or number on top: green with a check mark (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust). Pages that cannot be checked show a blue-grey shield.
+
+Version 1.3.0:
 
 • New "Non-tech terms" option, on by default: every warning, explanation and setting is written in simple words. Turn it off to see the technical wording.
-• The toolbar shield now changes colour instead of showing a number: green (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust).
+• The toolbar icon now shows a colour instead of a number: green (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust).
 • The marketplace chat monitor is now on by default.
 • Google Safe Browsing is now on by default; it starts checking pages as soon as you enter your own API key in settings.
 • A welcome page opens after installation. It explains what the extension does and, first of all, what it cannot do: it will miss some scams, especially new tricks nobody has reported yet, so stay alert even when there is no warning.
