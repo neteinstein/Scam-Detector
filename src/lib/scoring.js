@@ -6,7 +6,7 @@
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./domain.js'), require('./brands.js'), require('./tlds.js'), require('./lookalike.js'), require('./punycode.js'));
   else { root.SD = root.SD || {}; root.SD.scoring = factory(root.SD.domain, root.SD.brands, root.SD.tlds, root.SD.lookalike, root.SD.punycode); }
 })(typeof self !== 'undefined' ? self : this, function (domain, brands, tlds, lookalike, punycode) {
-  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [], phishFeedEnabled: true, phishtankAppKey: '', safeBrowsingEnabled: false, safeBrowsingApiKey: '' };
+  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [], chatMonitorEnabled: true, chatMonitorDomains: [], phishFeedEnabled: true, phishtankAppKey: '', safeBrowsingEnabled: true, safeBrowsingApiKey: '', plainLanguage: true };
 
   const HOST_RED_FLAG_TOKENS = new Set([
     'login', 'signin', 'logon', 'secure', 'security', 'verify', 'verification', 'account', 'accounts', 'update', 'support', 'auth',
@@ -211,5 +211,21 @@
     return result;
   }
 
-  return { evaluate, DEFAULT_SETTINGS };
+  /**
+   * Toolbar badge for a result: green = no risk signals, yellow = some signals
+   * but no banner, red = a warning banner is showing, grey with a check = trusted.
+   * No score number: the colour carries the meaning (a blank text still draws the dot).
+   */
+  const BADGE_COLORS = { green: '#2e7d32', yellow: '#f9a825', red: '#d32f2f', grey: '#757575' };
+  function badgeFor(result, settings) {
+    if (!result || result.verdict === 'skipped' || result.error) return { text: '', color: BADGE_COLORS.grey, state: 'none' };
+    if (result.verdict === 'trusted') return { text: '✓', color: BADGE_COLORS.grey, state: 'trusted' };
+    const showWarn = (settings || result.settings || {}).showWarnBanner !== false;
+    const banner = result.verdict === 'danger' || (result.verdict === 'warning' && showWarn);
+    if (banner) return { text: ' ', color: BADGE_COLORS.red, state: 'red' };
+    if ((result.signals || []).length || result.verdict === 'warning') return { text: ' ', color: BADGE_COLORS.yellow, state: 'yellow' };
+    return { text: ' ', color: BADGE_COLORS.green, state: 'green' };
+  }
+
+  return { evaluate, badgeFor, DEFAULT_SETTINGS };
 });

@@ -74,3 +74,28 @@ test('i18n helper falls back to English outside Chrome', () => {
   assert.equal(i18n.signalLabel(age), age.label);
   assert.equal(i18n.signalDetail(age), 'Registered 2026-11-04');
 });
+
+test('plain-language variants have a base message and the same placeholders', () => {
+  for (const l of LANGS) {
+    const m = load(l);
+    for (const k of Object.keys(m).filter((x) => x.endsWith('_plain'))) {
+      const base = k.slice(0, -'_plain'.length);
+      assert.ok(m[base], `${l}.${k} has no base message ${base}`);
+      assert.equal(placeholders(m[k].message), placeholders(m[base].message), `${l}.${k} placeholders`);
+    }
+  }
+  assert.ok(Object.keys(en).filter((x) => x.endsWith('_plain')).length >= 100, 'plain variants cover the UI');
+});
+
+test('plain mode prefers <key>_plain and falls back to <key>', () => {
+  const msgs = { sig_no_https: 'Connection is not encrypted (HTTP)', sig_no_https_plain: 'The connection is not secure', verdict_danger: 'Likely a scam' };
+  const prev = global.chrome;
+  global.chrome = { i18n: { getMessage: (k) => msgs[k] || '' } };
+  try {
+    i18n.setPlain(true);
+    assert.equal(i18n.t('sig_no_https'), 'The connection is not secure');
+    assert.equal(i18n.t('verdict_danger'), 'Likely a scam');
+    i18n.setPlain(false);
+    assert.equal(i18n.t('sig_no_https'), 'Connection is not encrypted (HTTP)');
+  } finally { i18n.setPlain(true); global.chrome = prev; }
+});

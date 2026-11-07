@@ -29,9 +29,13 @@ Every page you open is scored from 0 to 100 for the traces scams leave behind: a
 | --- | --- | --- |
 | **60 – 100** | 🔴 **This website is likely a scam** | Several strong, independent indicators. Do not enter anything. |
 | **35 – 59** | 🟠 **This website looks suspicious** | Some indicators. Look closer before trusting it. |
-| 0 – 34 | none | The toolbar badge still shows the score and the popup lists any minor observations. |
+| 0 – 34 | none | The popup shows the score and lists any minor observations. |
 
-Everything runs inside the browser. The only network traffic is a domain-registration lookup (domain name only), a periodic download of PhishTank's public reports feed, and, if you opt in with your own key, a Google Safe Browsing check. See [Privacy](#privacy).
+The toolbar icon carries a coloured dot instead of a number: 🟢 nothing found, 🟡 minor signals, 🔴 a warning banner is showing, ⚪ grey with ✓ on a site you trust.
+
+> **Do not trust it blindly.** Scam Detector recognises the traces of known scams. It will miss some, and it will most likely miss new schemes nobody has identified yet. No warning does not mean safe. A welcome page says this on first install.
+
+Everything runs inside the browser. The only network traffic is a domain-registration lookup (domain name only), a periodic download of PhishTank's public reports feed, and, once you enter your own API key, a Google Safe Browsing check (on by default, inactive without a key). See [Privacy](#privacy).
 
 ## Scenarios
 
@@ -45,7 +49,7 @@ Everything runs inside the browser. The only network traffic is a domain-registr
 <td><img src="docs/scenario-suspicious-shop.png" alt="Suspicious shop"><br><b>Too-good-to-be-true shop.</b> "Offer ends today, only 3 left, bank transfer only, as seen on TV" on a .top domain with dead navigation: suspicious, not yet condemned.</td>
 </tr>
 <tr>
-<td><img src="docs/scenario-chat-monitor.png" alt="Marketplace chat monitor"><br><b>Marketplace chat monitor (opt-in).</b> On OLX, Vinted, Wallapop, Leboncoin and ~100 other classified sites, the classic "I'm abroad, my courier will collect it, click the link to receive the payment" script is recognised in the conversation itself, including the fake OLX payment link.</td>
+<td><img src="docs/scenario-chat-monitor.png" alt="Marketplace chat monitor"><br><b>Marketplace chat monitor (on by default).</b> On OLX, Vinted, Wallapop, Leboncoin and ~100 other classified sites, the classic "I'm abroad, my courier will collect it, click the link to receive the payment" script is recognised in the conversation itself, including the fake OLX payment link.</td>
 <td><img src="docs/scenario-reported-page.png" alt="Reported page on a shared host"><br><b>Verified phishing report on a shared host.</b> A credential-harvesting form hosted on Google Forms is flagged because that exact page is in PhishTank's verified feed, matched locally. Other Google Docs pages stay trusted.</td>
 </tr>
 </table>
@@ -73,7 +77,7 @@ The interface follows the browser language. Every banner, button, popup line, se
 
 <table>
 <tr>
-<td width="33%"><img src="docs/popup-findings.png" alt="Popup with findings"><br><b>Every finding with its weight.</b> Click the badge to see what contributed to the score.</td>
+<td width="33%"><img src="docs/popup-findings.png" alt="Popup with findings"><br><b>Every finding with its weight.</b> Click the toolbar icon to see what contributed to the score.</td>
 <td width="33%"><img src="docs/popup-reported.png" alt="Popup for a reported page"><br><b>Reputation sources in the popup.</b> PhishTank feed status and, when enabled, the Safe Browsing answer.</td>
 <td width="33%"><img src="docs/popup-ok.png" alt="Popup on a clean site"><br><b>Clean site.</b> Score 0, registration date from RDAP, nothing to worry about.</td>
 </tr>
@@ -93,12 +97,12 @@ flowchart LR
     C --> B[Service worker]
     B --> R1[RDAP<br/>domain age]
     B --> R2[PhishTank feed<br/>local hash lookup]
-    B --> R3[Safe Browsing<br/>opt-in, own key]
+    B --> R3[Safe Browsing<br/>needs own key]
     B --> L[Look-alike & brand checks]
     R1 & R2 & R3 & L --> S[Scoring<br/>0–100]
     S -->|≥ 35| W[Banner + badge]
     S -->|< 35| Q[Badge only]
-    C -. opt-in on marketplaces .-> M[Chat monitor] --> W
+    C -. on marketplaces .-> M[Chat monitor] --> W
 ```
 
 Each observation becomes a weighted **signal**; weights add up, strong independent signals reinforce each other, and the total is clamped to 100. Pages on the real domains of known brands, on local networks and on domains you trust are never flagged, with one exception: a verified phishing report for the exact page overrides the brand shortcut, so phishing hosted on Google Docs or Dropbox still warns.
@@ -126,7 +130,7 @@ Each observation becomes a weighted **signal**; weights add up, strong independe
 | --- | --- | --- |
 | Verified phishing report | The page (or a path prefix of it) is in PhishTank's verified-online feed. A local copy (~50k addresses, refreshed every 6 hours, stored as truncated SHA-256 hashes) is matched in the browser, so visited URLs never leave the device. On shared platforms (Google Docs/Sites, link shorteners, form builders, free hosting) only exact-page matches count | 75 |
 | Phishing reports on this host | The host has verified reports and is not a shared platform | 45 |
-| Google Safe Browsing (opt-in) | With your own API key, the Lookup API is asked about each page. Warnings carry the "Advisory provided by Google" attribution and the links Google's terms require; answers are cached at most 30 minutes | 75 |
+| Google Safe Browsing (on by default, needs a key) | With your own API key, the Lookup API is asked about each page. Warnings carry the "Advisory provided by Google" attribution and the links Google's terms require; answers are cached at most 30 minutes | 75 |
 
 </details>
 
@@ -151,7 +155,7 @@ All language signals together are capped at 40 points. Patterns exist in **Engli
 </details>
 
 <details>
-<summary><b>Marketplace chat schemes</b> (opt-in)</summary>
+<summary><b>Marketplace chat schemes</b> (on by default)</summary>
 
 | Scheme | Typical message |
 | --- | --- |
@@ -187,11 +191,12 @@ The shield icon shows the risk score of the current tab (red, amber, or a green 
 
 Open the popup → **Settings**:
 
+- **Non-tech terms** (on by default): every warning and setting in simple words; off shows the technical wording.
 - Danger / warning thresholds, and whether the amber banner is shown.
 - RDAP domain-age lookup on/off and cache clearing.
 - Phishing-reports feed on/off, optional PhishTank app key, manual update.
-- Google Safe Browsing on/off with your own API key (restrict the key to the extension's origin in Google Cloud).
-- Marketplace chat monitor on/off and extra sites to monitor.
+- Google Safe Browsing on/off (on by default; it only runs once you enter your own API key — restrict the key to the extension's origin in Google Cloud).
+- Marketplace chat monitor on/off (on by default) and extra sites to monitor.
 - Trusted domains.
 - **Extra brands to protect**, one per line: `Name | keyword1, keyword2 | realdomain.com`.
 

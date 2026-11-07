@@ -21,6 +21,10 @@
   <h1 data-i18n="opt_title">Scam Detector settings</h1>
   <p class="muted" data-i18n="opt_intro">All analysis runs locally in your browser. The only network requests are the optional lookups described below.</p>
 
+  <h2 data-i18n="opt_plain_h">Simple language</h2>
+  <label><input type="checkbox" id="plainLanguage"> <span data-i18n="opt_plain_toggle">Non-tech terms: explain warnings in simple words</span></label>
+  <p class="muted" data-i18n="opt_plain_p">On by default. Turn it off to see the original technical wording (domain, RDAP, HTTP, favicon…).</p>
+
   <h2 data-i18n="opt_thresholds">Thresholds</h2>
   <label><span data-i18n="opt_danger_label">Show the red "likely scam" banner at risk score ≥</span> <input type="number" id="dangerThreshold" min="1" max="100"></label>
   <label><span data-i18n="opt_warn_label">Show the amber "suspicious" banner at risk score ≥</span> <input type="number" id="warnThreshold" min="1" max="100"></label>
@@ -37,15 +41,15 @@
   <label><span data-i18n="opt_feed_key">PhishTank application key (optional, raises the download limit; get one at phishtank.org):</span> <input type="text" id="phishtankAppKey" data-i18n-placeholder="opt_optional" placeholder="optional" size="40"></label>
   <div class="row"><button id="feedUpdate" data-i18n="opt_feed_update">Update now</button><span id="feedStatus" class="muted"></span></div>
 
-  <h2 data-i18n="opt_sb_h">Google Safe Browsing (optional)</h2>
+  <h2 data-i18n="opt_sb_h">Google Safe Browsing</h2>
   <label><input type="checkbox" id="safeBrowsingEnabled"> <span data-i18n="opt_sb_toggle">Also ask Google Safe Browsing about each page</span></label>
-  <p class="muted" data-i18n="opt_sb_p">Off by default. When on, the full address of every page you open is sent to Google's Safe Browsing Lookup service using your own API key (create one in Google Cloud, enable the Safe Browsing API and restrict the key to this extension). Google's terms allow non-commercial use only. Results are cached for up to 30 minutes.</p>
+  <p class="muted" data-i18n="opt_sb_p">On by default, but nothing is sent until you enter your own API key below. With a key, the full address of every page you open is sent to Google's Safe Browsing Lookup service (create the key in Google Cloud, enable the Safe Browsing API and restrict the key to this extension). Google's terms allow non-commercial use only. Results are cached for up to 30 minutes.</p>
   <p class="muted" data-i18n="opt_sb_notice">Google works to provide the most accurate and up-to-date information about unsafe web resources. However, Google cannot guarantee that its information is comprehensive and error-free: some risky sites may not be identified, and some safe sites may be identified in error. Warnings based on this data are marked "Advisory provided by Google".</p>
   <label><span data-i18n="opt_sb_key">API key:</span> <input type="text" id="safeBrowsingApiKey" placeholder="AIza…" size="44"></label>
 
   <h2 data-i18n="opt_chat_h">Marketplace chat monitor</h2>
   <label><input type="checkbox" id="chatMonitorEnabled"> <span data-i18n="opt_chat_toggle">Watch conversations on selling sites (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) for known scam scripts</span></label>
-  <p class="muted" data-i18n="opt_chat_p">Off by default. When on, chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as "I'll send a courier, click the link to receive the payment", "forward me the SMS code", "the payment is held until you pay the insurance", "send the deposit before the viewing" or overpayment refunds, in English, Portuguese, Spanish and French. A banner explains the scheme when one appears.</p>
+  <p class="muted" data-i18n="opt_chat_p">On by default. When on, chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as "I'll send a courier, click the link to receive the payment", "forward me the SMS code", "the payment is held until you pay the insurance", "send the deposit before the viewing" or overpayment refunds, in English, Portuguese, Spanish and French. A banner explains the scheme when one appears.</p>
   <label><span data-i18n="opt_chat_domains">Extra sites to monitor (one domain per line):</span><br><textarea id="chatMonitorDomains" placeholder="example-classifieds.com"></textarea></label>
 
   <h2 data-i18n="opt_trusted_h">Trusted domains</h2>

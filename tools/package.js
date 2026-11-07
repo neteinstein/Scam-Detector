@@ -11,7 +11,7 @@ const OUT_DIR = path.join(ROOT, 'dist');
 const OUT = path.join(OUT_DIR, `scam-detector-${manifest.version}.zip`);
 
 // Everything the manifest references, plus the files those pages load.
-const INCLUDE = ['manifest.json', '_locales', 'src', 'popup', 'options', 'icons'];
+const INCLUDE = ['manifest.json', '_locales', 'src', 'popup', 'options', 'welcome', 'icons'];
 const EXCLUDE = /(^|\/)(\.|.*\.map$|.*\.test\.js$)/;
 
 function walk(rel, acc) {

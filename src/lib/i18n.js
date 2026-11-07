@@ -3,11 +3,20 @@
  * content script, popup and options page. Signals and chat schemes carry
  * message keys + arguments (see scoring.js / chatSchemes.js) so they render
  * in the browser's UI language.
+ *
+ * Plain-language mode ("Non-tech terms", on by default): when a message
+ * `<key>_plain` exists it is used instead of `<key>`, so the same code shows
+ * jargon-free wording. Messages without a plain variant are shown as they are.
  */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
   else { root.SD = root.SD || {}; root.SD.i18n = factory(); }
 })(typeof self !== 'undefined' ? self : this, function () {
+  let plain = true;
+  /** Turn plain-language wording on or off (from the plainLanguage setting). */
+  function setPlain(on) { plain = on !== false; }
+  function isPlain() { return plain; }
+
   function has() { return typeof chrome !== 'undefined' && chrome.i18n && typeof chrome.i18n.getMessage === 'function'; }
 
   /** Translate `key` with substitutions; returns `fallback` (or the key) when no message exists. */
@@ -15,7 +24,7 @@
     if (has()) {
       try {
         const subs = (args || []).map(String);
-        const m = chrome.i18n.getMessage(key, subs);
+        const m = (plain && chrome.i18n.getMessage(key + '_plain', subs)) || chrome.i18n.getMessage(key, subs);
         if (m) return m;
       } catch (e) { /* fall through */ }
     }
@@ -49,5 +58,5 @@
     if (doc.title && doc.querySelector('title[data-i18n]')) doc.title = t(doc.querySelector('title[data-i18n]').getAttribute('data-i18n'), [], doc.title);
   }
 
-  return { t, signalLabel, signalDetail, chatTitle, chatAdvice, applyToDocument };
+  return { t, setPlain, isPlain, signalLabel, signalDetail, chatTitle, chatAdvice, applyToDocument };
 });

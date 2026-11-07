@@ -1,6 +1,7 @@
 (async function () {
   const $ = (id) => document.getElementById(id);
   const { t, signalLabel, signalDetail, chatTitle } = self.SD.i18n;
+  try { const s = (await chrome.storage.sync.get('settings')).settings || {}; self.SD.i18n.setPlain(s.plainLanguage !== false); } catch (e) { /* keep default */ }
   self.SD.i18n.applyToDocument(document);
   // ?tabId=<id> lets the page be opened as a normal tab (screenshots, debugging) and still show another tab's result.
   const forcedTabId = Number(new URLSearchParams(location.search).get('tabId'));
@@ -21,7 +22,10 @@
 
   function render(result) {
     const verdict = result ? result.verdict : 'skipped';
-    $('badge').className = 'badge ' + verdict;
+    // Same colours as the toolbar badge: green = nothing found, yellow = some signals, red = warning banner, grey = trusted.
+    const bannerShown = verdict === 'danger' || (verdict === 'warning' && !(result.settings && result.settings.showWarnBanner === false));
+    const tone = verdict === 'trusted' ? 'trusted' : verdict === 'skipped' ? 'skipped' : bannerShown ? 'danger' : (result.signals || []).length || verdict === 'warning' ? 'warning' : 'ok';
+    $('badge').className = 'badge ' + tone;
     $('badge').textContent = verdict === 'danger' || verdict === 'warning' ? result.score : verdict === 'trusted' ? '✓' : verdict === 'ok' ? 'OK' : '–';
     $('title').textContent = VERDICT_TEXT[verdict] || verdict;
     $('host').textContent = result && result.hostname ? result.hostname : (tab.url || '');

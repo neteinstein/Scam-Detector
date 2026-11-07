@@ -103,6 +103,8 @@
     { name: 'DHL', keywords: ['dhl'], domains: ['dhl.com', 'dhl.de', 'dhl.co.uk', 'dhlparcel.com', 'dhlexpress.com', 'dhl.pt', 'mydhl.express.dhl', 'dhlecommerce.com'] },
     { name: 'Royal Mail', keywords: ['royalmail'], domains: ['royalmail.com', 'royalmailgroup.com'] },
     { name: 'CTT', keywords: ['ctt'], domains: ['ctt.pt'] },
+    { name: 'Continente', keywords: ['cartaocontinente', 'continente'], domains: ['continente.pt', 'cartaocontinente.pt', 'sonae.pt'] },
+    { name: 'Via Verde', keywords: ['viaverde'], domains: ['viaverde.pt', 'brisa.pt'] },
     { name: 'Correos', keywords: ['correos'], domains: ['correos.es', 'correos.com'] },
     { name: 'Canada Post', keywords: ['canadapost'], domains: ['canadapost-postescanada.ca', 'canadapost.ca'] },
     { name: 'Australia Post', keywords: ['auspost'], domains: ['auspost.com.au'] },
@@ -202,7 +204,7 @@
 
   // Keywords this short or this generic only count when they are a whole
   // hostname label, never when they are merely embedded inside one.
-  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus']);
+  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus', 'continente']);
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [

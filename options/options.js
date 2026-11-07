@@ -1,8 +1,9 @@
 (async function () {
   const $ = (id) => document.getElementById(id);
   const { t } = self.SD.i18n;
-  self.SD.i18n.applyToDocument(document);
   let settings = await chrome.runtime.sendMessage({ type: 'GET_SETTINGS' });
+  self.SD.i18n.setPlain(settings.plainLanguage !== false);
+  self.SD.i18n.applyToDocument(document);
 
   function renderAllowlist() {
     const ul = $('allowlist');
@@ -38,6 +39,7 @@
   $('phishtankAppKey').value = settings.phishtankAppKey || '';
   $('safeBrowsingEnabled').checked = !!settings.safeBrowsingEnabled;
   $('safeBrowsingApiKey').value = settings.safeBrowsingApiKey || '';
+  $('plainLanguage').checked = settings.plainLanguage !== false;
   async function feedStatus() {
     const st = await chrome.runtime.sendMessage({ type: 'FEED_STATUS' });
     if (!st) return;
@@ -63,11 +65,12 @@
       dangerThreshold: danger, warnThreshold: warn, showWarnBanner: $('showWarnBanner').checked, rdapEnabled: $('rdapEnabled').checked,
       allowlist: settings.allowlist, customBrands: textToBrands($('customBrands').value),
       phishFeedEnabled: $('phishFeedEnabled').checked, phishtankAppKey: $('phishtankAppKey').value.trim(),
-      safeBrowsingEnabled: $('safeBrowsingEnabled').checked && !!$('safeBrowsingApiKey').value.trim(), safeBrowsingApiKey: $('safeBrowsingApiKey').value.trim(),
-      chatMonitorEnabled: $('chatMonitorEnabled').checked,
+      safeBrowsingEnabled: $('safeBrowsingEnabled').checked, safeBrowsingApiKey: $('safeBrowsingApiKey').value.trim(),
+      chatMonitorEnabled: $('chatMonitorEnabled').checked, plainLanguage: $('plainLanguage').checked,
       chatMonitorDomains: $('chatMonitorDomains').value.split('\n').map((l) => l.trim().toLowerCase().replace(/^https?:\/\//, '').split('/')[0]).filter(Boolean),
     } });
     $('dangerThreshold').value = settings.dangerThreshold; $('warnThreshold').value = settings.warnThreshold;
+    self.SD.i18n.setPlain(settings.plainLanguage !== false); self.SD.i18n.applyToDocument(document); renderAllowlist();
     $('status').textContent = t('opt_saved', [], 'Saved.');
     feedStatus();
     setTimeout(() => { $('status').textContent = ''; }, 2000);

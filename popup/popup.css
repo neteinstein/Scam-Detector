@@ -4,7 +4,7 @@ body { margin: 0; width: 360px; font: 13px/1.45 -apple-system, BlinkMacSystemFon
 .head { padding: 12px 14px; border-bottom: 1px solid var(--border); }
 .verdict { display: flex; gap: 12px; align-items: center; }
 .badge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #fff; background: #9e9e9e; flex: 0 0 auto; }
-.badge.danger { background: var(--danger); } .badge.warning { background: var(--warn); } .badge.ok, .badge.trusted { background: var(--ok); }
+.badge.danger { background: var(--danger); } .badge.warning { background: var(--warn); } .badge.ok { background: var(--ok); } .badge.trusted { background: #757575; }
 .title { font-weight: 700; font-size: 15px; }
 .host { color: var(--muted); font-size: 12px; word-break: break-all; }
 main { padding: 10px 14px; max-height: 380px; overflow-y: auto; }
