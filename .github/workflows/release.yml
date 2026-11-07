@@ -1,12 +1,12 @@
 # Builds an installable package for every version and publishes it as a
-# GitHub Release. Runs when manifest.json changes on main (or manually); the
-# release is created only if a tag for that version does not exist yet.
+# GitHub Release. Runs on every push to main (or manually); the release is
+# created only if a tag for the manifest version does not exist yet, so a
+# push that does not bump the version is a cheap no-op.
 name: Release
 
 on:
   push:
     branches: [main]
-    paths: ['manifest.json']
   workflow_dispatch:
 
 permissions:
@@ -43,14 +43,7 @@ jobs:
       - name: Release notes from store-listing/listing.md
         if: steps.v.outputs.exists == 'false'
         run: |
-          node -e "
-            const fs = require('fs');
-            const v = '${{ steps.v.outputs.version }}';
-            const md = fs.readFileSync('store-listing/listing.md', 'utf8');
-            const m = md.match(new RegExp('## What\\\\'s new \\\\(version ' + v.replace(/\\./g, '\\\\.') + '\\\\)\\\\n([\\\\s\\\\S]*?)(?=\\\\n## |\\\\s*$)'));
-            const notes = (m ? m[1].trim() : 'Version ' + v) + '\n\n## Install\n\n1. Download **scam-detector-' + v + '.zip** below and unzip it.\n2. Open chrome://extensions, enable **Developer mode**.\n3. Click **Load unpacked** and select the unzipped folder.\n\nVerify the download with SHA256SUMS.txt.';
-            fs.writeFileSync('dist/RELEASE_NOTES.md', notes);
-          "
+          node tools/release-notes.js > dist/RELEASE_NOTES.md
           cat dist/RELEASE_NOTES.md
 
       - name: Tag and publish release

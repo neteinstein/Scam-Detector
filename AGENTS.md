@@ -48,8 +48,9 @@ review older than 30 days; `npm test` prints a warning in that case.
   diacritic-stripped before matching) and must be added for all four languages
   (en, pt, es, fr) when a category is added or changed.
 - Never load remote code; the store declaration says the extension has none.
-- Releases: bumping `version` in `manifest.json` on `main` triggers `.github/workflows/release.yml`,
-  which tags `v<version>` and publishes the installable zip. Bump the version in the same
-  commit as the *What's new* entry in `store-listing/listing.md`.
+- Releases: `.github/workflows/release.yml` runs on every push to `main` and publishes a
+  tagged release with the installable zip whenever the manifest `version` has no tag yet.
+  Bump the version in the same commit as the *What's new* entry in `store-listing/listing.md`;
+  `tools/release-notes.js` turns that entry into the release notes.
 - Do not put model identifiers or tool names in commit messages, code comments or
   store text.
