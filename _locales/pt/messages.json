@@ -530,6 +530,12 @@
   "phrase_escrow": {
     "message": "Falso intermediário / pagamento retido por terceiros"
   },
+  "phrase_fakeregulator": {
+    "message": "Empresa de investimento diz ser licenciada por um governo"
+  },
+  "phrase_brokerplatform": {
+    "message": "Promoção de plataforma de negociação / corretora online"
+  },
   "det_registered": {
     "message": "Registado em $1"
   },

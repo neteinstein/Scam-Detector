@@ -336,6 +336,55 @@
         /\b(places|inscriptions) (limitees|disponibles|restantes)\b.{0,40}\b(invest|gain)/,
       ],
     },
+    // Clone / fake brokers: governments do not license investment firms, regulators do.
+    fakeregulator: {
+      weight: 20, label: 'Investment firm claims to be licensed by a government',
+      en: [
+        /\b(investment|trading|brokerage|broker|financial|forex|crypto)\b.{0,120}\b(authori[sz]ed|licen[cs]ed|regulated|approved) by the (uk|united kingdom|british|us|u\.s\.|united states|american|european|eu|portuguese|spanish|french|swiss|australian|canadian) government\b/,
+        /\b(authori[sz]ed|licen[cs]ed|regulated) by the (uk|united kingdom|british|us|united states) government\b.{0,80}\b(investment|trading|broker|financial|forex|crypto)\b/,
+      ],
+      pt: [
+        /\b(investimento|investimentos|negociacao|corretora|financeir[ao]|forex|cripto)\b.{0,120}\b(autorizad[ao]|licenciad[ao]|regulad[ao]|aprovad[ao]) pelo governo (do reino unido|britanico|portugues|brasileiro|dos estados unidos|americano|espanhol|frances|suico|europeu)\b/,
+        /\b(autorizad[ao]|licenciad[ao]|regulad[ao]) pelo governo (do reino unido|britanico|portugues|brasileiro|dos estados unidos)\b.{0,80}\b(investimento|negociacao|corretora|financeir[ao]|forex|cripto)/,
+      ],
+      es: [
+        /\b(inversion|inversiones|trading|corredora|broker|financier[ao]|forex|cripto)\b.{0,120}\b(autorizad[ao]|licenciad[ao]|regulad[ao]|aprobad[ao]) por el gobierno (del reino unido|britanico|espanol|de espana|de (los )?estados unidos|estadounidense|frances|mexicano|suizo|europeo)\b/,
+        /\b(autorizad[ao]|licenciad[ao]|regulad[ao]) por el gobierno (del reino unido|britanico|espanol|de espana|de (los )?estados unidos)\b.{0,80}\b(inversion|trading|corredora|broker|financier[ao]|forex|cripto)/,
+      ],
+      fr: [
+        /\b(investissement|investissements|trading|courtier|financiere?|forex|crypto)\b.{0,120}\b(autorisee?|agreee?|reglementee?|regulee?|licenciee?) par le gouvernement (du royaume-uni|britannique|francais|americain|des etats-unis|espagnol|suisse|europeen)\b/,
+        /\b(autorisee?|agreee?|reglementee?|regulee?) par le gouvernement (du royaume-uni|britannique|francais|americain|des etats-unis)\b.{0,80}\b(investissement|trading|courtier|financiere?|forex|crypto)/,
+      ],
+    },
+    // Online trading platform pitch. Legitimate brokers use it too, so it only
+    // matters together with other evidence (young domain, fake regulator...).
+    brokerplatform: {
+      weight: 10, label: 'Online trading / broker platform pitch',
+      en: [
+        /\b(cfds?|forex|fx|crypto|cryptocurrency|online) trading (firm|platform|company|broker)\b/,
+        /\b(open|create) (a |your )?(new |live |real )?(\w+ )?trading account\b/,
+        /\bfund(ed)? (your|a) (trading )?account\b|\bfunded (trader|account)\b/,
+        /\bprofit (share|split) of up to \d{2,3} ?%/,
+      ],
+      pt: [
+        /\b(plataforma|empresa|corretora) de (negociacao|trading) (de )?(cfds?|forex|cripto|criptomoedas|online)\b/,
+        /\b(abra|abrir|crie|criar) (uma |a sua |sua )?conta de (negociacao|trading)\b/,
+        /\b(financie|deposite fundos (na|em)) (a sua |sua )?conta\b|\bconta financiada\b/,
+        /\b(partilha|divisao) de lucros? (de )?ate \d{2,3} ?%/,
+      ],
+      es: [
+        /\b(plataforma|empresa|firma|corredora) de trading (de )?(cfds?|forex|cripto|criptomonedas|online)\b/,
+        /\b(abra|abre|abrir|crea|cree|crear) (una |tu |su )?cuenta de (trading|operaciones|inversion)\b/,
+        /\b(financia|fondea|deposita fondos en) (tu|su) cuenta\b|\bcuenta (financiada|fondeada)\b/,
+        /\breparto de (beneficios|ganancias) de hasta (el )?\d{2,3} ?%/,
+      ],
+      fr: [
+        /\b(plateforme|societe|courtier) de trading (de )?(cfds?|forex|crypto|cryptomonnaies|en ligne)\b/,
+        /\b(ouvrez|ouvrir|creez|creer) (un |votre )?compte de trading\b/,
+        /\b(alimentez|approvisionnez|financez) votre compte\b|\bcompte finance\b/,
+        /\bpartage des (profits|benefices|gains) (allant )?jusqu'a \d{2,3} ?%/,
+      ],
+    },
     advancefee: {
       weight: 14, label: 'Advance fee demanded to release money',
       en: [
@@ -542,7 +591,7 @@
     },
   };
 
-  const MONEY_CATEGORIES = ['investment', 'advancefee', 'loan', 'job', 'overpayment', 'lottery', 'escrow', 'payment', 'microfee', 'crypto'];
+  const MONEY_CATEGORIES = ['investment', 'fakeregulator', 'brokerplatform', 'advancefee', 'loan', 'job', 'overpayment', 'lottery', 'escrow', 'payment', 'microfee', 'crypto'];
   const LANGS = ['en', 'pt', 'es', 'fr'];
   const MAX_MATCHES_PER_CATEGORY = 3;
 
