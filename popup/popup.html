@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scam Detector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="verdict" id="verdict">
+      <div class="badge" id="badge">–</div>
+      <div>
+        <div class="title" id="title">Analysing…</div>
+        <div class="host" id="host"></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="chat hidden" id="chat"></div>
+    <p class="summary" id="summary"></p>
+    <ul class="signals" id="signals"></ul>
+    <dl class="meta" id="meta"></dl>
+  </main>
+  <footer>
+    <button id="rescan" class="btn">Re-scan</button>
+    <button id="trust" class="btn">Trust this site</button>
+    <button id="untrust" class="btn hidden">Stop trusting</button>
+    <a id="options" class="btn link" href="#">Settings</a>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>
