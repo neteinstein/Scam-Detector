@@ -131,12 +131,25 @@ src/lib/chatSchemes.js marketplace chat scam scripts (en/pt/es/fr) and marketpla
 src/lib/pageSignals.js DOM observation collector
 src/lib/scoring.js     signals → score → verdict
 popup/, options/       UI
-tools/                 icon generator and Playwright e2e script
+tools/                 icon generator, packager, store-asset generator, Playwright e2e script
+store-listing/         Chrome Web Store submission kit
 test/                  unit tests
 ```
 
 The library files use a tiny UMD wrapper so the same code runs in the service worker
 (`importScripts`), in content scripts and under Node for tests, with no build step.
+
+## Publishing to the Chrome Web Store
+
+Everything for the store submission is in [`store-listing/`](store-listing/README.md):
+listing text, permission justifications, privacy policy (Markdown and a hostable HTML
+copy), data-usage answers, distribution settings and generated 1280×800 screenshots and
+promo tiles.
+
+```
+npm run package       # dist/scam-detector-<version>.zip, runtime files only
+npm run store-assets  # regenerate store-listing/assets/*.png
+```
 
 ## Limitations
 

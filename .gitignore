@@ -1,4 +1,5 @@
 node_modules/
 e2e-output/
+dist/
 *.zip
 .DS_Store

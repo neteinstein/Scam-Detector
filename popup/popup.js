@@ -1,6 +1,10 @@
 (async function () {
   const $ = (id) => document.getElementById(id);
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  // ?tabId=<id> lets the page be opened as a normal tab (screenshots, debugging) and still show another tab's result.
+  const forcedTabId = Number(new URLSearchParams(location.search).get('tabId'));
+  let tab = null;
+  if (forcedTabId) { try { tab = await chrome.tabs.get(forcedTabId); } catch (e) { tab = null; } }
+  if (!tab) [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab) return;
 
   const VERDICT_TEXT = {
