@@ -1,5 +1,7 @@
-// Generates the toolbar icons (a shield with an exclamation mark) as PNGs
-// without any dependencies. Run: node tools/make-icons.js
+// Generates the icons (a shield with an exclamation mark) as PNGs without any
+// dependencies, plus the per-tab toolbar states in icons/state/ (the whole
+// shield changes colour: green check, yellow !, red !, grey check, neutral !).
+// Run: node tools/make-icons.js
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
@@ -49,17 +51,26 @@ function inMark(u, v) {
   const dx = u - 0.5, dy = v - 0.73;
   return dx * dx + dy * dy < 0.0075;                            // dot
 }
-function pixelFactory(size) {
+function segDist2(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay;
+  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)));
+  const ex = px - (ax + t * dx), ey = py - (ay + t * dy);
+  return ex * ex + ey * ey;
+}
+function inCheck(u, v) {
+  const w = 0.075 * 0.075;
+  return segDist2(u, v, 0.3, 0.5, 0.45, 0.65) < w || segDist2(u, v, 0.45, 0.65, 0.72, 0.33) < w;
+}
+function pixelFactory(size, base = [211, 47, 47], markColor = [255, 255, 255], markFn = inMark) {
   const SS = 4;
   return (px, py) => {
     let shield = 0, mark = 0;
     for (let i = 0; i < SS; i++) for (let j = 0; j < SS; j++) {
       const u = (px - 0.5 + (i + 0.5) / SS) / size, v = (py - 0.5 + (j + 0.5) / SS) / size;
-      if (inShield(u, v)) { shield++; if (inMark(u, v)) mark++; }
+      if (inShield(u, v)) { shield++; if (markFn(u, v)) mark++; }
     }
     const a = shield / (SS * SS), m = mark / (SS * SS);
-    const base = [211, 47, 47];      // red shield
-    const r = Math.round(base[0] * (1 - m) + 255 * m), g = Math.round(base[1] * (1 - m) + 255 * m), b = Math.round(base[2] * (1 - m) + 255 * m);
+    const r = Math.round(base[0] * (1 - m) + markColor[0] * m), g = Math.round(base[1] * (1 - m) + markColor[1] * m), b = Math.round(base[2] * (1 - m) + markColor[2] * m);
     return [r, g, b, Math.round(a * 255)];
   };
 }
@@ -67,4 +78,18 @@ function pixelFactory(size) {
 const out = path.join(__dirname, '..', 'icons');
 fs.mkdirSync(out, { recursive: true });
 for (const size of [16, 32, 48, 128]) fs.writeFileSync(path.join(out, `icon${size}.png`), png(size, pixelFactory(size)));
+
+// Toolbar states (keep in sync with BADGE_COLORS in src/lib/scoring.js).
+const STATES = {
+  green: [[46, 125, 50], [255, 255, 255], inCheck],
+  yellow: [[249, 168, 37], [33, 33, 33], inMark],
+  red: [[211, 47, 47], [255, 255, 255], inMark],
+  grey: [[117, 117, 117], [255, 255, 255], inCheck],
+  neutral: [[84, 110, 122], [255, 255, 255], inMark],
+};
+const stateDir = path.join(out, 'state');
+fs.mkdirSync(stateDir, { recursive: true });
+for (const [name, [base, mark, fn]] of Object.entries(STATES)) {
+  for (const size of [16, 32, 48]) fs.writeFileSync(path.join(stateDir, `${name}-${size}.png`), png(size, pixelFactory(size, base, mark, fn)));
+}
 console.log('icons written to', out);

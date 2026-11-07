@@ -30,6 +30,7 @@
     }).filter(Boolean);
   }
 
+  $('aboutVersion').textContent = t('opt_about_version', [chrome.runtime.getManifest().version], 'Version ' + chrome.runtime.getManifest().version);
   $('dangerThreshold').value = settings.dangerThreshold;
   $('warnThreshold').value = settings.warnThreshold;
   $('showWarnBanner').checked = !!settings.showWarnBanner;

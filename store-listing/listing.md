@@ -50,7 +50,7 @@ IN YOUR LANGUAGE, IN PLAIN WORDS
 The banner, popup, settings and every explanation are available in English, Portuguese, Spanish and French and follow your browser's language. "Non-tech terms" (on by default) explains every warning in simple words, without jargon such as domain, HTTP or favicon; turn it off in settings to see the technical wording.
 
 HOW THE WARNING WORKS
-Each finding adds to a 0–100 risk score. From 60 you get a red "likely a scam" banner, from 35 an amber "suspicious" one. The toolbar icon shows a coloured dot for the current tab: green when nothing suspicious was found, yellow when there are minor signals, red when a warning banner is showing, and grey with a check mark on a site you trust. The popup shows the score and lists every finding with its weight. You can dismiss a banner, leave the site in one click, or trust a site so it is never flagged again. Thresholds, the domain-age lookup, trusted sites, the chat monitor and extra brands you want protected are all configurable.
+Each finding adds to a 0–100 risk score. From 60 you get a red "likely a scam" banner, from 35 an amber "suspicious" one. The toolbar shield changes colour for the current tab: green with a check mark when nothing suspicious was found, yellow when there are minor signals, red when a warning banner is showing, and grey with a check mark on a site you trust. The popup shows the score and lists every finding with its weight. You can dismiss a banner, leave the site in one click, or trust a site so it is never flagged again. Thresholds, the domain-age lookup, trusted sites, the chat monitor and extra brands you want protected are all configurable.
 
 PRIVACY
 No browsing history, page content or personal data is collected or sent anywhere. Network requests are limited to: an optional lookup of the domain name (never the full address) against the public RDAP registry service to learn the registration date, cached for a week; the periodic download of the PhishTank reports feed, which carries no information about you; and, only once you enter your own key, the Google Safe Browsing check, which does send page addresses to Google. Each can be switched off. No accounts, no analytics, no remote code.
@@ -60,7 +60,12 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.3.0)
+## What's new (version 1.3.1)
+
+• The toolbar shield itself now changes colour, with no dot or number on top: green with a check mark (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust). Pages that cannot be checked show a blue-grey shield.
+• New About section at the end of the settings: who makes Scam Detector, a link to send feedback or report a bug, and ways to support its development (Revolut, Buy me a beer).
+
+Version 1.3.0:
 
 • New "Non-tech terms" option, on by default: every warning, explanation and setting is written in simple words. Turn it off to see the technical wording.
 • The toolbar icon now shows a colour instead of a number: green (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust).

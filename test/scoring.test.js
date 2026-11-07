@@ -152,7 +152,9 @@ test('defaults: Safe Browsing, chat monitor and non-tech terms are on', () => {
   assert.equal(d.plainLanguage, true);
 });
 
-test('toolbar badge: green, yellow, red, grey check', () => {
+test('toolbar icon: green, yellow, red, grey check, no badge text', () => {
+  const fs = require('fs');
+  const path = require('path');
   const { badgeFor } = require('../src/lib/scoring.js');
   const sig = [{ id: 'digits', weight: 4 }];
   assert.equal(badgeFor({ verdict: 'ok', signals: [] }).state, 'green');
@@ -160,8 +162,12 @@ test('toolbar badge: green, yellow, red, grey check', () => {
   assert.equal(badgeFor({ verdict: 'warning', signals: sig, settings: { showWarnBanner: false } }).state, 'yellow');
   assert.equal(badgeFor({ verdict: 'warning', signals: sig, settings: { showWarnBanner: true } }).state, 'red');
   assert.equal(badgeFor({ verdict: 'danger', signals: sig }).state, 'red');
-  const t = badgeFor({ verdict: 'trusted', signals: [] });
-  assert.deepEqual([t.state, t.text, t.color], ['trusted', '✓', '#757575']);
-  assert.equal(badgeFor({ verdict: 'skipped' }).text, '');
-  for (const r of [{ verdict: 'ok', signals: [] }, { verdict: 'danger', signals: sig }]) assert.ok(!/\d/.test(badgeFor(r).text), 'no score number');
+  assert.equal(badgeFor({ verdict: 'trusted', signals: [] }).state, 'grey');
+  assert.equal(badgeFor({ verdict: 'skipped' }).state, 'neutral');
+  assert.equal(badgeFor(null).state, 'neutral');
+  for (const st of ['green', 'yellow', 'red', 'grey', 'neutral']) {
+    const b = badgeFor(st === 'neutral' ? null : st === 'grey' ? { verdict: 'trusted' } : st === 'red' ? { verdict: 'danger', signals: sig } : { verdict: 'ok', signals: st === 'yellow' ? sig : [] });
+    assert.equal(b.text, '', 'no badge text');
+    for (const p of Object.values(b.icon)) assert.ok(fs.existsSync(path.join(__dirname, '..', p)), `${p} exists`);
+  }
 });

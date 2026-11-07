@@ -265,10 +265,10 @@ async function analyze(url, pageInfo, tabId) {
 }
 
 function updateBadge(tabId, result) {
+  // The toolbar shield itself changes colour; no badge text or dot on top of it.
   const b = scoring.badgeFor(result);
-  chrome.action.setBadgeText({ tabId, text: b.text }).catch(() => {});
-  chrome.action.setBadgeBackgroundColor({ tabId, color: b.color }).catch(() => {});
-  if (chrome.action.setBadgeTextColor) chrome.action.setBadgeTextColor({ tabId, color: '#ffffff' }).catch(() => {});
+  chrome.action.setIcon({ tabId, path: b.icon }).catch(() => {});
+  chrome.action.setBadgeText({ tabId, text: '' }).catch(() => {});
 }
 
 // --------------------------------------------------------------- messages
@@ -352,7 +352,7 @@ chrome.tabs.onRemoved.addListener((tabId) => { chrome.storage.session.remove(RES
 chrome.tabs.onUpdated.addListener((tabId, change) => {
   if (change.status === 'loading' && change.url) {
     chrome.storage.session.remove(RESULT_PREFIX + tabId).catch(() => {});
-    chrome.action.setBadgeText({ tabId, text: '' }).catch(() => {});
+    updateBadge(tabId, null);
   }
 });
 
