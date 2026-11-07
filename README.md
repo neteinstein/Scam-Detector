@@ -254,7 +254,7 @@ Detection is only as good as the lists it ships. The `update-scam-catalogue` ski
 Two GitHub Actions workflows in `.github/workflows/`:
 
 - **CI** (`ci.yml`) runs on every push and pull request: unit tests, the store-listing consistency check, the catalogue report, a package build attached as an artifact, and the Playwright end-to-end scenarios in Chromium with their screenshots.
-- **Release** (`release.yml`) runs when `manifest.json` changes on `main` (or on manual dispatch). If no tag exists for the manifest version it runs the tests, builds `scam-detector-<version>.zip`, writes `SHA256SUMS.txt`, takes the release notes from the *What's new* section of `store-listing/listing.md`, tags `v<version>` and publishes a GitHub Release with the zip and install instructions. Bumping the version is therefore the whole release procedure.
+- **Release** (`release.yml`) runs on every push to `main` (or on manual dispatch). If no tag exists for the manifest version it runs the tests, builds `scam-detector-<version>.zip`, writes `SHA256SUMS.txt`, takes the release notes from the *What's new* section of `store-listing/listing.md`, tags `v<version>` and publishes a GitHub Release with the zip and install instructions. Bumping the version is therefore the whole release procedure; pushes that do not bump it are a no-op.
 
 ## Publishing to the Chrome Web Store
 

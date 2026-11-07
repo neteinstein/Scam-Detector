@@ -56,9 +56,10 @@ Chromium through Playwright; takes about 20 s).
 ## Installable builds outside the store
 
 Every version is also published as a GitHub Release by `.github/workflows/release.yml`:
-when `manifest.json` changes on `main` (or on manual dispatch) the workflow runs the
-tests, builds `scam-detector-<version>.zip` with `npm run package`, tags `v<version>` and
-attaches the zip plus `SHA256SUMS.txt` with install instructions (unzip, *Load unpacked*).
+on every push to `main` (or on manual dispatch) the workflow reads the manifest version
+and, if no `v<version>` tag exists yet, runs the tests, builds `scam-detector-<version>.zip`
+with `npm run package`, tags `v<version>` and attaches the zip plus `SHA256SUMS.txt` with
+release notes taken from *What's new* in `listing.md` (`tools/release-notes.js`).
 The same zip is what gets uploaded to the store. CI (`ci.yml`) also attaches the package
 to every workflow run as an artifact.
 
