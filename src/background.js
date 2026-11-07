@@ -118,7 +118,8 @@ async function getFeedMeta() {
 async function loadFeedIndex() {
   if (feedIndexCache) return feedIndexCache;
   const stored = (await chrome.storage.local.get(FEED_KEY))[FEED_KEY];
-  feedIndexCache = stored || null;
+  // An index built with older matching rules is discarded and rebuilt.
+  feedIndexCache = stored && stored.v === urlmatch.INDEX_VERSION ? stored : null;
   return feedIndexCache;
 }
 
@@ -151,7 +152,9 @@ async function updateFeed(force) {
     const settings = await getSettings();
     const meta = await getFeedMeta();
     if (!settings.phishFeedEnabled) return meta;
-    if (!force && meta.updatedAt && Date.now() - meta.updatedAt < FEED_REFRESH_MINUTES * 60 * 1000) return meta;
+    const rebuild = !(await loadFeedIndex()); // missing or built with older rules
+    if (rebuild) meta.etag = '';
+    if (!force && !rebuild && meta.updatedAt && Date.now() - meta.updatedAt < FEED_REFRESH_MINUTES * 60 * 1000) return meta;
     if (!force && meta.lastAttempt && Date.now() - meta.lastAttempt < 15 * 60 * 1000) return meta; // back off after a failure
     meta.lastAttempt = Date.now();
     try {

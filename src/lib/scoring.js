@@ -145,21 +145,24 @@
       if (getCred && !crossCred) signals.push(signal('get-form', 'Password is sent in the URL (GET form)', 6, '', 'page'));
 
       // Brand references that do not match the domain
-      const titleBrands = (pageInfo.titleBrands || []).filter((n) => !(la && la.brand === n) || true);
+      // A site naming its own brand ("Google" on google.com) is not a mismatch.
+      const isOwn = (n) => !!ownBrand && ownBrand.name === n;
+      const titleBrands = (pageInfo.titleBrands || []).filter((n) => !isOwn(n));
       if (titleBrands.length) {
         const b = titleBrands[0];
         const w = hasCredentialForm ? 22 : 10;
         const shown = (pageInfo.title || pageInfo.siteName || pageInfo.headings || '').slice(0, 80);
         signals.push(signal('brand-title', `Page presents itself as ${b} but is not on a ${b} domain`, w, `title/heading: "${shown}"`, 'page', { args: [b], detailKey: 'det_title', detailArgs: [shown] }));
       } else {
-        const heavy = Object.entries(pageInfo.bodyBrandCounts || {}).filter(([, n]) => n >= 5).sort((a, b) => b[1] - a[1])[0];
+        const heavy = Object.entries(pageInfo.bodyBrandCounts || {}).filter(([b, n]) => n >= 5 && !isOwn(b)).sort((a, b) => b[1] - a[1])[0];
         if (heavy && hasCredentialForm) signals.push(signal('brand-body', `Page repeatedly mentions ${heavy[0]} next to a credential form`, 10, `${heavy[1]} mentions`, 'page', { args: [heavy[0]], detailKey: 'det_mentions', detailArgs: [heavy[1]] }));
       }
 
       for (const a of (pageInfo.brandAssets || [])) {
+        if (isOwn(a.brand)) continue;
         if (a.kind === 'favicon') { signals.push(signal('brand-favicon', `Favicon is loaded from ${a.brand}'s real site`, 20, a.host, 'page', { args: [a.brand] })); break; }
       }
-      const imgAsset = (pageInfo.brandAssets || []).find((a) => a.kind !== 'favicon');
+      const imgAsset = (pageInfo.brandAssets || []).find((a) => a.kind !== 'favicon' && !isOwn(a.brand));
       if (imgAsset && hasCredentialForm) signals.push(signal('brand-assets', `Logos/styles hot-linked from ${imgAsset.brand}'s real site on a credential page`, 15, imgAsset.host, 'page', { args: [imgAsset.brand] }));
 
       // Language (social engineering + money claims)

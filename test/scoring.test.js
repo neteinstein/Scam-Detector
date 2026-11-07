@@ -128,3 +128,9 @@ test('Safe Browsing match carries the Google attribution and hedged wording', ()
 test('brand domains stay trusted without a reputation hit', () => {
   assert.equal(scoring.evaluate({ hostname: 'docs.google.com', phishReport: null, safeBrowsing: { threats: [] } }, page(), {}).verdict, 'trusted');
 });
+
+test('a brand naming itself on its own domain is not a brand mismatch', () => {
+  const r = scoring.evaluate({ hostname: 'www.google.com', phishReport: { kind: 'url', count: 1, target: 'Other' } },
+    page({ title: 'Google', titleBrands: ['Google'], bodyBrandCounts: { Google: 9 }, brandAssets: [{ brand: 'Google', host: 'www.gstatic.com', kind: 'favicon' }] }), {});
+  for (const id of ['brand-title', 'brand-body', 'brand-favicon', 'brand-assets']) assert.ok(!ids(r).includes(id), id);
+});
