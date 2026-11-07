@@ -530,6 +530,12 @@
   "phrase_escrow": {
     "message": "Falso depósito / pago retenido por un tercero"
   },
+  "phrase_fakeregulator": {
+    "message": "Empresa de inversión afirma estar autorizada por un gobierno"
+  },
+  "phrase_brokerplatform": {
+    "message": "Promoción de plataforma de trading / bróker online"
+  },
   "det_registered": {
     "message": "Registrado el $1"
   },

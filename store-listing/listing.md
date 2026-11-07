@@ -32,7 +32,7 @@ Page
 • Credentials sent to another domain or over plain HTTP
 • Pages that call themselves a brand they are not, or borrow the real brand's logo and favicon
 • Social-engineering wording: urgency, prizes, tech-support alerts, parcel-fee lures, tiny "verification fees"
-• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops
+• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops, and fake online brokers ("clone firms") claiming to be licensed by a government
 • Fake navigation, deceptive links, decorative "secure" badges
 
 Wording is recognised in English, Portuguese, Spanish and French.
@@ -65,6 +65,7 @@ Open source: https://github.com/neteinstein/Scam-Detector
 • Fixed false alarms on major sites such as google.com: a phishing report about one redirect link or the home page no longer flags every page of a well-known service.
 • A site mentioning its own brand ("Google" on google.com) is no longer counted as impersonation.
 • No false alarms on mail.ru ("mail" is not a typo of "gmail") or on brand-owned domains such as cloud.microsoft.
+• New: detects fake online brokers ("clone firms") that claim to be licensed by a government, and online trading-platform pitches on newly registered sites.
 • Phishing reports about a single form or page on a shared service (Microsoft Forms, TikTok, WhatsApp links) no longer flag the whole service. Validated against the 100 most visited sites.
 
 Version 1.2.0:

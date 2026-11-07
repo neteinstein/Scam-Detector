@@ -530,6 +530,12 @@
   "phrase_escrow": {
     "message": "Fake escrow / payment held by a third party"
   },
+  "phrase_fakeregulator": {
+    "message": "Investment firm claims to be licensed by a government"
+  },
+  "phrase_brokerplatform": {
+    "message": "Online trading / broker platform pitch"
+  },
   "det_registered": {
     "message": "Registered $1"
   },
