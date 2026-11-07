@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-i18n="welcome_title">Welcome to Scam Detector</title>
+  <style>
+    :root { color-scheme: light dark; --border: rgba(127,127,127,.3); --muted: #777; }
+    body { margin: 0 auto; max-width: 720px; padding: 32px 16px 56px; font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    header img { width: 56px; height: 56px; }
+    h1 { font-size: 26px; margin: 0; } h2 { font-size: 18px; margin: 28px 0 8px; }
+    .caution { border: 2px solid #b45309; background: rgba(245, 158, 11, .12); border-radius: 10px; padding: 14px 18px; }
+    .caution h2 { margin-top: 0; color: #b45309; }
+    .caution p { margin: 6px 0; }
+    ul.dots { list-style: none; padding: 0; } ul.dots li { display: flex; gap: 10px; align-items: center; margin: 8px 0; }
+    .dot { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .green { background: #2e7d32; } .yellow { background: #f9a825; } .red { background: #d32f2f; } .grey { background: #757575; }
+    .muted { color: var(--muted); }
+    button { font: inherit; padding: 9px 16px; border-radius: 6px; border: 1px solid #1565c0; background: #1565c0; color: #fff; cursor: pointer; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="../icons/icon128.png" alt="">
+    <h1 data-i18n="welcome_title">Welcome to Scam Detector</h1>
+  </header>
+
+  <section class="caution" role="note">
+    <h2 data-i18n="welcome_caution_h">Please read: this tool cannot catch every scam</h2>
+    <p data-i18n="welcome_caution_p1">Scam Detector looks for the signs that known scams leave behind. It will miss some scams, and it will most likely miss new tricks that nobody has spotted and described yet.</p>
+    <p data-i18n="welcome_caution_p2">So do not trust it blindly. No warning does not mean a site or a message is safe. Stay alert, and never enter passwords, card numbers or codes when something feels off.</p>
+  </section>
+
+  <h2 data-i18n="welcome_what_h">What it does</h2>
+  <p data-i18n="welcome_what_p">Every time you open a page, Scam Detector checks it on your computer for warning signs: a website created only days ago, an address pretending to be a bank or a well-known brand, a page asking for your password or card on the wrong website, and wording typical of scams (prizes, urgent payments, "pay a fee to receive your money"). If the risk is high, a warning appears at the top of the page.</p>
+
+  <h2 data-i18n="welcome_badge_h">The coloured dot on the Scam Detector icon</h2>
+  <ul class="dots">
+    <li><span class="dot green"></span><span data-i18n="welcome_badge_green">Green: no warning signs found.</span></li>
+    <li><span class="dot yellow"></span><span data-i18n="welcome_badge_yellow">Yellow: a few small warning signs. Click the icon to see them.</span></li>
+    <li><span class="dot red"></span><span data-i18n="welcome_badge_red">Red: a warning is showing on the page. Be very careful.</span></li>
+    <li><span class="dot grey">✓</span><span data-i18n="welcome_badge_grey">Grey with a check mark: a website you chose to trust.</span></li>
+  </ul>
+
+  <h2 data-i18n="welcome_chat_h">Chats on selling websites</h2>
+  <p data-i18n="welcome_chat_p">On sites such as OLX, Vinted, Wallapop, Leboncoin or Facebook Marketplace, Scam Detector also reads the conversation and warns you about well-known tricks, like a "courier" who will pay you through a link, or a request to forward a code you received by text message.</p>
+
+  <h2 data-i18n="welcome_privacy_h">Your privacy</h2>
+  <p data-i18n="welcome_privacy_p">Pages and chats are checked on your computer. Only the name of each website (never the full address or what is on the page) is sent to a public service to learn when the website was created, and a list of reported fake websites is downloaded a few times a day. If you add your own Google key in the settings, page addresses are also checked with Google's list of dangerous sites.</p>
+
+  <p class="muted" data-i18n="welcome_settings_p">You can change all of this, and switch between simple and technical wording, in the settings.</p>
+  <button id="settings" data-i18n="welcome_settings_btn">Open settings</button>
+
+  <script src="../src/lib/i18n.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

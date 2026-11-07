@@ -32,6 +32,9 @@
   "btn_trust_tip": {
     "message": "Never warn again for this domain"
   },
+  "btn_trust_tip_plain": {
+    "message": "Never warn me again on this website"
+  },
   "btn_dismiss": {
     "message": "Dismiss"
   },
@@ -41,11 +44,17 @@
   "banner_more": {
     "message": "+ $1 more (see the extension popup)"
   },
+  "banner_more_plain": {
+    "message": "+ $1 more (click the Scam Detector icon in your toolbar)"
+  },
   "sb_advisory": {
     "message": "Advisory provided by Google"
   },
   "sb_learn": {
     "message": "Learn about phishing (APWG)"
+  },
+  "sb_learn_plain": {
+    "message": "Learn how fake websites trick people (APWG)"
   },
   "sb_disclaimer": {
     "message": "Google cannot guarantee its information is complete or error-free."
@@ -65,6 +74,9 @@
   "popup_rescanning": {
     "message": "Re-scanning…"
   },
+  "popup_rescanning_plain": {
+    "message": "Checking again…"
+  },
   "verdict_danger": {
     "message": "Likely a scam"
   },
@@ -74,20 +86,35 @@
   "verdict_ok": {
     "message": "No scam signals found"
   },
+  "verdict_ok_plain": {
+    "message": "No signs of a scam found"
+  },
   "verdict_trusted": {
     "message": "Trusted site"
   },
   "verdict_skipped": {
     "message": "Not analysed"
   },
+  "verdict_skipped_plain": {
+    "message": "Not checked"
+  },
   "popup_cannot_analyse": {
     "message": "This page cannot be analysed (browser page, local address or file)."
+  },
+  "popup_cannot_analyse_plain": {
+    "message": "This page can't be checked (it is a browser page or a file on your computer)."
   },
   "popup_trusted_allowlist": {
     "message": "You chose to trust this domain."
   },
+  "popup_trusted_allowlist_plain": {
+    "message": "You chose to trust this website."
+  },
   "popup_trusted_brand": {
     "message": "This is a $1 domain."
+  },
+  "popup_trusted_brand_plain": {
+    "message": "This is the real $1 website."
   },
   "popup_known": {
     "message": "known"
@@ -95,32 +122,62 @@
   "popup_ok_minor": {
     "message": "Risk score $1/100. Minor observations:"
   },
+  "popup_ok_minor_plain": {
+    "message": "Risk $1 out of 100. Small things we noticed:"
+  },
   "popup_ok_clean": {
     "message": "Risk score $1/100. Nothing suspicious was detected, but stay alert: no tool catches every scam."
+  },
+  "popup_ok_clean_plain": {
+    "message": "Risk $1 out of 100. We found nothing worrying, but stay alert: no tool catches every scam."
   },
   "popup_score_one": {
     "message": "Risk score $1/100 based on 1 signal:"
   },
+  "popup_score_one_plain": {
+    "message": "Risk $1 out of 100, because of 1 warning sign:"
+  },
   "popup_score_many": {
     "message": "Risk score $1/100 based on $2 signals:"
+  },
+  "popup_score_many_plain": {
+    "message": "Risk $1 out of 100, because of $2 warning signs:"
   },
   "meta_domain": {
     "message": "Domain"
   },
+  "meta_domain_plain": {
+    "message": "Website"
+  },
   "meta_registered": {
     "message": "Registered"
+  },
+  "meta_registered_plain": {
+    "message": "Website created"
   },
   "meta_registrar": {
     "message": "Registrar"
   },
+  "meta_registrar_plain": {
+    "message": "Name bought through"
+  },
   "meta_impersonates": {
     "message": "Impersonates"
+  },
+  "meta_impersonates_plain": {
+    "message": "Pretends to be"
   },
   "meta_reports": {
     "message": "Phishing reports"
   },
+  "meta_reports_plain": {
+    "message": "Reports of fake websites"
+  },
   "meta_safebrowsing": {
     "message": "Safe Browsing"
+  },
+  "meta_safebrowsing_plain": {
+    "message": "Google's list of dangerous sites"
   },
   "registered_days_ago": {
     "message": "$1 ($2 days ago)"
@@ -131,20 +188,38 @@
   "rdap_no_date": {
     "message": "registry does not publish"
   },
+  "rdap_no_date_plain": {
+    "message": "not published"
+  },
   "rdap_not_found": {
     "message": "not in RDAP"
+  },
+  "rdap_not_found_plain": {
+    "message": "not found"
   },
   "rdap_disabled": {
     "message": "lookup disabled in settings"
   },
+  "rdap_disabled_plain": {
+    "message": "check turned off in settings"
+  },
   "rdap_free_hosting": {
     "message": "shared hosting platform"
+  },
+  "rdap_free_hosting_plain": {
+    "message": "made with a website service shared by many sites"
   },
   "rdap_timeout": {
     "message": "lookup timed out"
   },
+  "rdap_timeout_plain": {
+    "message": "check took too long"
+  },
   "rdap_error": {
     "message": "lookup failed"
+  },
+  "rdap_error_plain": {
+    "message": "check failed"
   },
   "rdap_na": {
     "message": "n/a"
@@ -152,20 +227,38 @@
   "feed_disabled": {
     "message": "feed disabled in settings"
   },
+  "feed_disabled_plain": {
+    "message": "turned off in settings"
+  },
   "feed_downloading": {
     "message": "feed downloading…"
+  },
+  "feed_downloading_plain": {
+    "message": "list downloading…"
   },
   "feed_not_downloaded": {
     "message": "feed not downloaded yet ($1)"
   },
+  "feed_not_downloaded_plain": {
+    "message": "list not downloaded yet ($1)"
+  },
   "feed_line": {
     "message": "$1 · feed of $2 sites, $3"
+  },
+  "feed_line_plain": {
+    "message": "$1 · list of $2 sites, $3"
   },
   "feed_page_reported": {
     "message": "this page is reported"
   },
+  "feed_page_reported_plain": {
+    "message": "this page has been reported as fake"
+  },
   "feed_host_reports": {
     "message": "$1 report(s) on this host"
+  },
+  "feed_host_reports_plain": {
+    "message": "$1 report(s) on this website"
   },
   "feed_none": {
     "message": "none for this page"
@@ -185,14 +278,26 @@
   "sb_failed": {
     "message": "lookup failed ($1)"
   },
+  "sb_failed_plain": {
+    "message": "check failed ($1)"
+  },
   "sb_listed": {
     "message": "listed: $1 (advisory provided by Google)"
+  },
+  "sb_listed_plain": {
+    "message": "on the list: $1 (advisory provided by Google)"
   },
   "sb_not_listed": {
     "message": "not listed (advisory provided by Google)"
   },
+  "sb_not_listed_plain": {
+    "message": "not on the list (advisory provided by Google)"
+  },
   "btn_rescan": {
     "message": "Re-scan"
+  },
+  "btn_rescan_plain": {
+    "message": "Check again"
   },
   "btn_untrust": {
     "message": "Stop trusting"
@@ -209,44 +314,95 @@
   "opt_intro": {
     "message": "All analysis runs locally in your browser. The only network requests are the optional lookups described below."
   },
+  "opt_intro_plain": {
+    "message": "Scam Detector checks pages on your own computer. It only contacts other services for the optional checks described below."
+  },
+  "opt_plain_h": {
+    "message": "Simple language"
+  },
+  "opt_plain_toggle": {
+    "message": "Non-tech terms: explain warnings in simple words"
+  },
+  "opt_plain_p": {
+    "message": "On by default. Turn it off to see the original technical wording (domain, RDAP, HTTP, favicon…)."
+  },
   "opt_thresholds": {
     "message": "Thresholds"
+  },
+  "opt_thresholds_plain": {
+    "message": "When to warn"
   },
   "opt_danger_label": {
     "message": "Show the red \"likely scam\" banner at risk score ≥"
   },
+  "opt_danger_label_plain": {
+    "message": "Show the red \"likely scam\" warning when the risk is at least"
+  },
   "opt_warn_label": {
     "message": "Show the amber \"suspicious\" banner at risk score ≥"
+  },
+  "opt_warn_label_plain": {
+    "message": "Show the orange \"suspicious\" warning when the risk is at least"
   },
   "opt_show_warn": {
     "message": "Show the amber banner (the toolbar badge always shows the score)"
   },
+  "opt_show_warn_plain": {
+    "message": "Show the orange warning too (the Scam Detector icon always shows the risk)"
+  },
   "opt_rdap_h": {
     "message": "Domain age lookup"
+  },
+  "opt_rdap_h_plain": {
+    "message": "How old is the website?"
   },
   "opt_rdap_toggle": {
     "message": "Look up when a domain was registered (RDAP)"
   },
+  "opt_rdap_toggle_plain": {
+    "message": "Check when each website was created"
+  },
   "opt_rdap_p": {
     "message": "Sends the site's domain name (never the full URL) to rdap.org, which redirects to the registry's public RDAP service. Results are cached for 7 days. Freshly registered domains are one of the strongest scam indicators, so this is on by default."
+  },
+  "opt_rdap_p_plain": {
+    "message": "Sends only the website's name (for example example.com, never the full page address) to rdap.org, a public service that knows when websites were created. The answer is remembered for 7 days. Brand-new websites are one of the clearest signs of a scam, so this is on by default."
   },
   "opt_clear_cache": {
     "message": "Clear cached lookups"
   },
+  "opt_clear_cache_plain": {
+    "message": "Forget saved answers"
+  },
   "opt_cache_cleared": {
     "message": "Cache cleared."
+  },
+  "opt_cache_cleared_plain": {
+    "message": "Saved answers forgotten."
   },
   "opt_feed_h": {
     "message": "Phishing reports feed"
   },
+  "opt_feed_h_plain": {
+    "message": "List of reported fake websites"
+  },
   "opt_feed_toggle": {
     "message": "Keep a local copy of PhishTank's verified phishing reports and warn when a page or site is in it"
+  },
+  "opt_feed_toggle_plain": {
+    "message": "Keep a list of fake websites reported by PhishTank volunteers and warn me if I open one"
   },
   "opt_feed_p": {
     "message": "A list of about 50,000 community-reported, verified phishing addresses is downloaded from data.phishtank.com a few times a day (about 2 MB each time) and stored on this device as hashes. Pages are matched locally: the addresses you visit are never sent anywhere. Reports are community data and are not guaranteed to be accurate."
   },
+  "opt_feed_p_plain": {
+    "message": "A list of about 50,000 fake websites, reported and checked by volunteers, is downloaded from PhishTank a few times a day (about 2 MB each time) and kept on this computer. Pages are compared here, on your computer: the websites you visit are never sent anywhere. The list is made by volunteers and may contain mistakes."
+  },
   "opt_feed_key": {
     "message": "PhishTank application key (optional, raises the download limit; get one at phishtank.org):"
+  },
+  "opt_feed_key_plain": {
+    "message": "PhishTank key (optional, lets you download the list more often; get one at phishtank.org):"
   },
   "opt_optional": {
     "message": "optional"
@@ -257,11 +413,17 @@
   "feed_status_disabled": {
     "message": "Feed disabled."
   },
+  "feed_status_disabled_plain": {
+    "message": "List turned off."
+  },
   "feed_status_updating": {
     "message": "Updating…"
   },
   "feed_status_ok": {
     "message": "$1 reported addresses, updated $2"
+  },
+  "feed_status_ok_plain": {
+    "message": "$1 reported websites, updated $2"
   },
   "feed_status_fail": {
     "message": " (last attempt failed: $1)"
@@ -273,37 +435,70 @@
     "message": "Not downloaded yet: $1"
   },
   "opt_sb_h": {
-    "message": "Google Safe Browsing (optional)"
+    "message": "Google Safe Browsing"
+  },
+  "opt_sb_h_plain": {
+    "message": "Google's list of dangerous sites (Safe Browsing)"
   },
   "opt_sb_toggle": {
     "message": "Also ask Google Safe Browsing about each page"
   },
+  "opt_sb_toggle_plain": {
+    "message": "Also check each page against Google's list of dangerous sites"
+  },
   "opt_sb_p": {
-    "message": "Off by default. When on, the full address of every page you open is sent to Google's Safe Browsing Lookup service using your own API key (create one in Google Cloud, enable the Safe Browsing API and restrict the key to this extension). Google's terms allow non-commercial use only. Results are cached for up to 30 minutes."
+    "message": "On by default, but nothing is sent until you enter your own API key below. With a key, the full address of every page you open is sent to Google's Safe Browsing Lookup service (create the key in Google Cloud, enable the Safe Browsing API and restrict the key to this extension). Google's terms allow non-commercial use only. Results are cached for up to 30 minutes."
+  },
+  "opt_sb_p_plain": {
+    "message": "On by default, but it only starts working once you paste a free access key from Google below. With a key, the address of every page you open is sent to Google, which answers whether it is dangerous. To get a key, sign in to Google Cloud, turn on the \"Safe Browsing API\" and create an API key. Google allows this for personal, non-commercial use only. Answers are remembered for up to 30 minutes."
   },
   "opt_sb_notice": {
     "message": "Google works to provide the most accurate and up-to-date information about unsafe web resources. However, Google cannot guarantee that its information is comprehensive and error-free: some risky sites may not be identified, and some safe sites may be identified in error. Warnings based on this data are marked \"Advisory provided by Google\"."
   },
+  "opt_sb_notice_plain": {
+    "message": "Google tries to keep this list accurate and up to date, but cannot promise it is complete or free of mistakes: some dangerous sites may be missed and some safe sites may be flagged by mistake. Warnings based on this list are marked \"Advisory provided by Google\"."
+  },
   "opt_sb_key": {
     "message": "API key:"
+  },
+  "opt_sb_key_plain": {
+    "message": "Google access key (API key):"
   },
   "opt_chat_h": {
     "message": "Marketplace chat monitor"
   },
+  "opt_chat_h_plain": {
+    "message": "Watch chats on selling websites"
+  },
   "opt_chat_toggle": {
     "message": "Watch conversations on selling sites (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) for known scam scripts"
   },
+  "opt_chat_toggle_plain": {
+    "message": "Watch conversations on selling sites (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) for known scam tricks"
+  },
   "opt_chat_p": {
-    "message": "Off by default. When on, chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as \"I'll send a courier, click the link to receive the payment\", \"forward me the SMS code\", \"the payment is held until you pay the insurance\", \"send the deposit before the viewing\" or overpayment refunds, in English, Portuguese, Spanish and French. A banner explains the scheme when one appears."
+    "message": "On by default. Chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as \"I'll send a courier, click the link to receive the payment\", \"forward me the SMS code\", \"the payment is held until you pay the insurance\", \"send the deposit before the viewing\" or overpayment refunds, in English, Portuguese, Spanish and French. A banner explains the scheme when one appears."
+  },
+  "opt_chat_p_plain": {
+    "message": "On by default. Messages in chats on those sites are checked on this computer (nothing is sent anywhere) for common tricks such as \"I'll send a courier, click the link to receive the payment\", \"forward me the SMS code\", \"the payment is held until you pay the insurance\", \"send the deposit before the viewing\" or paying too much and asking for the difference back, in English, Portuguese, Spanish and French. A warning explains the trick when one appears."
   },
   "opt_chat_domains": {
     "message": "Extra sites to monitor (one domain per line):"
   },
+  "opt_chat_domains_plain": {
+    "message": "Other selling sites to watch (one per line, for example example.com):"
+  },
   "opt_trusted_h": {
     "message": "Trusted domains"
   },
+  "opt_trusted_h_plain": {
+    "message": "Websites you trust"
+  },
   "opt_trusted_p": {
     "message": "Domains you have chosen to trust are never flagged."
+  },
+  "opt_trusted_p_plain": {
+    "message": "You are never warned about websites you trust."
   },
   "opt_trusted_none": {
     "message": "None yet."
@@ -319,6 +514,9 @@
   },
   "opt_brands_p": {
     "message": "One per line: Brand name | keyword1, keyword2 | realdomain.com, other.com. Keywords are matched inside hostnames; real domains are never flagged. Useful for your bank, employer or local services."
+  },
+  "opt_brands_p_plain": {
+    "message": "One per line: Brand name | word1, word2 | realwebsite.com, other.com. If a website address contains one of the words but is not one of the real websites, you are warned. Useful for your bank, employer or local services."
   },
   "btn_save": {
     "message": "Save"
@@ -344,146 +542,290 @@
   "sig_ip_host": {
     "message": "Site is addressed by a raw IP address instead of a domain name"
   },
+  "sig_ip_host_plain": {
+    "message": "The website uses a string of numbers instead of a normal name"
+  },
   "sig_lookalike": {
     "message": "Domain impersonates $1"
+  },
+  "sig_lookalike_plain": {
+    "message": "The website address pretends to be $1"
   },
   "sig_idn": {
     "message": "Internationalised domain name (non-Latin characters) can hide look-alike letters"
   },
+  "sig_idn_plain": {
+    "message": "The website name uses letters from other alphabets that can look like normal letters"
+  },
   "sig_domain_age": {
     "message": "Domain was registered only $1 ago"
+  },
+  "sig_domain_age_plain": {
+    "message": "This website was created only $1 ago"
   },
   "sig_risky_tld": {
     "message": ".$1 is a top-level domain heavily used for abuse"
   },
+  "sig_risky_tld_plain": {
+    "message": "Website addresses ending in .$1 are often used by scammers"
+  },
   "sig_host_keywords": {
     "message": "Hostname contains words typical of phishing links"
+  },
+  "sig_host_keywords_plain": {
+    "message": "The website address contains words fake sites often use (like \"login\" or \"verify\")"
   },
   "sig_hyphens_many": {
     "message": "Unusually many hyphens in the domain"
   },
+  "sig_hyphens_many_plain": {
+    "message": "The website address has an unusual number of dashes"
+  },
   "sig_hyphens_some": {
     "message": "Several hyphens in the domain"
+  },
+  "sig_hyphens_some_plain": {
+    "message": "The website address has several dashes"
   },
   "sig_deep_subdomain": {
     "message": "Deeply nested subdomains (often used to hide the real domain)"
   },
+  "sig_deep_subdomain_plain": {
+    "message": "The website address is long and layered, which can hide the real website"
+  },
   "sig_long_host": {
     "message": "Very long hostname"
+  },
+  "sig_long_host_plain": {
+    "message": "The website address is very long"
   },
   "sig_digits": {
     "message": "Domain mixes letters and digits"
   },
+  "sig_digits_plain": {
+    "message": "The website name mixes letters and numbers"
+  },
   "sig_random_name": {
     "message": "Domain looks randomly generated"
+  },
+  "sig_random_name_plain": {
+    "message": "The website name looks like random letters"
   },
   "sig_no_https": {
     "message": "Connection is not encrypted (HTTP)"
   },
+  "sig_no_https_plain": {
+    "message": "The connection is not secure: others could see what you type"
+  },
   "sig_seed_phrase": {
     "message": "Page asks for a crypto wallet seed / recovery phrase or private key"
+  },
+  "sig_seed_phrase_plain": {
+    "message": "The page asks for the secret recovery words or key of a crypto wallet"
   },
   "sig_cred_lookalike": {
     "message": "Login form on a domain impersonating $1"
   },
+  "sig_cred_lookalike_plain": {
+    "message": "The page asks for your password on a website pretending to be $1"
+  },
   "sig_cred_young": {
     "message": "Login form on a very recently registered domain"
+  },
+  "sig_cred_young_plain": {
+    "message": "The page asks for your password on a brand-new website"
   },
   "sig_cred_free_host": {
     "message": "Login form hosted on a free hosting / sandbox service"
   },
+  "sig_cred_free_host_plain": {
+    "message": "The page asks for your password but was made with a free website service"
+  },
   "sig_cred_ip": {
     "message": "Login form on a raw IP address"
+  },
+  "sig_cred_ip_plain": {
+    "message": "The page asks for your password on a website with no proper name"
   },
   "sig_hidden_password": {
     "message": "Hidden password field present"
   },
+  "sig_hidden_password_plain": {
+    "message": "The page has a hidden password box"
+  },
   "sig_card_lookalike": {
     "message": "Card-details form on a domain impersonating $1"
+  },
+  "sig_card_lookalike_plain": {
+    "message": "The page asks for card details on a website pretending to be $1"
   },
   "sig_card_young": {
     "message": "Card-details form on a very recently registered domain"
   },
+  "sig_card_young_plain": {
+    "message": "The page asks for card details on a brand-new website"
+  },
   "sig_card_free_host": {
     "message": "Card-details form hosted on a free hosting service"
+  },
+  "sig_card_free_host_plain": {
+    "message": "The page asks for card details but was made with a free website service"
   },
   "sig_cross_domain_form": {
     "message": "Credentials are submitted to a different domain"
   },
+  "sig_cross_domain_form_plain": {
+    "message": "What you type here is sent to a different website"
+  },
   "sig_http_form": {
     "message": "Credentials are submitted over unencrypted HTTP"
+  },
+  "sig_http_form_plain": {
+    "message": "Your password or card details would be sent without protection"
   },
   "sig_get_form": {
     "message": "Password is sent in the URL (GET form)"
   },
+  "sig_get_form_plain": {
+    "message": "Your password would appear in the page address"
+  },
   "sig_brand_title": {
     "message": "Page presents itself as $1 but is not on a $1 domain"
+  },
+  "sig_brand_title_plain": {
+    "message": "The page says it is $1 but is not on $1's real website"
   },
   "sig_brand_body": {
     "message": "Page repeatedly mentions $1 next to a credential form"
   },
+  "sig_brand_body_plain": {
+    "message": "The page mentions $1 many times next to a box asking for your password or card"
+  },
   "sig_brand_favicon": {
     "message": "Favicon is loaded from $1's real site"
+  },
+  "sig_brand_favicon_plain": {
+    "message": "The small icon in the browser tab is copied from $1's real website"
   },
   "sig_brand_assets": {
     "message": "Logos/styles hot-linked from $1's real site on a credential page"
   },
+  "sig_brand_assets_plain": {
+    "message": "Logos are copied from $1's real website on a page asking for your details"
+  },
   "sig_dead_links": {
     "message": "Most links on the page go nowhere (fake navigation)"
+  },
+  "sig_dead_links_plain": {
+    "message": "Most links on the page do not work (the site is just a front)"
   },
   "sig_link_mismatch": {
     "message": "Links display one address but lead to another"
   },
+  "sig_link_mismatch_plain": {
+    "message": "Some links show one address but take you to another"
+  },
   "sig_no_context_menu": {
     "message": "Right-click is disabled on a credential page"
+  },
+  "sig_no_context_menu_plain": {
+    "message": "Right-clicking is blocked on a page asking for your details"
   },
   "sig_fake_badges": {
     "message": "Decorative \"secure / verified\" badges"
   },
+  "sig_fake_badges_plain": {
+    "message": "Pictures of \"secure / verified\" badges that prove nothing"
+  },
   "sig_meta_refresh": {
     "message": "Page auto-redirects to another domain"
+  },
+  "sig_meta_refresh_plain": {
+    "message": "The page automatically sends you to another website"
   },
   "sig_frames": {
     "message": "Many third-party frames on a credential page"
   },
+  "sig_frames_plain": {
+    "message": "The page loads many pieces from other websites while asking for your details"
+  },
   "sig_money_form": {
     "message": "Asks for card or account details next to money claims"
+  },
+  "sig_money_form_plain": {
+    "message": "Asks for card or account details next to promises of money"
   },
   "sig_money_stack": {
     "message": "Several independent money-scam templates on one page"
   },
+  "sig_money_stack_plain": {
+    "message": "Several different money-scam tricks on one page"
+  },
   "sig_money_young_new": {
     "message": "Money claims on a very recently registered site"
+  },
+  "sig_money_young_new_plain": {
+    "message": "Promises of money on a brand-new website"
   },
   "sig_money_young_free": {
     "message": "Money claims on a free-hosting site"
   },
+  "sig_money_young_free_plain": {
+    "message": "Promises of money on a site made with a free website service"
+  },
   "sig_phish_report_url": {
     "message": "Reported and verified as a phishing page by the PhishTank community"
+  },
+  "sig_phish_report_url_plain": {
+    "message": "People reported this page as a fake website and the report was confirmed (PhishTank)"
   },
   "sig_phish_report_host_one": {
     "message": "This site has 1 verified phishing report on PhishTank"
   },
+  "sig_phish_report_host_one_plain": {
+    "message": "This website has 1 confirmed report of being fake (PhishTank)"
+  },
   "sig_phish_report_host_many": {
     "message": "This site has $1 verified phishing reports on PhishTank"
+  },
+  "sig_phish_report_host_many_plain": {
+    "message": "This website has $1 confirmed reports of being fake (PhishTank)"
   },
   "sig_safe_browsing": {
     "message": "Google Safe Browsing lists this page as a $1"
   },
+  "sig_safe_browsing_plain": {
+    "message": "Google lists this page as a $1"
+  },
   "sb_type_social": {
     "message": "suspected phishing / deceptive site"
+  },
+  "sb_type_social_plain": {
+    "message": "fake site made to trick you"
   },
   "sb_type_malware": {
     "message": "site that may distribute malware"
   },
+  "sb_type_malware_plain": {
+    "message": "site that may put viruses on your device"
+  },
   "sb_type_unwanted": {
     "message": "site that may install unwanted software"
+  },
+  "sb_type_unwanted_plain": {
+    "message": "site that may install unwanted programs"
   },
   "sb_type_pha": {
     "message": "potentially harmful application"
   },
+  "sb_type_pha_plain": {
+    "message": "harmful app"
+  },
   "sb_type_unknown": {
     "message": "potentially unsafe site"
+  },
+  "sb_type_unknown_plain": {
+    "message": "possibly dangerous site"
   },
   "phrase_urgency": {
     "message": "Pressure / urgency language"
@@ -497,8 +839,14 @@
   "phrase_techsupport": {
     "message": "Tech-support scam wording"
   },
+  "phrase_techsupport_plain": {
+    "message": "Fake computer-help messages"
+  },
   "phrase_payment": {
     "message": "Untraceable payment method requested"
+  },
+  "phrase_payment_plain": {
+    "message": "Asks for a payment method that cannot be traced or refunded"
   },
   "phrase_delivery": {
     "message": "Parcel / delivery fee lure"
@@ -509,11 +857,17 @@
   "phrase_fakeproof": {
     "message": "Fake legitimacy claims"
   },
+  "phrase_fakeproof_plain": {
+    "message": "Fake claims of being trustworthy"
+  },
   "phrase_investment": {
     "message": "Unrealistic investment returns promised"
   },
   "phrase_advancefee": {
     "message": "Advance fee demanded to release money"
+  },
+  "phrase_advancefee_plain": {
+    "message": "Asks you to pay a fee before you get money"
   },
   "phrase_loan": {
     "message": "Loan offer with scam traits"
@@ -524,11 +878,17 @@
   "phrase_overpayment": {
     "message": "Overpayment / refund-the-difference scheme"
   },
+  "phrase_overpayment_plain": {
+    "message": "Pays too much and asks you to send back the difference"
+  },
   "phrase_lottery": {
     "message": "Lottery / inheritance / unclaimed funds lure"
   },
   "phrase_escrow": {
     "message": "Fake escrow / payment held by a third party"
+  },
+  "phrase_escrow_plain": {
+    "message": "Fake \"middleman\" said to be holding the payment"
   },
   "phrase_fakeregulator": {
     "message": "Investment firm claims to be licensed by a government"
@@ -536,14 +896,26 @@
   "phrase_brokerplatform": {
     "message": "Online trading / broker platform pitch"
   },
+  "phrase_brokerplatform_plain": {
+    "message": "Pitch for an online trading platform"
+  },
   "det_registered": {
     "message": "Registered $1"
+  },
+  "det_registered_plain": {
+    "message": "Created $1"
   },
   "det_cred_classic": {
     "message": "Classic credential-phishing setup"
   },
+  "det_cred_classic_plain": {
+    "message": "A common way to steal passwords"
+  },
   "det_no_https_cred": {
     "message": "and the page asks for credentials or card details"
+  },
+  "det_no_https_cred_plain": {
+    "message": "and the page asks for a password or card details"
   },
   "det_seed": {
     "message": "No legitimate service ever asks for this"
@@ -551,8 +923,14 @@
   "det_posts_to": {
     "message": "posts to $1"
   },
+  "det_posts_to_plain": {
+    "message": "sent to $1"
+  },
   "det_title": {
     "message": "title/heading: \"$1\""
+  },
+  "det_title_plain": {
+    "message": "page title: \"$1\""
   },
   "det_mentions": {
     "message": "$1 mentions"
@@ -566,8 +944,14 @@
   "det_frames": {
     "message": "$1 frames"
   },
+  "det_frames_plain": {
+    "message": "$1 pieces from other websites"
+  },
   "det_chars": {
     "message": "$1 characters"
+  },
+  "det_chars_plain": {
+    "message": "$1 letters long"
   },
   "det_impersonating": {
     "message": "impersonating $1"
@@ -578,11 +962,20 @@
   "ev_contains": {
     "message": "hostname contains \"$1\" but is not a $2 domain"
   },
+  "ev_contains_plain": {
+    "message": "the address contains \"$1\" but is not a real $2 website"
+  },
   "ev_normalises": {
     "message": "hostname token normalises to \"$1\""
   },
+  "ev_normalises_plain": {
+    "message": "part of the address reads as \"$1\""
+  },
   "ev_typosquat": {
     "message": "\"$1\" is $2 edit(s) away from \"$3\""
+  },
+  "ev_typosquat_plain": {
+    "message": "\"$1\" is only $2 letter(s) different from \"$3\""
   },
   "ev_glued": {
     "message": "\"$1\" mimics \"$2\""
@@ -593,11 +986,17 @@
   "chat_courier_pickup_advice": {
     "message": "Classic OLX/Vinted scam: the \"courier\" or \"delivery service\" is fake and the payment link steals your card details. Only use the platform's own delivery and payment flow."
   },
+  "chat_courier_pickup_advice_plain": {
+    "message": "A well-known scam on selling sites: the \"courier\" or \"delivery service\" is fake and the payment link steals your card details. Only use the selling site's own delivery and payment."
+  },
   "chat_payment_link_title": {
     "message": "Asked to open a link or enter card details to \"receive\" money"
   },
   "chat_payment_link_advice": {
     "message": "Nobody needs your card number, CVV or a link to pay you. Real platform payouts go to the account you already set up. Do not open the link."
+  },
+  "chat_payment_link_advice_plain": {
+    "message": "Nobody needs your card number, the 3 digits on the back of your card or a link to pay you. Real payments from the selling site go to the account you already set up. Do not open the link."
   },
   "chat_fee_to_release_title": {
     "message": "Payment \"held\" until you pay a fee or insurance"
@@ -611,8 +1010,14 @@
   "chat_sms_code_advice": {
     "message": "The code is being used to take over an account (WhatsApp, Google Voice, the marketplace itself) in your name. Never share codes you receive by SMS."
   },
+  "chat_sms_code_advice_plain": {
+    "message": "With that code, the scammer can take over one of your accounts (WhatsApp, Google Voice, the selling site itself) and pretend to be you. Never share codes you receive by text message."
+  },
   "chat_overpayment_title": {
     "message": "Overpayment / refund-the-difference"
+  },
+  "chat_overpayment_title_plain": {
+    "message": "Paid too much and asks for the difference back"
   },
   "chat_overpayment_advice": {
     "message": "The original payment is fake or will be reversed; any \"difference\" you send back is lost."
@@ -626,14 +1031,26 @@
   "chat_off_platform_title": {
     "message": "Pushing the conversation off the platform"
   },
+  "chat_off_platform_title_plain": {
+    "message": "Wants to move the chat to another app"
+  },
   "chat_off_platform_advice": {
     "message": "Scammers move to WhatsApp, Telegram or email so the platform cannot see or block them. Keep the conversation and the payment inside the platform."
+  },
+  "chat_off_platform_advice_plain": {
+    "message": "Scammers move to WhatsApp, Telegram or email so the selling site cannot see or block them. Keep the conversation and the payment on the selling site."
   },
   "chat_pay_first_title": {
     "message": "Payment demanded upfront through an untraceable channel"
   },
+  "chat_pay_first_title_plain": {
+    "message": "Asks you to pay first in a way that cannot be traced"
+  },
   "chat_pay_first_advice": {
     "message": "Deposits by bank transfer, MB WAY, Bizum, PayPal \"friends and family\", gift cards or crypto before you have the item cannot be recovered. Use the platform's protected payment or pay on collection."
+  },
+  "chat_pay_first_advice_plain": {
+    "message": "Money sent before you have the item, by bank transfer, MB WAY, Bizum, PayPal \"friends and family\", gift cards or crypto, cannot be got back. Use the selling site's protected payment or pay when you collect."
   },
   "chat_rental_deposit_title": {
     "message": "Rental: deposit requested before any viewing"
@@ -662,7 +1079,64 @@
   "chat_external_link_title": {
     "message": "External link sent alongside payment or delivery talk"
   },
+  "chat_external_link_title_plain": {
+    "message": "Link to another website sent while talking about payment or delivery"
+  },
   "chat_external_link_advice": {
     "message": "Links to $1 should not be needed to pay or ship. Stay on the platform."
+  },
+  "chat_external_link_advice_plain": {
+    "message": "You should not need a link to $1 to pay or send an item. Stay on the selling site."
+  },
+  "welcome_title": {
+    "message": "Welcome to Scam Detector"
+  },
+  "welcome_caution_h": {
+    "message": "Please read: this tool cannot catch every scam"
+  },
+  "welcome_caution_p1": {
+    "message": "Scam Detector looks for the signs that known scams leave behind. It will miss some scams, and it will most likely miss new tricks that nobody has spotted and described yet."
+  },
+  "welcome_caution_p2": {
+    "message": "So do not trust it blindly. No warning does not mean a site or a message is safe. Stay alert, and never enter passwords, card numbers or codes when something feels off."
+  },
+  "welcome_what_h": {
+    "message": "What it does"
+  },
+  "welcome_what_p": {
+    "message": "Every time you open a page, Scam Detector checks it on your computer for warning signs: a website created only days ago, an address pretending to be a bank or a well-known brand, a page asking for your password or card on the wrong website, and wording typical of scams (prizes, urgent payments, \"pay a fee to receive your money\"). If the risk is high, a warning appears at the top of the page."
+  },
+  "welcome_badge_h": {
+    "message": "The coloured dot on the Scam Detector icon"
+  },
+  "welcome_badge_green": {
+    "message": "Green: no warning signs found."
+  },
+  "welcome_badge_yellow": {
+    "message": "Yellow: a few small warning signs. Click the icon to see them."
+  },
+  "welcome_badge_red": {
+    "message": "Red: a warning is showing on the page. Be very careful."
+  },
+  "welcome_badge_grey": {
+    "message": "Grey with a check mark: a website you chose to trust."
+  },
+  "welcome_chat_h": {
+    "message": "Chats on selling websites"
+  },
+  "welcome_chat_p": {
+    "message": "On sites such as OLX, Vinted, Wallapop, Leboncoin or Facebook Marketplace, Scam Detector also reads the conversation and warns you about well-known tricks, like a \"courier\" who will pay you through a link, or a request to forward a code you received by text message."
+  },
+  "welcome_privacy_h": {
+    "message": "Your privacy"
+  },
+  "welcome_privacy_p": {
+    "message": "Pages and chats are checked on your computer. Only the name of each website (never the full address or what is on the page) is sent to a public service to learn when the website was created, and a list of reported fake websites is downloaded a few times a day. If you add your own Google key in the settings, page addresses are also checked with Google's list of dangerous sites."
+  },
+  "welcome_settings_p": {
+    "message": "You can change all of this, and switch between simple and technical wording, in the settings."
+  },
+  "welcome_settings_btn": {
+    "message": "Open settings"
   }
 }

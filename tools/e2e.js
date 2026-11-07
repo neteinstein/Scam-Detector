@@ -130,15 +130,19 @@ async function main() {
     check(otherDoc.verdict === 'trusted', 'other docs.google.com page stays trusted (shared host, no host-level match)');
     await sw.evaluate(async () => { await chrome.storage.local.remove(['feed:phishtank', 'feedmeta:phishtank']); feedIndexCache = null; });
 
-    // 3. Marketplace chat monitor: off by default, on when enabled in settings
+    // 3. Marketplace chat monitor: on by default, silent when turned off in settings
     await page.goto('https://www.olx.pt/mensagens/123', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(3000);
-    const chatBannerOff = await page.$('#scam-detector-banner-host');
-    check(!chatBannerOff, 'chat monitor is off by default (no banner on OLX chat)');
-    await sw.evaluate(async () => {
+    await page.waitForSelector('#scam-detector-banner-host', { timeout: 15000 }).catch(() => {});
+    check(!!(await page.$('#scam-detector-banner-host')), 'chat monitor is on by default (banner on OLX chat)');
+    const setChat = (on) => sw.evaluate(async (on) => {
       const s = (await chrome.storage.sync.get('settings')).settings || {};
-      await chrome.storage.sync.set({ settings: Object.assign({}, s, { chatMonitorEnabled: true }) });
-    });
+      await chrome.storage.sync.set({ settings: Object.assign({}, s, { chatMonitorEnabled: on }) });
+    }, on);
+    await setChat(false);
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(3000);
+    check(!(await page.$('#scam-detector-banner-host')), 'no chat banner when the monitor is turned off');
+    await setChat(true);
     await page.waitForTimeout(2500);
     let chatBanner = await page.$('#scam-detector-banner-host');
     if (!chatBanner) { await page.reload({ waitUntil: 'domcontentloaded' }); await page.waitForSelector('#scam-detector-banner-host', { timeout: 15000 }); }
@@ -198,7 +202,7 @@ async function main() {
     const firstSignal = await popupPt.textContent('#signals li div');
     console.log(`pt popup: "${titlePt}" / first signal "${firstSignal}"`);
     check(titlePt === 'Provavelmente uma burla', 'popup verdict rendered in Portuguese');
-    check(/imita PayPal|O domínio imita/.test(firstSignal || ''), 'signal label rendered in Portuguese with the brand substituted');
+    check(/finge ser PayPal|imita PayPal|O domínio imita/.test(firstSignal || ''), 'signal label rendered in Portuguese with the brand substituted');
     await popupPt.screenshot({ path: path.join(OUT, 'popup-pt.png') });
   } finally {
     await ctxPt.close();

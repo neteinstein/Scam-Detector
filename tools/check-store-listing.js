@@ -120,7 +120,7 @@ for (const f of shots) {
   if (!s || !((s[0] === 1280 && s[1] === 800) || (s[0] === 640 && s[1] === 400))) fail(`store-listing/assets/${f} must be 1280x800 or 640x400 (is ${s ? s.join('x') : 'not a PNG'})`);
 }
 // Screenshots must be newer than the UI they show.
-const uiFiles = ['popup/popup.html', 'popup/popup.css', 'popup/popup.js', 'options/options.html', 'options/options.js', 'src/content.js', 'icons/icon128.png'].filter(exists);
+const uiFiles = ['popup/popup.html', 'popup/popup.css', 'popup/popup.js', 'options/options.html', 'options/options.js', 'welcome/welcome.html', 'src/content.js', 'icons/icon128.png'].filter(exists);
 const newestUi = Math.max(...uiFiles.map((f) => fs.statSync(path.join(ROOT, f)).mtimeMs));
 const oldestShot = Math.min(...shots.map((f) => fs.statSync(path.join(ROOT, 'store-listing/assets', f)).mtimeMs));
 if (shots.length && process.env.CI !== 'true' && oldestShot + 1000 < newestUi) fail('store-listing/assets: UI files are newer than the screenshots; run `npm run store-assets` (set CI=true to skip this check)');

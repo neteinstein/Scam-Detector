@@ -72,3 +72,16 @@ test('brands added from feed statistics', () => {
   assert.equal(brandOf('societegenerale-secure.com'), 'Société Générale');
   assert.equal(lookalike.detect('particuliers.societegenerale.fr'), null);
 });
+
+test('Continente and Via Verde impersonation (2026 PT SMS campaigns)', () => {
+  const lookalike = require('../src/lib/lookalike.js');
+  const brands = require('../src/lib/brands.js');
+  assert.equal(lookalike.detect('cartaocontinente.vc').brand, 'Continente');
+  assert.equal(lookalike.detect('continente.vc').brand, 'Continente');
+  assert.equal(lookalike.detect('viaverde-pagamentos.com').brand, 'Via Verde');
+  assert.equal(lookalike.detect('cartao.continente.pt'), null);
+  assert.equal(lookalike.detect('www.viaverde.pt'), null);
+  assert.equal(brands.findByDomain('cartaocontinente.pt').name, 'Continente');
+  // Near-miss: ordinary words, not the brand.
+  assert.equal(lookalike.detect('continentes-viagens.pt'), null);
+});

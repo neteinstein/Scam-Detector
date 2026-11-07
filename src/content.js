@@ -5,7 +5,7 @@
  *
  * Two independent monitors share one banner host:
  *  - page verdict (always on)
- *  - marketplace chat monitor (opt-in; OLX, Vinted, Wallapop, Leboncoin, ...)
+ *  - marketplace chat monitor (on by default; OLX, Vinted, Wallapop, Leboncoin, ...)
  */
 (function () {
   if (window.top !== window) return; // top frame only (manifest also sets all_frames:false)
@@ -15,7 +15,8 @@
 
   const HOST_ID = 'scam-detector-banner-host';
   const MAX_RESCANS = 6;
-  let settings = { customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [] };
+  const CONTENT_DEFAULTS = { customBrands: [], chatMonitorEnabled: true, chatMonitorDomains: [], plainLanguage: true };
+  let settings = Object.assign({}, CONTENT_DEFAULTS);
   let pageDismissed = false;
   let chatDismissedSignature = '';
   let rescans = 0;
@@ -29,8 +30,9 @@
   async function loadSettings() {
     try {
       const s = await chrome.storage.sync.get('settings');
-      settings = Object.assign({ customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [] }, s.settings || {});
+      settings = Object.assign({}, CONTENT_DEFAULTS, s.settings || {});
     } catch (e) { /* keep defaults */ }
+    SD.i18n.setPlain(settings.plainLanguage !== false);
   }
 
   // ------------------------------------------------------------ page scan
@@ -259,7 +261,7 @@
   });
   try {
     chrome.storage.onChanged.addListener((changes, area) => {
-      if (area === 'sync' && changes.settings) { loadSettings().then(() => { lastChatSignature = ''; chatScan(); }); }
+      if (area === 'sync' && changes.settings) { loadSettings().then(() => { lastChatSignature = ''; chatScan(); render(); }); }
     });
   } catch (e) { /* ignore */ }
 

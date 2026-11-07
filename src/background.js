@@ -265,10 +265,9 @@ async function analyze(url, pageInfo, tabId) {
 }
 
 function updateBadge(tabId, result) {
-  const colors = { danger: '#d32f2f', warning: '#f59e0b', ok: '#2e7d32', trusted: '#2e7d32', skipped: '#9e9e9e' };
-  const text = result.verdict === 'danger' || result.verdict === 'warning' ? String(result.score) : result.verdict === 'trusted' ? '✓' : '';
-  chrome.action.setBadgeText({ tabId, text }).catch(() => {});
-  chrome.action.setBadgeBackgroundColor({ tabId, color: colors[result.verdict] || '#9e9e9e' }).catch(() => {});
+  const b = scoring.badgeFor(result);
+  chrome.action.setBadgeText({ tabId, text: b.text }).catch(() => {});
+  chrome.action.setBadgeBackgroundColor({ tabId, color: b.color }).catch(() => {});
   if (chrome.action.setBadgeTextColor) chrome.action.setBadgeTextColor({ tabId, color: '#ffffff' }).catch(() => {});
 }
 
@@ -307,10 +306,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           const d = domain.parse(msg.hostname).registrable || domain.normalizeHost(msg.hostname);
           if (d && !s.allowlist.includes(d)) s.allowlist = s.allowlist.concat([d]);
           await saveSettings({ allowlist: s.allowlist });
-          if (msg.tabId != null) {
-            const key = RESULT_PREFIX + msg.tabId;
+          const trustTab = msg.tabId != null ? msg.tabId : (sender && sender.tab ? sender.tab.id : null);
+          if (trustTab != null) {
+            const key = RESULT_PREFIX + trustTab;
             const r = (await chrome.storage.session.get(key))[key];
-            if (r) { r.verdict = 'trusted'; r.reason = 'allowlist'; await chrome.storage.session.set({ [key]: r }); updateBadge(msg.tabId, r); }
+            if (r) { r.verdict = 'trusted'; r.reason = 'allowlist'; await chrome.storage.session.set({ [key]: r }); updateBadge(trustTab, r); }
           }
           sendResponse({ ok: true, domain: d });
           break;
@@ -357,7 +357,9 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
 });
 
 // Periodic jobs: feed refresh and lookup-cache sweep.
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
+  // First install: explain what the extension does and, above all, what it cannot catch.
+  if (details && details.reason === 'install') chrome.tabs.create({ url: chrome.runtime.getURL('welcome/welcome.html') }).catch(() => {});
   chrome.alarms.create('sweep-cache', { periodInMinutes: 24 * 60 });
   chrome.alarms.create('feed-update', { delayInMinutes: 1, periodInMinutes: FEED_REFRESH_MINUTES });
   updateFeed(false);

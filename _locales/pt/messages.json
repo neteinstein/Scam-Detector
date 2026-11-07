@@ -32,6 +32,9 @@
   "btn_trust_tip": {
     "message": "Não voltar a avisar para este domínio"
   },
+  "btn_trust_tip_plain": {
+    "message": "Não voltar a avisar neste site"
+  },
   "btn_dismiss": {
     "message": "Ignorar"
   },
@@ -41,11 +44,17 @@
   "banner_more": {
     "message": "+ $1 mais (ver o popup da extensão)"
   },
+  "banner_more_plain": {
+    "message": "+ $1 mais (clique no ícone do Scam Detector na barra do navegador)"
+  },
   "sb_advisory": {
     "message": "Advisory provided by Google"
   },
   "sb_learn": {
     "message": "Saber mais sobre phishing (APWG)"
+  },
+  "sb_learn_plain": {
+    "message": "Saiba como os sites falsos enganam as pessoas (APWG)"
   },
   "sb_disclaimer": {
     "message": "A Google não garante que a sua informação seja completa ou isenta de erros."
@@ -65,6 +74,9 @@
   "popup_rescanning": {
     "message": "A reanalisar…"
   },
+  "popup_rescanning_plain": {
+    "message": "A verificar de novo…"
+  },
   "verdict_danger": {
     "message": "Provavelmente uma burla"
   },
@@ -74,20 +86,35 @@
   "verdict_ok": {
     "message": "Sem sinais de burla"
   },
+  "verdict_ok_plain": {
+    "message": "Não foram encontrados sinais de burla"
+  },
   "verdict_trusted": {
     "message": "Site de confiança"
   },
   "verdict_skipped": {
     "message": "Não analisado"
   },
+  "verdict_skipped_plain": {
+    "message": "Não verificado"
+  },
   "popup_cannot_analyse": {
     "message": "Esta página não pode ser analisada (página do browser, endereço local ou ficheiro)."
+  },
+  "popup_cannot_analyse_plain": {
+    "message": "Esta página não pode ser verificada (é uma página do navegador ou um ficheiro no seu computador)."
   },
   "popup_trusted_allowlist": {
     "message": "Escolheu confiar neste domínio."
   },
+  "popup_trusted_allowlist_plain": {
+    "message": "Escolheu confiar neste site."
+  },
   "popup_trusted_brand": {
     "message": "Este é um domínio de $1."
+  },
+  "popup_trusted_brand_plain": {
+    "message": "Este é o site verdadeiro de $1."
   },
   "popup_known": {
     "message": "conhecido"
@@ -95,32 +122,62 @@
   "popup_ok_minor": {
     "message": "Pontuação de risco $1/100. Observações menores:"
   },
+  "popup_ok_minor_plain": {
+    "message": "Risco $1 em 100. Pequenas coisas que notámos:"
+  },
   "popup_ok_clean": {
     "message": "Pontuação de risco $1/100. Nada de suspeito foi detetado, mas mantenha-se atento: nenhuma ferramenta apanha todas as burlas."
+  },
+  "popup_ok_clean_plain": {
+    "message": "Risco $1 em 100. Não encontrámos nada preocupante, mas mantenha-se atento: nenhuma ferramenta apanha todas as burlas."
   },
   "popup_score_one": {
     "message": "Pontuação de risco $1/100 com base em 1 sinal:"
   },
+  "popup_score_one_plain": {
+    "message": "Risco $1 em 100, por causa de 1 sinal de alerta:"
+  },
   "popup_score_many": {
     "message": "Pontuação de risco $1/100 com base em $2 sinais:"
+  },
+  "popup_score_many_plain": {
+    "message": "Risco $1 em 100, por causa de $2 sinais de alerta:"
   },
   "meta_domain": {
     "message": "Domínio"
   },
+  "meta_domain_plain": {
+    "message": "Site"
+  },
   "meta_registered": {
     "message": "Registado"
+  },
+  "meta_registered_plain": {
+    "message": "Site criado"
   },
   "meta_registrar": {
     "message": "Registrador"
   },
+  "meta_registrar_plain": {
+    "message": "Nome comprado através de"
+  },
   "meta_impersonates": {
     "message": "Imita"
+  },
+  "meta_impersonates_plain": {
+    "message": "Finge ser"
   },
   "meta_reports": {
     "message": "Relatos de phishing"
   },
+  "meta_reports_plain": {
+    "message": "Denúncias de sites falsos"
+  },
   "meta_safebrowsing": {
     "message": "Safe Browsing"
+  },
+  "meta_safebrowsing_plain": {
+    "message": "Lista de sites perigosos da Google"
   },
   "registered_days_ago": {
     "message": "$1 (há $2 dias)"
@@ -131,20 +188,38 @@
   "rdap_no_date": {
     "message": "o registo não publica"
   },
+  "rdap_no_date_plain": {
+    "message": "não publicado"
+  },
   "rdap_not_found": {
     "message": "não está no RDAP"
+  },
+  "rdap_not_found_plain": {
+    "message": "não encontrado"
   },
   "rdap_disabled": {
     "message": "consulta desativada nas definições"
   },
+  "rdap_disabled_plain": {
+    "message": "verificação desativada nas definições"
+  },
   "rdap_free_hosting": {
     "message": "plataforma de alojamento partilhado"
+  },
+  "rdap_free_hosting_plain": {
+    "message": "feito num serviço de sites partilhado por muitos sites"
   },
   "rdap_timeout": {
     "message": "a consulta expirou"
   },
+  "rdap_timeout_plain": {
+    "message": "a verificação demorou demasiado"
+  },
   "rdap_error": {
     "message": "a consulta falhou"
+  },
+  "rdap_error_plain": {
+    "message": "a verificação falhou"
   },
   "rdap_na": {
     "message": "n/d"
@@ -152,20 +227,38 @@
   "feed_disabled": {
     "message": "feed desativado nas definições"
   },
+  "feed_disabled_plain": {
+    "message": "desativado nas definições"
+  },
   "feed_downloading": {
     "message": "a transferir o feed…"
+  },
+  "feed_downloading_plain": {
+    "message": "a transferir a lista…"
   },
   "feed_not_downloaded": {
     "message": "feed ainda não transferido ($1)"
   },
+  "feed_not_downloaded_plain": {
+    "message": "lista ainda não transferida ($1)"
+  },
   "feed_line": {
     "message": "$1 · feed com $2 sites, $3"
+  },
+  "feed_line_plain": {
+    "message": "$1 · lista de $2 sites, $3"
   },
   "feed_page_reported": {
     "message": "esta página foi reportada"
   },
+  "feed_page_reported_plain": {
+    "message": "esta página foi denunciada como falsa"
+  },
   "feed_host_reports": {
     "message": "$1 relato(s) neste servidor"
+  },
+  "feed_host_reports_plain": {
+    "message": "$1 denúncia(s) neste site"
   },
   "feed_none": {
     "message": "nenhum para esta página"
@@ -185,14 +278,26 @@
   "sb_failed": {
     "message": "a consulta falhou ($1)"
   },
+  "sb_failed_plain": {
+    "message": "a verificação falhou ($1)"
+  },
   "sb_listed": {
     "message": "listado: $1 (advisory provided by Google)"
+  },
+  "sb_listed_plain": {
+    "message": "na lista: $1 (advisory provided by Google)"
   },
   "sb_not_listed": {
     "message": "não listado (advisory provided by Google)"
   },
+  "sb_not_listed_plain": {
+    "message": "não está na lista (advisory provided by Google)"
+  },
   "btn_rescan": {
     "message": "Reanalisar"
+  },
+  "btn_rescan_plain": {
+    "message": "Verificar de novo"
   },
   "btn_untrust": {
     "message": "Deixar de confiar"
@@ -209,44 +314,95 @@
   "opt_intro": {
     "message": "Toda a análise é feita localmente no seu browser. Os únicos pedidos de rede são as consultas opcionais descritas abaixo."
   },
+  "opt_intro_plain": {
+    "message": "O Scam Detector verifica as páginas no seu próprio computador. Só contacta outros serviços para as verificações opcionais descritas abaixo."
+  },
+  "opt_plain_h": {
+    "message": "Linguagem simples"
+  },
+  "opt_plain_toggle": {
+    "message": "Termos não técnicos: explicar os avisos em palavras simples"
+  },
+  "opt_plain_p": {
+    "message": "Ativado por omissão. Desative para ver os termos técnicos originais (domínio, RDAP, HTTP, favicon…)."
+  },
   "opt_thresholds": {
     "message": "Limiares"
+  },
+  "opt_thresholds_plain": {
+    "message": "Quando avisar"
   },
   "opt_danger_label": {
     "message": "Mostrar a faixa vermelha \"provável burla\" a partir da pontuação ≥"
   },
+  "opt_danger_label_plain": {
+    "message": "Mostrar o aviso vermelho \"provável burla\" quando o risco for pelo menos"
+  },
   "opt_warn_label": {
     "message": "Mostrar a faixa laranja \"suspeito\" a partir da pontuação ≥"
+  },
+  "opt_warn_label_plain": {
+    "message": "Mostrar o aviso laranja \"suspeito\" quando o risco for pelo menos"
   },
   "opt_show_warn": {
     "message": "Mostrar a faixa laranja (o ícone da barra mostra sempre a pontuação)"
   },
+  "opt_show_warn_plain": {
+    "message": "Mostrar também o aviso laranja (o ícone do Scam Detector mostra sempre o risco)"
+  },
   "opt_rdap_h": {
     "message": "Consulta da idade do domínio"
+  },
+  "opt_rdap_h_plain": {
+    "message": "Que idade tem o site?"
   },
   "opt_rdap_toggle": {
     "message": "Consultar quando um domínio foi registado (RDAP)"
   },
+  "opt_rdap_toggle_plain": {
+    "message": "Verificar quando cada site foi criado"
+  },
   "opt_rdap_p": {
     "message": "Envia o nome do domínio (nunca o URL completo) para rdap.org, que redireciona para o serviço RDAP público do registo. Os resultados ficam em cache 7 dias. Domínios registados há pouco tempo são um dos indicadores de burla mais fortes, por isso está ativo por omissão."
+  },
+  "opt_rdap_p_plain": {
+    "message": "Envia apenas o nome do site (por exemplo example.com, nunca o endereço completo da página) para rdap.org, um serviço público que sabe quando os sites foram criados. A resposta é guardada durante 7 dias. Sites acabados de criar são um dos sinais mais claros de burla, por isso está ativado por omissão."
   },
   "opt_clear_cache": {
     "message": "Limpar consultas em cache"
   },
+  "opt_clear_cache_plain": {
+    "message": "Esquecer respostas guardadas"
+  },
   "opt_cache_cleared": {
     "message": "Cache limpa."
+  },
+  "opt_cache_cleared_plain": {
+    "message": "Respostas guardadas esquecidas."
   },
   "opt_feed_h": {
     "message": "Feed de relatos de phishing"
   },
+  "opt_feed_h_plain": {
+    "message": "Lista de sites falsos denunciados"
+  },
   "opt_feed_toggle": {
     "message": "Manter uma cópia local dos relatos de phishing verificados do PhishTank e avisar quando uma página ou site constar dela"
+  },
+  "opt_feed_toggle_plain": {
+    "message": "Manter uma lista de sites falsos denunciados por voluntários do PhishTank e avisar-me se abrir um"
   },
   "opt_feed_p": {
     "message": "Uma lista de cerca de 50 000 endereços de phishing reportados pela comunidade e verificados é transferida de data.phishtank.com algumas vezes por dia (cerca de 2 MB de cada vez) e guardada neste dispositivo como hashes. As páginas são comparadas localmente: os endereços que visita nunca são enviados para lado nenhum. Os relatos são dados da comunidade e não há garantia de exatidão."
   },
+  "opt_feed_p_plain": {
+    "message": "Uma lista de cerca de 50 000 sites falsos, denunciados e confirmados por voluntários, é transferida do PhishTank algumas vezes por dia (cerca de 2 MB de cada vez) e guardada neste computador. As páginas são comparadas aqui, no seu computador: os sites que visita nunca são enviados para lado nenhum. A lista é feita por voluntários e pode conter erros."
+  },
   "opt_feed_key": {
     "message": "Chave de aplicação PhishTank (opcional, aumenta o limite de transferências; obtenha uma em phishtank.org):"
+  },
+  "opt_feed_key_plain": {
+    "message": "Chave do PhishTank (opcional, permite transferir a lista mais vezes; obtenha uma em phishtank.org):"
   },
   "opt_optional": {
     "message": "opcional"
@@ -257,11 +413,17 @@
   "feed_status_disabled": {
     "message": "Feed desativado."
   },
+  "feed_status_disabled_plain": {
+    "message": "Lista desativada."
+  },
   "feed_status_updating": {
     "message": "A atualizar…"
   },
   "feed_status_ok": {
     "message": "$1 endereços reportados, atualizado em $2"
+  },
+  "feed_status_ok_plain": {
+    "message": "$1 sites denunciados, atualizado $2"
   },
   "feed_status_fail": {
     "message": " (última tentativa falhou: $1)"
@@ -273,37 +435,70 @@
     "message": "Ainda não transferido: $1"
   },
   "opt_sb_h": {
-    "message": "Google Safe Browsing (opcional)"
+    "message": "Google Safe Browsing"
+  },
+  "opt_sb_h_plain": {
+    "message": "Lista de sites perigosos da Google (Safe Browsing)"
   },
   "opt_sb_toggle": {
     "message": "Consultar também o Google Safe Browsing para cada página"
   },
+  "opt_sb_toggle_plain": {
+    "message": "Verificar também cada página na lista de sites perigosos da Google"
+  },
   "opt_sb_p": {
-    "message": "Desativado por omissão. Quando ativo, o endereço completo de cada página que abre é enviado ao serviço Safe Browsing Lookup da Google com a sua própria chave de API (crie uma no Google Cloud, ative a Safe Browsing API e restrinja a chave a esta extensão). Os termos da Google só permitem uso não comercial. Os resultados ficam em cache até 30 minutos."
+    "message": "Ativado por omissão, mas nada é enviado até introduzir a sua própria chave de API abaixo. Com uma chave, o endereço completo de cada página que abre é enviado ao serviço Safe Browsing Lookup da Google (crie a chave no Google Cloud, ative a Safe Browsing API e restrinja a chave a esta extensão). Os termos da Google só permitem uso não comercial. Os resultados ficam em cache até 30 minutos."
+  },
+  "opt_sb_p_plain": {
+    "message": "Ativado por omissão, mas só começa a funcionar quando colar abaixo uma chave de acesso gratuita da Google. Com uma chave, o endereço de cada página que abre é enviado à Google, que responde se é perigosa. Para obter uma chave, entre no Google Cloud, ative a \"Safe Browsing API\" e crie uma chave de API. A Google só permite isto para uso pessoal e não comercial. As respostas são guardadas até 30 minutos."
   },
   "opt_sb_notice": {
     "message": "A Google esforça-se por fornecer a informação mais precisa e atualizada sobre recursos web inseguros. No entanto, a Google não garante que a sua informação seja completa e isenta de erros: alguns sites perigosos podem não ser identificados e alguns sites seguros podem ser identificados por engano. Os avisos baseados nestes dados estão marcados com \"Advisory provided by Google\"."
   },
+  "opt_sb_notice_plain": {
+    "message": "A Google tenta manter esta lista correta e atualizada, mas não pode garantir que esteja completa ou sem erros: alguns sites perigosos podem escapar e alguns sites seguros podem ser marcados por engano. Os avisos baseados nesta lista estão marcados com \"Advisory provided by Google\"."
+  },
   "opt_sb_key": {
     "message": "Chave de API:"
+  },
+  "opt_sb_key_plain": {
+    "message": "Chave de acesso da Google (chave de API):"
   },
   "opt_chat_h": {
     "message": "Monitor de chat em sites de vendas"
   },
+  "opt_chat_h_plain": {
+    "message": "Vigiar conversas em sites de vendas"
+  },
   "opt_chat_toggle": {
     "message": "Vigiar conversas em sites de vendas (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) à procura de esquemas de burla conhecidos"
   },
+  "opt_chat_toggle_plain": {
+    "message": "Vigiar conversas em sites de vendas (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) à procura de truques de burla conhecidos"
+  },
   "opt_chat_p": {
-    "message": "Desativado por omissão. Quando ativo, o texto do chat nesses sites é verificado localmente (nada é enviado) à procura de esquemas como \"envio um estafeta, clica no link para receber o pagamento\", \"envia-me o código do SMS\", \"o pagamento fica retido até pagares o seguro\", \"paga a caução antes da visita\" ou devoluções por pagamento a mais, em inglês, português, espanhol e francês. Uma faixa explica o esquema quando aparece."
+    "message": "Ativado por omissão. O texto do chat nesses sites é verificado localmente (nada é enviado) à procura de esquemas como \"envio um estafeta, clica no link para receber o pagamento\", \"envia-me o código do SMS\", \"o pagamento fica retido até pagares o seguro\", \"paga a caução antes da visita\" ou devoluções por pagamento a mais, em inglês, português, espanhol e francês. Uma faixa explica o esquema quando aparece."
+  },
+  "opt_chat_p_plain": {
+    "message": "Ativado por omissão. As mensagens nas conversas desses sites são verificadas neste computador (nada é enviado) à procura de truques comuns como \"envio um estafeta, clica no link para receber o pagamento\", \"envia-me o código do SMS\", \"o pagamento fica retido até pagares o seguro\", \"paga a caução antes da visita\" ou pagar a mais e pedir a diferença de volta, em inglês, português, espanhol e francês. Um aviso explica o truque quando aparece."
   },
   "opt_chat_domains": {
     "message": "Sites adicionais a vigiar (um domínio por linha):"
   },
+  "opt_chat_domains_plain": {
+    "message": "Outros sites de vendas a vigiar (um por linha, por exemplo example.com):"
+  },
   "opt_trusted_h": {
     "message": "Domínios de confiança"
   },
+  "opt_trusted_h_plain": {
+    "message": "Sites em que confia"
+  },
   "opt_trusted_p": {
     "message": "Os domínios em que escolheu confiar nunca são assinalados."
+  },
+  "opt_trusted_p_plain": {
+    "message": "Nunca é avisado sobre sites em que confia."
   },
   "opt_trusted_none": {
     "message": "Ainda nenhum."
@@ -319,6 +514,9 @@
   },
   "opt_brands_p": {
     "message": "Uma por linha: Nome da marca | palavra1, palavra2 | dominioreal.com, outro.com. As palavras são procuradas nos nomes de domínio; os domínios reais nunca são assinalados. Útil para o seu banco, empregador ou serviços locais."
+  },
+  "opt_brands_p_plain": {
+    "message": "Uma por linha: Nome da marca | palavra1, palavra2 | siteverdadeiro.com, outro.com. Se o endereço de um site contiver uma das palavras mas não for um dos sites verdadeiros, é avisado. Útil para o seu banco, empregador ou serviços locais."
   },
   "btn_save": {
     "message": "Guardar"
@@ -344,146 +542,290 @@
   "sig_ip_host": {
     "message": "O site é acedido por um endereço IP em vez de um nome de domínio"
   },
+  "sig_ip_host_plain": {
+    "message": "O site usa uma sequência de números em vez de um nome normal"
+  },
   "sig_lookalike": {
     "message": "O domínio imita $1"
+  },
+  "sig_lookalike_plain": {
+    "message": "O endereço do site finge ser $1"
   },
   "sig_idn": {
     "message": "Nome de domínio internacionalizado (caracteres não latinos) pode esconder letras parecidas"
   },
+  "sig_idn_plain": {
+    "message": "O nome do site usa letras de outros alfabetos que podem parecer letras normais"
+  },
   "sig_domain_age": {
     "message": "O domínio foi registado há apenas $1"
+  },
+  "sig_domain_age_plain": {
+    "message": "Este site foi criado há apenas $1"
   },
   "sig_risky_tld": {
     "message": ".$1 é um domínio de topo muito usado para abusos"
   },
+  "sig_risky_tld_plain": {
+    "message": "Endereços de sites terminados em .$1 são muito usados por burlões"
+  },
   "sig_host_keywords": {
     "message": "O nome de domínio contém palavras típicas de links de phishing"
+  },
+  "sig_host_keywords_plain": {
+    "message": "O endereço do site contém palavras usadas por sites falsos (como \"login\" ou \"verify\")"
   },
   "sig_hyphens_many": {
     "message": "Número invulgar de hífenes no domínio"
   },
+  "sig_hyphens_many_plain": {
+    "message": "O endereço do site tem um número invulgar de hífenes"
+  },
   "sig_hyphens_some": {
     "message": "Vários hífenes no domínio"
+  },
+  "sig_hyphens_some_plain": {
+    "message": "O endereço do site tem vários hífenes"
   },
   "sig_deep_subdomain": {
     "message": "Subdomínios muito aninhados (usados para esconder o domínio real)"
   },
+  "sig_deep_subdomain_plain": {
+    "message": "O endereço do site é longo e tem muitas partes, o que pode esconder o site verdadeiro"
+  },
   "sig_long_host": {
     "message": "Nome de domínio muito longo"
+  },
+  "sig_long_host_plain": {
+    "message": "O endereço do site é muito longo"
   },
   "sig_digits": {
     "message": "O domínio mistura letras e dígitos"
   },
+  "sig_digits_plain": {
+    "message": "O nome do site mistura letras e números"
+  },
   "sig_random_name": {
     "message": "O domínio parece gerado aleatoriamente"
+  },
+  "sig_random_name_plain": {
+    "message": "O nome do site parece um conjunto de letras ao acaso"
   },
   "sig_no_https": {
     "message": "A ligação não é cifrada (HTTP)"
   },
+  "sig_no_https_plain": {
+    "message": "A ligação não é segura: outras pessoas podem ver o que escreve"
+  },
   "sig_seed_phrase": {
     "message": "A página pede a frase de recuperação ou a chave privada de uma carteira cripto"
+  },
+  "sig_seed_phrase_plain": {
+    "message": "A página pede as palavras secretas de recuperação ou a chave de uma carteira de criptomoedas"
   },
   "sig_cred_lookalike": {
     "message": "Formulário de login num domínio que imita $1"
   },
+  "sig_cred_lookalike_plain": {
+    "message": "A página pede a sua palavra-passe num site que finge ser $1"
+  },
   "sig_cred_young": {
     "message": "Formulário de login num domínio registado muito recentemente"
+  },
+  "sig_cred_young_plain": {
+    "message": "A página pede a sua palavra-passe num site acabado de criar"
   },
   "sig_cred_free_host": {
     "message": "Formulário de login alojado num serviço de alojamento gratuito"
   },
+  "sig_cred_free_host_plain": {
+    "message": "A página pede a sua palavra-passe mas foi feita num serviço de sites gratuito"
+  },
   "sig_cred_ip": {
     "message": "Formulário de login num endereço IP"
+  },
+  "sig_cred_ip_plain": {
+    "message": "A página pede a sua palavra-passe num site sem nome próprio"
   },
   "sig_hidden_password": {
     "message": "Campo de palavra-passe escondido"
   },
+  "sig_hidden_password_plain": {
+    "message": "A página tem uma caixa de palavra-passe escondida"
+  },
   "sig_card_lookalike": {
     "message": "Formulário de dados de cartão num domínio que imita $1"
+  },
+  "sig_card_lookalike_plain": {
+    "message": "A página pede dados do cartão num site que finge ser $1"
   },
   "sig_card_young": {
     "message": "Formulário de dados de cartão num domínio registado muito recentemente"
   },
+  "sig_card_young_plain": {
+    "message": "A página pede dados do cartão num site acabado de criar"
+  },
   "sig_card_free_host": {
     "message": "Formulário de dados de cartão alojado num serviço de alojamento gratuito"
+  },
+  "sig_card_free_host_plain": {
+    "message": "A página pede dados do cartão mas foi feita num serviço de sites gratuito"
   },
   "sig_cross_domain_form": {
     "message": "As credenciais são enviadas para outro domínio"
   },
+  "sig_cross_domain_form_plain": {
+    "message": "O que escrever aqui é enviado para outro site"
+  },
   "sig_http_form": {
     "message": "As credenciais são enviadas por HTTP não cifrado"
+  },
+  "sig_http_form_plain": {
+    "message": "A sua palavra-passe ou dados do cartão seriam enviados sem proteção"
   },
   "sig_get_form": {
     "message": "A palavra-passe é enviada no URL (formulário GET)"
   },
+  "sig_get_form_plain": {
+    "message": "A sua palavra-passe apareceria no endereço da página"
+  },
   "sig_brand_title": {
     "message": "A página apresenta-se como $1 mas não está num domínio de $1"
+  },
+  "sig_brand_title_plain": {
+    "message": "A página diz ser $1 mas não está no site verdadeiro de $1"
   },
   "sig_brand_body": {
     "message": "A página menciona $1 repetidamente junto a um formulário de credenciais"
   },
+  "sig_brand_body_plain": {
+    "message": "A página menciona $1 muitas vezes junto a uma caixa que pede a sua palavra-passe ou cartão"
+  },
   "sig_brand_favicon": {
     "message": "O favicon é carregado do site real de $1"
+  },
+  "sig_brand_favicon_plain": {
+    "message": "O pequeno ícone no separador do navegador é copiado do site verdadeiro de $1"
   },
   "sig_brand_assets": {
     "message": "Logótipos/estilos carregados do site real de $1 numa página de credenciais"
   },
+  "sig_brand_assets_plain": {
+    "message": "Os logótipos são copiados do site verdadeiro de $1 numa página que pede os seus dados"
+  },
   "sig_dead_links": {
     "message": "A maioria dos links da página não leva a lado nenhum (navegação falsa)"
+  },
+  "sig_dead_links_plain": {
+    "message": "A maioria dos links da página não funciona (o site é só uma fachada)"
   },
   "sig_link_mismatch": {
     "message": "Os links mostram um endereço mas levam a outro"
   },
+  "sig_link_mismatch_plain": {
+    "message": "Alguns links mostram um endereço mas levam a outro"
+  },
   "sig_no_context_menu": {
     "message": "O botão direito está desativado numa página de credenciais"
+  },
+  "sig_no_context_menu_plain": {
+    "message": "O clique direito está bloqueado numa página que pede os seus dados"
   },
   "sig_fake_badges": {
     "message": "Selos decorativos de \"seguro / verificado\""
   },
+  "sig_fake_badges_plain": {
+    "message": "Imagens de selos \"seguro / verificado\" que não provam nada"
+  },
   "sig_meta_refresh": {
     "message": "A página redireciona automaticamente para outro domínio"
+  },
+  "sig_meta_refresh_plain": {
+    "message": "A página envia-o automaticamente para outro site"
   },
   "sig_frames": {
     "message": "Muitos frames de terceiros numa página de credenciais"
   },
+  "sig_frames_plain": {
+    "message": "A página carrega muitas partes de outros sites enquanto pede os seus dados"
+  },
   "sig_money_form": {
     "message": "Pede dados de cartão ou de conta junto a promessas de dinheiro"
+  },
+  "sig_money_form_plain": {
+    "message": "Pede dados do cartão ou da conta junto a promessas de dinheiro"
   },
   "sig_money_stack": {
     "message": "Vários esquemas de burla financeira independentes na mesma página"
   },
+  "sig_money_stack_plain": {
+    "message": "Vários truques diferentes de burla com dinheiro na mesma página"
+  },
   "sig_money_young_new": {
     "message": "Promessas de dinheiro num site registado muito recentemente"
+  },
+  "sig_money_young_new_plain": {
+    "message": "Promessas de dinheiro num site acabado de criar"
   },
   "sig_money_young_free": {
     "message": "Promessas de dinheiro num site de alojamento gratuito"
   },
+  "sig_money_young_free_plain": {
+    "message": "Promessas de dinheiro num site feito num serviço gratuito"
+  },
   "sig_phish_report_url": {
     "message": "Reportada e verificada como página de phishing pela comunidade PhishTank"
+  },
+  "sig_phish_report_url_plain": {
+    "message": "Esta página foi denunciada como site falso e a denúncia foi confirmada (PhishTank)"
   },
   "sig_phish_report_host_one": {
     "message": "Este site tem 1 relato de phishing verificado no PhishTank"
   },
+  "sig_phish_report_host_one_plain": {
+    "message": "Este site tem 1 denúncia confirmada de ser falso (PhishTank)"
+  },
   "sig_phish_report_host_many": {
     "message": "Este site tem $1 relatos de phishing verificados no PhishTank"
+  },
+  "sig_phish_report_host_many_plain": {
+    "message": "Este site tem $1 denúncias confirmadas de ser falso (PhishTank)"
   },
   "sig_safe_browsing": {
     "message": "O Google Safe Browsing lista esta página como $1"
   },
+  "sig_safe_browsing_plain": {
+    "message": "A Google classifica esta página como $1"
+  },
   "sb_type_social": {
     "message": "site suspeito de phishing / enganoso"
+  },
+  "sb_type_social_plain": {
+    "message": "site falso feito para o enganar"
   },
   "sb_type_malware": {
     "message": "site que pode distribuir malware"
   },
+  "sb_type_malware_plain": {
+    "message": "site que pode instalar vírus no seu dispositivo"
+  },
   "sb_type_unwanted": {
     "message": "site que pode instalar software indesejado"
+  },
+  "sb_type_unwanted_plain": {
+    "message": "site que pode instalar programas indesejados"
   },
   "sb_type_pha": {
     "message": "aplicação potencialmente perigosa"
   },
+  "sb_type_pha_plain": {
+    "message": "aplicação perigosa"
+  },
   "sb_type_unknown": {
     "message": "site potencialmente inseguro"
+  },
+  "sb_type_unknown_plain": {
+    "message": "site possivelmente perigoso"
   },
   "phrase_urgency": {
     "message": "Linguagem de pressão / urgência"
@@ -497,8 +839,14 @@
   "phrase_techsupport": {
     "message": "Linguagem de burla de suporte técnico"
   },
+  "phrase_techsupport_plain": {
+    "message": "Mensagens falsas de assistência informática"
+  },
   "phrase_payment": {
     "message": "Pedido de método de pagamento não rastreável"
+  },
+  "phrase_payment_plain": {
+    "message": "Pede um meio de pagamento que não pode ser rastreado nem reembolsado"
   },
   "phrase_delivery": {
     "message": "Isco de taxa de encomenda / entrega"
@@ -509,11 +857,17 @@
   "phrase_fakeproof": {
     "message": "Alegações falsas de legitimidade"
   },
+  "phrase_fakeproof_plain": {
+    "message": "Falsas garantias de confiança"
+  },
   "phrase_investment": {
     "message": "Promessa de retornos de investimento irrealistas"
   },
   "phrase_advancefee": {
     "message": "Exigência de taxa antecipada para libertar dinheiro"
+  },
+  "phrase_advancefee_plain": {
+    "message": "Pede que pague uma taxa antes de receber dinheiro"
   },
   "phrase_loan": {
     "message": "Oferta de empréstimo com traços de burla"
@@ -524,11 +878,17 @@
   "phrase_overpayment": {
     "message": "Esquema de pagamento a mais / devolução da diferença"
   },
+  "phrase_overpayment_plain": {
+    "message": "Paga a mais e pede que devolva a diferença"
+  },
   "phrase_lottery": {
     "message": "Isco de lotaria / herança / fundos não reclamados"
   },
   "phrase_escrow": {
     "message": "Falso intermediário / pagamento retido por terceiros"
+  },
+  "phrase_escrow_plain": {
+    "message": "\"Intermediário\" falso que diz guardar o pagamento"
   },
   "phrase_fakeregulator": {
     "message": "Empresa de investimento diz ser licenciada por um governo"
@@ -536,14 +896,26 @@
   "phrase_brokerplatform": {
     "message": "Promoção de plataforma de negociação / corretora online"
   },
+  "phrase_brokerplatform_plain": {
+    "message": "Promoção de uma plataforma de investimento online"
+  },
   "det_registered": {
     "message": "Registado em $1"
+  },
+  "det_registered_plain": {
+    "message": "Criado em $1"
   },
   "det_cred_classic": {
     "message": "Configuração clássica de phishing de credenciais"
   },
+  "det_cred_classic_plain": {
+    "message": "Uma forma comum de roubar palavras-passe"
+  },
   "det_no_https_cred": {
     "message": "e a página pede credenciais ou dados de cartão"
+  },
+  "det_no_https_cred_plain": {
+    "message": "e a página pede uma palavra-passe ou dados do cartão"
   },
   "det_seed": {
     "message": "Nenhum serviço legítimo pede isto"
@@ -551,8 +923,14 @@
   "det_posts_to": {
     "message": "envia para $1"
   },
+  "det_posts_to_plain": {
+    "message": "enviado para $1"
+  },
   "det_title": {
     "message": "título/cabeçalho: \"$1\""
+  },
+  "det_title_plain": {
+    "message": "título da página: \"$1\""
   },
   "det_mentions": {
     "message": "$1 menções"
@@ -566,8 +944,14 @@
   "det_frames": {
     "message": "$1 frames"
   },
+  "det_frames_plain": {
+    "message": "$1 partes de outros sites"
+  },
   "det_chars": {
     "message": "$1 caracteres"
+  },
+  "det_chars_plain": {
+    "message": "$1 carateres"
   },
   "det_impersonating": {
     "message": "a imitar $1"
@@ -578,11 +962,20 @@
   "ev_contains": {
     "message": "o nome de domínio contém \"$1\" mas não é um domínio de $2"
   },
+  "ev_contains_plain": {
+    "message": "o endereço contém \"$1\" mas não é um site verdadeiro de $2"
+  },
   "ev_normalises": {
     "message": "parte do nome de domínio normaliza para \"$1\""
   },
+  "ev_normalises_plain": {
+    "message": "parte do endereço lê-se como \"$1\""
+  },
   "ev_typosquat": {
     "message": "\"$1\" está a $2 alteração(ões) de \"$3\""
+  },
+  "ev_typosquat_plain": {
+    "message": "\"$1\" difere apenas $2 letra(s) de \"$3\""
   },
   "ev_glued": {
     "message": "\"$1\" imita \"$2\""
@@ -593,11 +986,17 @@
   "chat_courier_pickup_advice": {
     "message": "Burla clássica do OLX/Vinted: o \"estafeta\" ou \"serviço de entrega\" é falso e o link de pagamento rouba os dados do cartão. Use apenas a entrega e o pagamento da própria plataforma."
   },
+  "chat_courier_pickup_advice_plain": {
+    "message": "Burla muito conhecida em sites de vendas: o \"estafeta\" ou \"serviço de entregas\" é falso e o link de pagamento rouba os dados do seu cartão. Use apenas a entrega e o pagamento do próprio site."
+  },
   "chat_payment_link_title": {
     "message": "Pedem-lhe para abrir um link ou introduzir dados do cartão para \"receber\" dinheiro"
   },
   "chat_payment_link_advice": {
     "message": "Ninguém precisa do seu número de cartão, CVV ou de um link para lhe pagar. Os pagamentos reais da plataforma vão para a conta que já configurou. Não abra o link."
+  },
+  "chat_payment_link_advice_plain": {
+    "message": "Ninguém precisa do número do seu cartão, dos 3 dígitos no verso do cartão ou de um link para lhe pagar. Os pagamentos reais do site vão para a conta que já configurou. Não abra o link."
   },
   "chat_fee_to_release_title": {
     "message": "Pagamento \"retido\" até pagar uma taxa ou um seguro"
@@ -611,8 +1010,14 @@
   "chat_sms_code_advice": {
     "message": "O código está a ser usado para assumir uma conta (WhatsApp, Google Voice, a própria plataforma) em seu nome. Nunca partilhe códigos que recebe por SMS."
   },
+  "chat_sms_code_advice_plain": {
+    "message": "Com esse código, o burlão pode ficar com uma das suas contas (WhatsApp, Google Voice, o próprio site de vendas) e fazer-se passar por si. Nunca partilhe códigos que recebe por SMS."
+  },
   "chat_overpayment_title": {
     "message": "Pagamento a mais / devolução da diferença"
+  },
+  "chat_overpayment_title_plain": {
+    "message": "Pagou a mais e pede a diferença de volta"
   },
   "chat_overpayment_advice": {
     "message": "O pagamento original é falso ou será revertido; qualquer \"diferença\" que devolva está perdida."
@@ -626,14 +1031,26 @@
   "chat_off_platform_title": {
     "message": "Tentativa de levar a conversa para fora da plataforma"
   },
+  "chat_off_platform_title_plain": {
+    "message": "Quer passar a conversa para outra aplicação"
+  },
   "chat_off_platform_advice": {
     "message": "Os burlões passam para o WhatsApp, Telegram ou email para que a plataforma não os veja nem bloqueie. Mantenha a conversa e o pagamento na plataforma."
+  },
+  "chat_off_platform_advice_plain": {
+    "message": "Os burlões passam para o WhatsApp, Telegram ou email para que o site não os veja nem bloqueie. Mantenha a conversa e o pagamento no site de vendas."
   },
   "chat_pay_first_title": {
     "message": "Exigência de pagamento adiantado por um canal não rastreável"
   },
+  "chat_pay_first_title_plain": {
+    "message": "Pede que pague primeiro de uma forma que não pode ser rastreada"
+  },
   "chat_pay_first_advice": {
     "message": "Sinais por transferência, MB WAY, Bizum, PayPal \"amigos e família\", cartões-presente ou cripto antes de ter o artigo não são recuperáveis. Use o pagamento protegido da plataforma ou pague no levantamento."
+  },
+  "chat_pay_first_advice_plain": {
+    "message": "Dinheiro enviado antes de ter o artigo, por transferência bancária, MB WAY, Bizum, PayPal \"amigos e família\", cartões-oferta ou cripto, não pode ser recuperado. Use o pagamento protegido do site ou pague na entrega."
   },
   "chat_rental_deposit_title": {
     "message": "Arrendamento: caução pedida antes de qualquer visita"
@@ -662,7 +1079,64 @@
   "chat_external_link_title": {
     "message": "Link externo enviado junto com conversa de pagamento ou entrega"
   },
+  "chat_external_link_title_plain": {
+    "message": "Link para outro site enviado numa conversa sobre pagamento ou entrega"
+  },
   "chat_external_link_advice": {
     "message": "Não deviam ser precisos links para $1 para pagar ou enviar. Fique na plataforma."
+  },
+  "chat_external_link_advice_plain": {
+    "message": "Não deveria precisar de um link para $1 para pagar ou enviar um artigo. Fique no site de vendas."
+  },
+  "welcome_title": {
+    "message": "Bem-vindo ao Scam Detector"
+  },
+  "welcome_caution_h": {
+    "message": "Leia por favor: esta ferramenta não apanha todas as burlas"
+  },
+  "welcome_caution_p1": {
+    "message": "O Scam Detector procura os sinais que as burlas conhecidas deixam. Vai deixar escapar algumas burlas e, muito provavelmente, truques novos que ainda ninguém identificou e descreveu."
+  },
+  "welcome_caution_p2": {
+    "message": "Por isso, não confie cegamente. Não haver aviso não quer dizer que um site ou uma mensagem seja seguro. Mantenha-se atento e nunca introduza palavras-passe, números de cartão ou códigos quando algo lhe parecer estranho."
+  },
+  "welcome_what_h": {
+    "message": "O que faz"
+  },
+  "welcome_what_p": {
+    "message": "Sempre que abre uma página, o Scam Detector verifica-a no seu computador à procura de sinais de alerta: um site criado há poucos dias, um endereço que finge ser um banco ou uma marca conhecida, uma página que pede a palavra-passe ou o cartão no site errado e frases típicas de burlas (prémios, pagamentos urgentes, \"pague uma taxa para receber o seu dinheiro\"). Se o risco for alto, aparece um aviso no topo da página."
+  },
+  "welcome_badge_h": {
+    "message": "O ponto colorido no ícone do Scam Detector"
+  },
+  "welcome_badge_green": {
+    "message": "Verde: não foram encontrados sinais de alerta."
+  },
+  "welcome_badge_yellow": {
+    "message": "Amarelo: alguns pequenos sinais de alerta. Clique no ícone para os ver."
+  },
+  "welcome_badge_red": {
+    "message": "Vermelho: há um aviso na página. Tenha muito cuidado."
+  },
+  "welcome_badge_grey": {
+    "message": "Cinzento com um visto: um site em que escolheu confiar."
+  },
+  "welcome_chat_h": {
+    "message": "Conversas em sites de vendas"
+  },
+  "welcome_chat_p": {
+    "message": "Em sites como OLX, Vinted, Wallapop, Leboncoin ou Facebook Marketplace, o Scam Detector também lê a conversa e avisa-o de truques conhecidos, como um \"estafeta\" que lhe paga através de um link ou um pedido para reencaminhar um código que recebeu por SMS."
+  },
+  "welcome_privacy_h": {
+    "message": "A sua privacidade"
+  },
+  "welcome_privacy_p": {
+    "message": "As páginas e conversas são verificadas no seu computador. Só o nome de cada site (nunca o endereço completo nem o conteúdo da página) é enviado a um serviço público para saber quando o site foi criado, e uma lista de sites falsos denunciados é transferida algumas vezes por dia. Se adicionar a sua própria chave da Google nas definições, os endereços das páginas também são verificados na lista de sites perigosos da Google."
+  },
+  "welcome_settings_p": {
+    "message": "Pode mudar tudo isto, e escolher entre linguagem simples e técnica, nas definições."
+  },
+  "welcome_settings_btn": {
+    "message": "Abrir definições"
   }
 }

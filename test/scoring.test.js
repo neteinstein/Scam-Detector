@@ -144,3 +144,24 @@ test('clone broker: young domain claiming government licensing is danger, a real
   const real = pitch + 'IG Markets Ltd is authorised and regulated by the Financial Conduct Authority.';
   assert.equal(scoring.evaluate({ hostname: 'some-broker.com', ageDays: 6000, rdapStatus: 'ok' }, page({ phrases: phrases.scan(real) }), {}).verdict, 'ok');
 });
+
+test('defaults: Safe Browsing, chat monitor and non-tech terms are on', () => {
+  const d = require('../src/lib/scoring.js').DEFAULT_SETTINGS;
+  assert.equal(d.safeBrowsingEnabled, true);
+  assert.equal(d.chatMonitorEnabled, true);
+  assert.equal(d.plainLanguage, true);
+});
+
+test('toolbar badge: green, yellow, red, grey check', () => {
+  const { badgeFor } = require('../src/lib/scoring.js');
+  const sig = [{ id: 'digits', weight: 4 }];
+  assert.equal(badgeFor({ verdict: 'ok', signals: [] }).state, 'green');
+  assert.equal(badgeFor({ verdict: 'ok', signals: sig }).state, 'yellow');
+  assert.equal(badgeFor({ verdict: 'warning', signals: sig, settings: { showWarnBanner: false } }).state, 'yellow');
+  assert.equal(badgeFor({ verdict: 'warning', signals: sig, settings: { showWarnBanner: true } }).state, 'red');
+  assert.equal(badgeFor({ verdict: 'danger', signals: sig }).state, 'red');
+  const t = badgeFor({ verdict: 'trusted', signals: [] });
+  assert.deepEqual([t.state, t.text, t.color], ['trusted', '✓', '#757575']);
+  assert.equal(badgeFor({ verdict: 'skipped' }).text, '');
+  for (const r of [{ verdict: 'ok', signals: [] }, { verdict: 'danger', signals: sig }]) assert.ok(!/\d/.test(badgeFor(r).text), 'no score number');
+});
