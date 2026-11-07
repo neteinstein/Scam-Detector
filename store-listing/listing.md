@@ -32,7 +32,7 @@ Page
 • Credentials sent to another domain or over plain HTTP
 • Pages that call themselves a brand they are not, or borrow the real brand's logo and favicon
 • Social-engineering wording: urgency, prizes, tech-support alerts, parcel-fee lures, tiny "verification fees"
-• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops
+• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops, and fake online brokers ("clone firms") claiming to be licensed by a government
 • Fake navigation, deceptive links, decorative "secure" badges
 
 Wording is recognised in English, Portuguese, Spanish and French.
@@ -60,7 +60,12 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.2.1)
+## What's new (version 1.2.2)
+
+• New: detects fake online brokers ("clone firms") that claim to be licensed by a government, and online trading-platform pitches on newly registered sites.
+• Fewer false alarms: images and icons a site keeps on its own cloud storage (Google Cloud Storage, Amazon S3, Azure) are no longer mistaken for copies of Google's, Amazon's or Microsoft's own pages.
+
+Version 1.2.1:
 
 • Fixed false alarms on major sites such as google.com: a phishing report about one redirect link or the home page no longer flags every page of a well-known service.
 • A site mentioning its own brand ("Google" on google.com) is no longer counted as impersonation.

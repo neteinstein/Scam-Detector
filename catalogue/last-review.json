@@ -11,7 +11,9 @@
   "added": [
     "Shared-host list seeded from PhishTank host statistics: QR/link shorteners (qrco.de, q-r.to, l.ead.me, l.wl.co, did.li, zpr.io, surl.li, flowcode, qr-codes.io), form builders (hsforms, powr.io), link-in-bio (linkin.bio, linqapp), Google Docs/Sites, Adobe Express, Dropbox, WeTransfer, Mockplus, ipfs gateways",
     "Brands from PhishTank most-targeted list: Allegro, Bradesco, Banco do Brasil, Itau, Nubank, Optus, Societe Generale, La Banque Postale, Credit Agricole, BNP Paribas, Free Mobile, Ameli, impots.gouv.fr, ANTAI, SMBC, Interactive Brokers, ABN AMRO, Rabobank, DBS, Scotiabank, Raiffeisen, Swiss Post, Intesa Sanpaolo, UniCredit, Poste Italiane, ABSA, Huntington, AEON, Sparkasse, Commerzbank, Postbank, DKB, Hermes DE",
-    "Marketplace list and PT banks/couriers/public bodies from Banco de Portugal, PJ and DECO reporting"
+    "Marketplace list and PT banks/couriers/public bodies from Banco de Portugal, PJ and DECO reporting",
+    "Phrase categories fakeregulator (investment firm 'authorised by the UK government') and brokerplatform (CFD/forex trading pitch) in en/pt/es/fr, from a user-reported clone broker (quinaspro.com, registered 2026-05-27)",
+    "Closed brand TLDs (.microsoft, .google, .apple, ...) treated as the brand's own; top-100 user-content/CDN hosts added to shared hosts after validating against the Tranco top 100"
   ],
   "notes": [
     "Imovirtual, Standvirtual, Continente, Pingo Doce, Worten, Via Verde and the MB WAY request-vs-send chat pattern are known gaps (see README limitations)"

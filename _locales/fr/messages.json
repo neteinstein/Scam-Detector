@@ -530,6 +530,12 @@
   "phrase_escrow": {
     "message": "Faux séquestre / paiement retenu par un tiers"
   },
+  "phrase_fakeregulator": {
+    "message": "Société d'investissement prétendant être agréée par un gouvernement"
+  },
+  "phrase_brokerplatform": {
+    "message": "Promotion de plateforme de trading / courtier en ligne"
+  },
   "det_registered": {
     "message": "Enregistré le $1"
   },

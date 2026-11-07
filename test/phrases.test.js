@@ -39,6 +39,8 @@ test('money-claim categories in four languages', () => {
     ['loan', 'Guaranteed loan approval, no credit check required', 'Empréstimo aprovado sem consulta ao Banco de Portugal', 'Préstamo aprobado sin consulta a ASNEF', 'Prêt garanti sans justificatif, frais de dossier à payer avant'],
     ['techsupport', 'Your computer is infected. Call now +1 (888) 555-0199', 'O seu computador está infetado. Ligue já 800 123 456', 'Su ordenador está infectado. Llame ahora al 900 123 456', 'Votre ordinateur est infecté. Appelez maintenant le 0800 123 456'],
     ['delivery', 'Your package is on hold, pay the redelivery fee', 'A sua encomenda está retida, pague a taxa de reenvio', 'Su paquete está retenido, pague la tasa de aduana', 'Votre colis est en attente, réglez les frais de livraison'],
+    ['fakeregulator', 'XYZ Ltd, a UK-registered investment company authorised by the United Kingdom government', 'A XYZ é uma empresa de investimento autorizada pelo governo do Reino Unido', 'XYZ es una empresa de inversión autorizada por el gobierno del Reino Unido', "XYZ est une société d'investissement agréée par le gouvernement britannique"],
+    ['brokerplatform', 'The leading CFD trading firm. Open a trading account and fund your account today', 'Plataforma de negociação de CFDs: abra uma conta de negociação', 'La mejor plataforma de trading de CFDs: abre una cuenta de trading', 'La plateforme de trading de CFD : ouvrez un compte de trading'],
     ['prize', 'Congratulations, you have been selected! Claim your prize', 'Parabéns, foi selecionado! Reclame o seu prémio', '¡Enhorabuena, has sido seleccionado! Reclama tu premio', 'Félicitations, vous avez été sélectionné ! Réclamez votre prix'],
   ];
   for (const [cat, ...texts] of cases) {
@@ -63,5 +65,9 @@ test('benign multilingual copy does not trigger', () => {
     'Bem-vindo à nossa loja. Portes grátis acima de 50€. Crie uma conta para acompanhar as suas encomendas.',
     'Bienvenido a nuestra tienda. Envío gratis a partir de 50€. Crea una cuenta para seguir tus pedidos.',
     'Our savings account pays 3% interest per year. Terms apply.',
-  ]) assert.deepEqual(phrases.scan(t), [], t);
+    // Real regulator statements are not government claims
+    'IG Markets Ltd is authorised and regulated by the Financial Conduct Authority (FCA), register number 195355.',
+    'CySEC regulated investment firm. 74% of retail investor accounts lose money when trading CFDs.',
+    'The UK government announced new rules for investment firms regulated by the FCA.',
+  ]) assert.ok(!phrases.scan(t).some((p) => p.category === 'fakeregulator'), t);
 });

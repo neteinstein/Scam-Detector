@@ -134,3 +134,13 @@ test('a brand naming itself on its own domain is not a brand mismatch', () => {
     page({ title: 'Google', titleBrands: ['Google'], bodyBrandCounts: { Google: 9 }, brandAssets: [{ brand: 'Google', host: 'www.gstatic.com', kind: 'favicon' }] }), {});
   for (const id of ['brand-title', 'brand-body', 'brand-favicon', 'brand-assets']) assert.ok(!ids(r).includes(id), id);
 });
+
+test('clone broker: young domain claiming government licensing is danger, a real broker is not', () => {
+  const pitch = 'The leading CFD trading firm for experts and beginners. Open a trading account. Fund your account and complete KYC. ';
+  const clone = pitch + 'Operated by XYZ Trading Limited, a UK-registered investment company authorised by the United Kingdom government. Regulated by the FCA.';
+  const r = scoring.evaluate({ hostname: 'quinaspro.com', ageDays: 164, rdapStatus: 'ok' }, page({ phrases: phrases.scan(clone) }), {});
+  assert.equal(r.verdict, 'danger');
+  assert.ok(ids(r).includes('phrase-fakeregulator'));
+  const real = pitch + 'IG Markets Ltd is authorised and regulated by the Financial Conduct Authority.';
+  assert.equal(scoring.evaluate({ hostname: 'some-broker.com', ageDays: 6000, rdapStatus: 'ok' }, page({ phrases: phrases.scan(real) }), {}).verdict, 'ok');
+});
