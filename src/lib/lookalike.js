@@ -7,6 +7,10 @@
   else { root.SD = root.SD || {}; root.SD.lookalike = factory(root.SD.domain, root.SD.brands, root.SD.punycode); }
 })(typeof self !== 'undefined' ? self : this, function (domain, brands, punycode) {
   // Characters that are routinely swapped for look-alikes in domain names.
+  // Ordinary words that are never treated as a typo of a brand name when they
+  // make up the whole domain name (mail.ru is not "gmail").
+  const GENERIC_SLDS = new Set(brands.SUSPICIOUS_TOKENS.concat(['news', 'shop', 'store', 'home', 'search', 'video', 'music', 'games', 'photos', 'maps', 'chat']));
+
   const ASCII_CONFUSABLES = { '0': 'o', '1': 'l', '3': 'e', '4': 'a', '5': 's', '7': 't', '8': 'b', '9': 'g', '2': 'z', '6': 'b', 'l': 'l', '|': 'l' };
   const MULTI_CONFUSABLES = [['rn', 'm'], ['vv', 'w'], ['cl', 'd'], ['nn', 'm'], ['ii', 'u']];
   // Unicode confusables (Cyrillic, Greek, Latin extended, full-width...) → ASCII
@@ -119,7 +123,8 @@
         }
         // 3. Typosquat of the registrable SLD (gooogle, paypai, amazom, faceboook)
         const sld = unicodeParsed.sld || parsed.sld;
-        if (kw.length >= 5 && sld && sld !== kw) {
+        // A plain generic word ("mail" vs "gmail", "drive") is not a typo of a brand.
+        if (kw.length >= 5 && sld && sld !== kw && !GENERIC_SLDS.has(sld)) {
           const dist = domain.levenshtein(sldSkeleton, kw);
           const maxDist = kw.length >= 9 ? 2 : 1;
           if (dist > 0 && dist <= maxDist) {

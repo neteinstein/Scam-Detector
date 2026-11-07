@@ -220,9 +220,25 @@
   const byDomain = new Map();
   for (const b of BRANDS) for (const d of b.domains) byDomain.set(d, b);
 
+  // Closed ".brand" top-level domains: only the brand itself can register
+  // names under them (cloud.microsoft, about.google, ...).
+  const BRAND_TLDS = {
+    microsoft: 'Microsoft', office: 'Microsoft', windows: 'Microsoft', xbox: 'Microsoft', bing: 'Microsoft', azure: 'Microsoft', skype: 'Microsoft',
+    google: 'Google', youtube: 'Google', gmail: 'Google', android: 'Google', chrome: 'Google',
+    apple: 'Apple', amazon: 'Amazon', aws: 'Amazon', netflix: 'Netflix', barclays: 'Barclays', hsbc: 'HSBC', citi: 'Citi',
+    americanexpress: 'American Express', amex: 'American Express', bnpparibas: 'BNP Paribas', santander: 'Santander', bbva: 'BBVA',
+    dhl: 'DHL', fedex: 'FedEx', ups: 'UPS', ebay: 'eBay', walmart: 'Walmart',
+  };
+  const byName = new Map(BRANDS.map((b) => [b.name, b]));
+
   function findByDomain(registrable) {
-    return byDomain.get(registrable) || null;
+    const r = String(registrable || '');
+    const hit = byDomain.get(r);
+    if (hit) return hit;
+    const dot = r.lastIndexOf('.');
+    const tld = dot >= 0 ? r.slice(dot + 1) : '';
+    return (dot > 0 && Object.prototype.hasOwnProperty.call(BRAND_TLDS, tld) && byName.get(BRAND_TLDS[tld])) || null;
   }
 
-  return { BRANDS, WHOLE_LABEL_ONLY, SUSPICIOUS_TOKENS, findByDomain };
+  return { BRANDS, WHOLE_LABEL_ONLY, SUSPICIOUS_TOKENS, BRAND_TLDS, findByDomain };
 });

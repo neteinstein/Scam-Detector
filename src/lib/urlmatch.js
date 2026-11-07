@@ -31,7 +31,12 @@
     'zpr.io', 'linkin.bio', 'scanned.page', 'linqapp.com', 'powr.io', 'surl.li', 'mockplus.com', 'rp.mockplus.com', 'wetransfer.com',
     'qr.io', 'qrfy.com', 'me-qr.com', 'qr-code-generator.com', 'beaconstac.com', 'linktree.com', 'taplink.cc', 'bio.site', 'lnk.bio',
     'campaign-archive.com', 'list-manage.com', 'flow.page', 'campsite.bio', 'sendgrid.net', 'clickfunnels.com', 'systeme.io', 'groove.cm', 'gitbook.io',
+    // Top-100 sites (Tranco, 2026-11) that host user content, redirect links or CDN traffic for many unrelated customers
+    'tiktok.com', 'tiktokcdn.com', 'tiktokv.com', 'wa.me', 'whatsapp.com', 'whatsapp.net', 'baidu.com', 'qq.com', 'pinterest.com', 'vimeo.com',
+    'wikipedia.org', 'wordpress.org', 'mail.ru', 'dzen.ru', 'yandex.net', 'yandex.ru', 'myfritz.net', 'fastly.net', 'akamaiedge.net',
+    'akamaized.net', 'edgekey.net', 'cloudflare.net', 'cdn77.org', 'trafficmanager.net', 'cloudflare.com', 'mozilla.org',
   ]);
+  const INDEX_VERSION = 2; // bump when key rules change so stored indexes are rebuilt
   const MAX_HOST_REPORTS_FOR_HOST_SIGNAL = 100; // more than this on one host = a shared platform we do not know about
   const HASH_BYTES = 12;
 
@@ -62,23 +67,57 @@
     return String(normalized || '').split(/[/?]/)[0].replace(/:\d+$/, '');
   }
 
-  /** Keys stored for one reported URL: full form and, if it has a query, the form without it. */
+  /** Number of path segments in a normalised key ("host/a/b?x" -> 2). */
+  function pathDepth(key) {
+    const noQuery = String(key || '').split('?')[0];
+    const i = noQuery.indexOf('/');
+    return i < 0 ? 0 : noQuery.slice(i + 1).split('/').filter(Boolean).length;
+  }
+
+  /**
+   * True for hosts whose address space is shared by unrelated people: a big
+   * brand's own hosts (google.com, docs.google.com, forms.office.com) and the
+   * shared platforms themselves (bit.ly, weebly.com). A customer subdomain
+   * such as foo.weebly.com belongs to one owner and is not path-shared.
+   */
+  function isPathShared(host) {
+    const h = domain.normalizeHost(host).replace(/^www\./, '').replace(/:\d+$/, '');
+    if (!h) return false;
+    if (SHARED_HOSTS.has(h)) return true;
+    for (const suf of domain.FREE_HOSTING_SUFFIXES) if (h !== suf && h.endsWith('.' + suf)) return false; // a tenant's own site
+    return !!brands.findByDomain(domain.parse(h).registrable);
+  }
+
+  /**
+   * On path-shared hosts a short or query-stripped key covers every visitor of
+   * that service: one report of an open redirect (google.com/url?q=evil), a
+   * form (forms.office.com/...?id=x) or the home page would flag them all.
+   * There, the site root never matches and the query is never dropped from a
+   * report.
+   */
+  function keyAllowed(key, shared) {
+    return !shared || pathDepth(key) >= 1;
+  }
+
+  /** Keys stored for one reported URL: full form and, if it has a query and the host is not path-shared, the form without it. */
   function storedKeys(url) {
     const n = normalizeUrl(url);
     if (!n) return [];
+    const shared = isPathShared(hostOf(n));
     const keys = [n];
     const q = n.indexOf('?');
-    if (q >= 0) keys.push(n.slice(0, q));
-    return keys;
+    if (q >= 0 && !shared) keys.push(n.slice(0, q));
+    return keys.filter((k) => keyAllowed(k, shared));
   }
 
   /** Keys to look up for a visited URL, most specific first: full, without query, then shorter paths. */
   function candidates(url) {
     const n = normalizeUrl(url);
     if (!n) return [];
+    const shared = isPathShared(hostOf(n));
     const out = [];
     const seen = new Set();
-    const push = (k) => { if (k && !seen.has(k)) { seen.add(k); out.push(k); } };
+    const push = (k) => { if (k && !seen.has(k) && keyAllowed(k, shared)) { seen.add(k); out.push(k); } };
     push(n);
     const q = n.indexOf('?');
     const noQuery = q >= 0 ? n.slice(0, q) : n;
@@ -180,7 +219,7 @@
     const hostHashes = await hashKeys(hostEntries.map(([h]) => h));
     const hosts = {};
     hostEntries.forEach(([, n], i) => { hosts[hostHashes[i]] = n; });
-    return { urls, hosts, count, targets };
+    return { v: INDEX_VERSION, urls, hosts, count, targets };
   }
 
   function binarySearch(sorted, value) {
@@ -211,5 +250,5 @@
     return null;
   }
 
-  return { SHARED_HOSTS, isSharedHost, normalizeUrl, hostOf, storedKeys, candidates, hashKey, hashKeys, parseCsv, parsePhishTankCsv, buildIndex, lookup };
+  return { INDEX_VERSION, SHARED_HOSTS, isSharedHost, isPathShared, normalizeUrl, hostOf, storedKeys, candidates, hashKey, hashKeys, parseCsv, parsePhishTankCsv, buildIndex, lookup };
 });

@@ -60,7 +60,14 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.2.0)
+## What's new (version 1.2.1)
+
+• Fixed false alarms on major sites such as google.com: a phishing report about one redirect link or the home page no longer flags every page of a well-known service.
+• A site mentioning its own brand ("Google" on google.com) is no longer counted as impersonation.
+• No false alarms on mail.ru ("mail" is not a typo of "gmail") or on brand-owned domains such as cloud.microsoft.
+• Phishing reports about a single form or page on a shared service (Microsoft Forms, TikTok, WhatsApp links) no longer flag the whole service. Validated against the 100 most visited sites.
+
+Version 1.2.0:
 
 • The whole interface now follows your browser language: English, Portuguese, Spanish and French.
 • Every warning explanation, chat-scam advice and settings text is translated.
