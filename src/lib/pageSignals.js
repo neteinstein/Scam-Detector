@@ -171,6 +171,8 @@
   }
 
   /** Main entry: returns a plain serialisable object. */
+  const TENANT_STORAGE_HOSTS = Array.from(domain.FREE_HOSTING_SUFFIXES).concat(['firebasestorage.googleapis.com']);
+
   function collect(doc, loc, extraBrands) {
     const allBrands = extraBrands && extraBrands.length ? brands.BRANDS.concat(extraBrands) : brands.BRANDS;
     const base = loc.href;
@@ -264,7 +266,10 @@
         if (!h) continue;
         const reg = domain.parse(h).registrable;
         if (reg === here.registrable) continue;
-        const owner = brands.findByDomain(reg);
+        // Customer storage on a brand's cloud (storage.googleapis.com,
+        // s3.amazonaws.com, blob.core.windows.net) is not the brand's own site.
+        const tenantStorage = TENANT_STORAGE_HOSTS.some((suf) => h === suf || h.endsWith('.' + suf));
+        const owner = tenantStorage ? null : brands.findByDomain(reg);
         if (owner && !owner.domains.some((d) => domain.isSubdomainOf(here.host, d))) {
           const key = owner.name + ':' + a.kind;
           if (!seen.has(key)) { seen.add(key); info.brandAssets.push({ brand: owner.name, host: h, kind: a.kind }); }
