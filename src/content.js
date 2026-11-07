@@ -248,6 +248,11 @@
     if (msg && msg.type === 'RESCAN') { pageDismissed = false; chatDismissedSignature = ''; lastSignature = ''; lastChatSignature = ''; scan(true).then(() => { chatScan(); sendResponse({ ok: true }); }); return true; }
     if (msg && msg.type === 'HIDE_BANNER') { pageDismissed = true; render(); sendResponse({ ok: true }); }
     if (msg && msg.type === 'GET_CHAT_RESULT') { sendResponse(chatResult); }
+    if (msg && msg.type === 'EXPAND_DETAILS') { // used by the screenshot tooling; the shadow root is closed
+      const host = document.getElementById(HOST_ID);
+      if (host && host._shadow) for (const d of host._shadow.querySelectorAll('.details')) d.classList.add('open');
+      sendResponse({ ok: !!host });
+    }
     return false;
   });
   try {

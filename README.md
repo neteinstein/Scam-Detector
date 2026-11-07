@@ -1,37 +1,95 @@
+<div align="center">
+
+<img src="icons/icon128.png" width="96" alt="Scam Detector icon">
+
 # Scam Detector
 
-A Chrome extension (Manifest V3) that inspects every page you visit for the tell-tale
-traces of a scam and shows a warning banner at the top of the page when the risk is high.
+**A Chrome extension that warns you before a scam website gets your passwords, card details or money.**
 
-![banner](docs/banner.png)
+[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
+[![Tests](https://img.shields.io/badge/tests-60%20passing-2e7d32)](test/)
+[![Languages](https://img.shields.io/badge/detects-EN%20%C2%B7%20PT%20%C2%B7%20ES%20%C2%B7%20FR-b45309)](src/lib/phrases.js)
+[![No build step](https://img.shields.io/badge/build-none%20needed-6c757d)](#development)
+[![License](https://img.shields.io/badge/license-MIT-blue)](package.json)
 
-![chat banner](docs/chat-banner.png)
+<img src="docs/scenario-phishing-login.png" width="900" alt="Red warning banner on a fake PayPal login page, with the reasons expanded">
 
-Everything runs locally in the browser. The only network request is an optional
-lookup of the domain's registration date (see [Privacy](#privacy)).
+*A fake PayPal login on a look-alike domain. The banner explains why, in plain words, and offers a one-click way out.*
 
-## Install (unpacked)
+</div>
 
-1. Clone this repository.
-2. Open `chrome://extensions`, enable **Developer mode** (top right).
-3. Click **Load unpacked** and select the repository folder (the one containing `manifest.json`).
+---
 
-The shield icon shows the risk score of the current tab as a badge (red = likely scam,
-amber = suspicious, green tick = known / trusted site). Click it for the full list of
-signals, to re-scan, or to trust a site.
+## What it does
 
-## What it looks at
+Every page you open is scored from 0 to 100 for the traces scams leave behind: a domain registered days ago, a brand name hidden in the address, a login form that posts somewhere else, a logo hot-linked from the real company, the wording of a "your account has been suspended" page, a courier that will "collect the item and pay you by link". When the score crosses a threshold a banner appears at the top of the page:
 
-Each observation becomes a weighted *signal*; the weights add up to a 0–100 risk
-score. Independent strong signals reinforce each other. Default thresholds:
-**≥ 60 → red "likely a scam" banner**, **≥ 35 → amber "suspicious" banner**.
+| Score | Banner | Meaning |
+| --- | --- | --- |
+| **60 – 100** | 🔴 **This website is likely a scam** | Several strong, independent indicators. Do not enter anything. |
+| **35 – 59** | 🟠 **This website looks suspicious** | Some indicators. Look closer before trusting it. |
+| 0 – 34 | none | The toolbar badge still shows the score and the popup lists any minor observations. |
 
-### Domain-level signals
+Everything runs inside the browser. The only network traffic is a domain-registration lookup (domain name only), a periodic download of PhishTank's public reports feed, and, if you opt in with your own key, a Google Safe Browsing check. See [Privacy](#privacy).
+
+## Scenarios
+
+<table>
+<tr>
+<td width="50%"><img src="docs/scenario-crypto-investment.png" alt="Crypto investment scam"><br><b>Crypto "double your Bitcoin" page.</b> Seed-phrase field, guaranteed-returns wording, airdrop lure and a cheap TLD stack up to a red banner.</td>
+<td width="50%"><img src="docs/scenario-parcel-fee-pt.png" alt="Portuguese parcel-fee scam"><br><b>Parcel-fee scam in Portuguese.</b> A CTT look-alike domain asking for card details to "reschedule delivery" for €1,99. Wording is matched in Portuguese, Spanish, French and English.</td>
+</tr>
+<tr>
+<td><img src="docs/scenario-tech-support.png" alt="Tech-support scam"><br><b>Tech-support scare page.</b> "Your computer is infected, call now" plus urgency and a phishing-style hostname lands in the amber range.</td>
+<td><img src="docs/scenario-suspicious-shop.png" alt="Suspicious shop"><br><b>Too-good-to-be-true shop.</b> "Offer ends today, only 3 left, bank transfer only, as seen on TV" on a .top domain with dead navigation: suspicious, not yet condemned.</td>
+</tr>
+<tr>
+<td><img src="docs/scenario-chat-monitor.png" alt="Marketplace chat monitor"><br><b>Marketplace chat monitor (opt-in).</b> On OLX, Vinted, Wallapop, Leboncoin and ~100 other classified sites, the classic "I'm abroad, my courier will collect it, click the link to receive the payment" script is recognised in the conversation itself, including the fake OLX payment link.</td>
+<td><img src="docs/scenario-reported-page.png" alt="Reported page on a shared host"><br><b>Verified phishing report on a shared host.</b> A credential-harvesting form hosted on Google Forms is flagged because that exact page is in PhishTank's verified feed, matched locally. Other Google Docs pages stay trusted.</td>
+</tr>
+</table>
+
+### Popup and settings
+
+<table>
+<tr>
+<td width="33%"><img src="docs/popup-findings.png" alt="Popup with findings"><br><b>Every finding with its weight.</b> Click the badge to see what contributed to the score.</td>
+<td width="33%"><img src="docs/popup-reported.png" alt="Popup for a reported page"><br><b>Reputation sources in the popup.</b> PhishTank feed status and, when enabled, the Safe Browsing answer.</td>
+<td width="33%"><img src="docs/popup-ok.png" alt="Popup on a clean site"><br><b>Clean site.</b> Score 0, registration date from RDAP, nothing to worry about.</td>
+</tr>
+</table>
+
+<details>
+<summary><b>Settings page</b> (thresholds, reputation sources, chat monitor, trusted domains, custom brands)</summary>
+<br>
+<img src="docs/options.png" width="820" alt="Settings page">
+</details>
+
+## How it works
+
+```mermaid
+flowchart LR
+    P[Page loads] --> C[Content script<br/>collects page signals]
+    C --> B[Service worker]
+    B --> R1[RDAP<br/>domain age]
+    B --> R2[PhishTank feed<br/>local hash lookup]
+    B --> R3[Safe Browsing<br/>opt-in, own key]
+    B --> L[Look-alike & brand checks]
+    R1 & R2 & R3 & L --> S[Scoring<br/>0–100]
+    S -->|≥ 35| W[Banner + badge]
+    S -->|< 35| Q[Badge only]
+    C -. opt-in on marketplaces .-> M[Chat monitor] --> W
+```
+
+Each observation becomes a weighted **signal**; weights add up, strong independent signals reinforce each other, and the total is clamped to 100. Pages on the real domains of known brands, on local networks and on domains you trust are never flagged, with one exception: a verified phishing report for the exact page overrides the brand shortcut, so phishing hosted on Google Docs or Dropbox still warns.
+
+<details>
+<summary><b>Domain-level signals</b></summary>
 
 | Signal | Description | Weight |
 | --- | --- | --- |
 | Domain age | Registration date via RDAP. < 7 days: 35, < 30 days: 30, < 90: 22, < 180: 14, < 1 year: 8 | up to 35 |
-| Brand impersonation | The hostname contains, typosquats or homoglyph-mimics one of ~130 commonly impersonated brands (banks, payments, crypto, couriers, tax authorities, big tech) and is **not** one of that brand's real domains. Covers `paypal-secure-login.com`, `paypa1.com`, `secure.paypal.com.evil.net`, `gooogle.com`, `xn--pypal-4ve.com` (Cyrillic а), `micros0ft-support.live`, `amazon-de.top`… | 28–35 |
+| Brand impersonation | The hostname contains, typosquats or homoglyph-mimics one of ~180 commonly impersonated brands (banks, payments, crypto, couriers, tax authorities, telecoms, marketplaces, big tech) and is **not** one of that brand's real domains. Covers `paypal-secure-login.com`, `paypa1.com`, `secure.paypal.com.evil.net`, `gooogle.com`, `xn--pypal-4ve.com` (Cyrillic а), `micros0ft-support.live`, `amazon-de.top` | 28–35 |
 | IDN / punycode | Non-Latin hostname without a brand match | 10 |
 | Raw IP host | Site addressed by IP instead of a name | 25 |
 | Risky TLD | TLDs with a very high abuse share (`.zip`, `.top`, `.xyz`, `.tk`, `.icu`, `.sbs`, …) | 4–14 |
@@ -39,17 +97,21 @@ score. Independent strong signals reinforce each other. Default thresholds:
 | Structure | Many hyphens, deep subdomains, very long host, mixed digits, random-looking names | 4–8 each |
 | No HTTPS | Unencrypted page; much worse if it asks for credentials | 10 / 25 |
 
-### Reputation sources
+</details>
+
+<details>
+<summary><b>Reputation sources</b></summary>
 
 | Signal | Description | Weight |
 | --- | --- | --- |
-| Verified phishing report | The page (or a path prefix of it) is in PhishTank's verified-online feed. A local copy of the feed (~50k addresses, refreshed every 6 hours, stored as truncated SHA-256 hashes) is matched in the browser, so visited URLs never leave the device. Works on shared platforms such as Google Docs, Sites and link shorteners, where only exact-page matches count | 75 |
-| Phishing reports on this host | The host has one or more verified reports and is not a shared platform | 45 |
-| Google Safe Browsing (opt-in) | With the user's own API key, the Lookup API is asked about each page; warnings carry the "Advisory provided by Google" attribution and links Google's terms require, and answers are cached at most 30 minutes | 75 |
+| Verified phishing report | The page (or a path prefix of it) is in PhishTank's verified-online feed. A local copy (~50k addresses, refreshed every 6 hours, stored as truncated SHA-256 hashes) is matched in the browser, so visited URLs never leave the device. On shared platforms (Google Docs/Sites, link shorteners, form builders, free hosting) only exact-page matches count | 75 |
+| Phishing reports on this host | The host has verified reports and is not a shared platform | 45 |
+| Google Safe Browsing (opt-in) | With your own API key, the Lookup API is asked about each page. Warnings carry the "Advisory provided by Google" attribution and the links Google's terms require; answers are cached at most 30 minutes | 75 |
 
-These run before the "known brand domain" shortcut, so a phishing page hosted on `docs.google.com` still warns.
+</details>
 
-### Page-level signals
+<details>
+<summary><b>Page-level signals</b></summary>
 
 | Signal | Description | Weight |
 | --- | --- | --- |
@@ -57,85 +119,88 @@ These run before the "known brand domain" shortcut, so a phishing page hosted on
 | Seed phrase request | Input asking for a wallet recovery phrase / private key | 35 |
 | Cross-domain submission | Credentials posted to a different registrable domain, or over plain HTTP | 20 |
 | Brand mismatch | Page title / heading / copyright claims to be a brand the domain does not belong to (ambiguous names like *Apple*, *Chase*, *Visa* need an account/login context) | 10, 22 with a form |
-| Hot-linked brand assets | Favicon or logos loaded from the real brand's servers (phishing kits do this) | 15–20 |
-| Social-engineering language | Urgency ("account suspended, verify within 24 hours"), prizes, tech-support alerts with phone numbers, parcel-fee lures, fake "100% safe" claims. **English, Portuguese, Spanish and French**, matched accent-insensitively | 5–15 per category |
-| Money claims | Templates of well-known money frauds: unrealistic investment returns ("5% daily, guaranteed"), advance fees to "release" funds, loans with no credit check but an upfront insurance fee, job offers that pay a fortune but charge a registration fee or need you to "recharge your account", overpayment / refund-the-difference, lottery / inheritance / unclaimed funds, fake escrow ("our shipping agent holds the money"), crypto doubling / airdrops, gift-card-only payment, tiny "verification" fees. Same four languages | 8–14 per category |
-| Money claims + a way to take your money | Card or account form next to money claims (+12), several independent money-fraud templates on one page (+10), money claims on a days-old or free-hosted site (+10) | up to 32 |
-
-All language signals together are capped at 40 points.
-| Fake navigation | Most links go to `#` / `javascript:` | 8 |
-| Deceptive links | Link text shows one domain, `href` goes to another | 6–12 |
+| Hot-linked brand assets | Favicon or logos loaded from the real brand's servers | 15–20 |
+| Social-engineering language | Urgency, prizes, tech-support alerts, parcel-fee lures, fake "100% safe" claims | 5–15 per category |
+| Money claims | Templates of well-known money frauds: unrealistic investment returns, advance fees to "release" funds, no-credit-check loans with upfront fees, job offers that charge a registration fee, overpayment refunds, lottery / inheritance / unclaimed funds, fake escrow, crypto doubling, gift-card-only payment, tiny "verification fees" | 8–14 per category |
+| Money claims + a way to take your money | Card or account form next to money claims, several fraud templates on one page, money claims on a days-old or free-hosted site | up to 32 |
+| Fake navigation / deceptive links | Most links go nowhere; link text shows one domain, `href` another | 6–12 |
 | Misc | Right-click disabled on a login page, decorative "secure" badges, auto-redirect to another domain, many third-party frames | 5–8 |
 
-Pages on the real domains of known brands, on `localhost` / private networks, and on
-domains you trust are never flagged. Phishing kits often inject the login form after
-load, so the page is re-scanned on DOM changes for the first 45 seconds.
+All language signals together are capped at 40 points. Patterns exist in **English, Portuguese, Spanish and French**, matched accent-insensitively.
 
-## Marketplace chat monitor (opt-in)
+</details>
 
-Scams on classified sites rarely live on a suspicious domain: the site is OLX, Vinted,
-Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace or Idealista, and the
-fraud happens in the chat. Enable **Marketplace chat monitor** in settings and the
-extension watches the conversation area on those sites (plus any domains you add) and
-shows a blue banner explaining the scheme when the conversation matches one of the
-standard scripts, in English, Portuguese, Spanish or French:
+<details>
+<summary><b>Marketplace chat schemes</b> (opt-in)</summary>
 
 | Scheme | Typical message |
 | --- | --- |
 | Courier pick-up | "I'm abroad, I'll send a courier to collect it, the transport company pays you" |
 | Payment link / card details to *receive* money | "Click the link to receive the payment and enter your card details" |
-| Look-alike link | A link in the chat whose domain imitates the marketplace or a payment brand (`olx-entregas-pagamento.com`) |
-| Fee to release the money | "The payment is held by the platform until you pay the transport insurance (refunded on delivery)" |
-| Forward the SMS code | "Send me the verification code you just received, so I know you're real" |
+| Look-alike link | A link in the chat whose domain imitates the marketplace or a payment brand |
+| Fee to release the money | "The payment is held by the platform until you pay the transport insurance" |
+| Forward the SMS code | "Send me the verification code you just received" |
 | Overpayment | "I sent too much by mistake, refund the difference" |
 | Rental deposit before viewing | "Pay the deposit first, the keys will be sent by courier, Airbnb will handle it" |
 | Fake payment proof / upgrade | "I've paid, see the screenshot. It's pending until you upgrade to a business account" |
 | Pay upfront via untraceable channel | "Bank transfer / MB WAY / Bizum / PayPal friends & family / gift cards first, then I ship" |
-| Off-platform + abroad + pressure | "Let's talk on WhatsApp", "I can't come in person", "I need it today, I'll pay extra" (weak alone, alert together) |
+| Off-platform + abroad + pressure | Weak alone, an alert together |
 
-The chat text never leaves the browser. Everything runs on the page with the same
-regex catalogue used by the unit tests (`src/lib/chatSchemes.js`).
+The chat text never leaves the browser. On sites without a recognisable chat area, only the strong schemes are applied to the page text.
+
+</details>
+
+## Install
+
+Until the Chrome Web Store listing is live:
+
+1. Clone this repository.
+2. Open `chrome://extensions`, enable **Developer mode** (top right).
+3. Click **Load unpacked** and select the repository folder (the one containing `manifest.json`).
+
+The shield icon shows the risk score of the current tab (red, amber, or a green tick for known and trusted sites). Click it for the full list of findings, to re-scan, or to trust a site.
 
 ## Settings
 
-Open the popup → **Settings** (or the extension's options page):
+Open the popup → **Settings**:
 
 - Danger / warning thresholds, and whether the amber banner is shown.
-- Toggle the RDAP domain-age lookup and clear its cache.
+- RDAP domain-age lookup on/off and cache clearing.
 - Phishing-reports feed on/off, optional PhishTank app key, manual update.
 - Google Safe Browsing on/off with your own API key (restrict the key to the extension's origin in Google Cloud).
 - Marketplace chat monitor on/off and extra sites to monitor.
-- Trusted domains list.
-- **Extra brands to protect**: add your own bank, employer or local services as
-  `Name | keyword1, keyword2 | realdomain.com`. Keywords are matched inside hostnames and
-  page titles, real domains are never flagged.
+- Trusted domains.
+- **Extra brands to protect**, one per line: `Name | keyword1, keyword2 | realdomain.com`.
 
 ## Privacy
 
-- No browsing data leaves the browser except the **registrable domain name** (never the
-  URL, never page content) sent to `https://rdap.org/domain/<domain>`, which redirects to
-  the registry's public RDAP service to find the registration date. Results are cached
-  locally for 7 days. This can be switched off in settings.
-- The PhishTank feed download (`data.phishtank.com`) carries no user data; matching is local.
-- The optional Google Safe Browsing check sends the page URL to Google. It is off unless you
-  enable it and provide your own key.
-- No analytics, no remote blocklists, no accounts.
-- Settings sync through `chrome.storage.sync`; per-tab results live in session storage only.
+| Data | Where it goes | Default |
+| --- | --- | --- |
+| Registrable domain name (never the URL or page content) | `rdap.org`, which redirects to the domain's registry, to learn the registration date. Cached 7 days | on, can be disabled |
+| Nothing about you | `data.phishtank.com`: the extension *downloads* the public reports feed a few times a day. Matching is local | on, can be disabled |
+| Full page URL | `safebrowsing.googleapis.com`, only if you enable it and provide your own key | **off** |
+| Page content, chat text, settings | Processed in memory; settings sync via Chrome; per-tab results live in session storage | never sent |
+
+No analytics, no accounts, no remote code. The full policy is in [`store-listing/privacy-policy.md`](store-listing/privacy-policy.md).
 
 ## Development
 
 ```
-npm test        # unit tests (node --test), no dependencies needed
-npm run e2e     # loads the extension into Chromium with Playwright and checks the banner
-npm run icons   # regenerate icons/*.png
+npm test               # unit tests + store-listing consistency check + catalogue report
+npm run e2e            # loads the extension into Chromium with Playwright and checks every scenario
+npm run icons          # regenerate icons/*.png
+npm run package        # dist/scam-detector-<version>.zip, runtime files only
+npm run store-assets   # regenerate store-listing/assets/*.png (1280×800 screenshots, promo tiles)
+node tools/docs-screenshots.js   # regenerate the README screenshots in docs/
+node tools/catalogue-report.js [--feed online-valid.csv]   # catalogue stats, stale-review warning, brands missing vs. PhishTank targets
 ```
 
-Layout:
+No build step and no runtime dependencies. The library files use a tiny UMD wrapper so the same code runs in the service worker (`importScripts`), in content scripts and under Node for tests.
 
 ```
 manifest.json
-src/background.js      service worker: RDAP lookup + cache, scoring, badge, messaging
-src/content.js         collects page observations, renders the banner (closed shadow DOM)
+src/background.js      service worker: RDAP lookup, PhishTank feed, Safe Browsing, scoring, badge, messaging
+src/content.js         collects page observations, chat monitor, renders the banners (closed shadow DOM)
 src/lib/domain.js      hostname parsing (compact public-suffix subset), Levenshtein, entropy
 src/lib/punycode.js    IDN decoding
 src/lib/brands.js      impersonated-brand catalogue
@@ -147,50 +212,33 @@ src/lib/urlmatch.js    phishing-feed index (hashed) and local URL/host matching
 src/lib/pageSignals.js DOM observation collector
 src/lib/scoring.js     signals → score → verdict
 popup/, options/       UI
-tools/                 icon generator, packager, store-asset generator, Playwright e2e script
-store-listing/         Chrome Web Store submission kit
+tools/                 icon generator, packager, screenshot generators, catalogue report, e2e script
 test/                  unit tests
+catalogue/             review log for the scam catalogue
+store-listing/         Chrome Web Store submission kit
+.claude/skills/        update-scam-catalogue skill
 ```
 
-The library files use a tiny UMD wrapper so the same code runs in the service worker
-(`importScripts`), in content scripts and under Node for tests, with no build step.
+### Keeping the catalogue current
+
+Detection is only as good as the lists it ships. The `update-scam-catalogue` skill ([`.claude/skills/update-scam-catalogue/SKILL.md`](.claude/skills/update-scam-catalogue/SKILL.md)) walks an agent through reviewing current reports from Banco de Portugal, PJ, CNCS, DECO, INCIBE, cybermalveillance.gouv.fr, Action Fraud, the FTC, APWG, Spamhaus and PhishTank's own target statistics, adding what is missing with tests in all four languages, and logging the review in [`catalogue/last-review.json`](catalogue/last-review.json). [`AGENTS.md`](AGENTS.md) requires it before finishing any change, and `npm test` warns when the last review is older than 30 days.
 
 ## Publishing to the Chrome Web Store
 
-Everything for the store submission is in [`store-listing/`](store-listing/README.md):
-listing text, permission justifications, privacy policy (Markdown and a hostable HTML
-copy), data-usage answers, distribution settings and generated 1280×800 screenshots and
-promo tiles.
-
-```
-node tools/catalogue-report.js [--feed online-valid.csv]   # catalogue stats, stale-review warning, brands missing vs. PhishTank targets
-npm run package        # dist/scam-detector-<version>.zip, runtime files only
-npm run store-assets   # regenerate store-listing/assets/*.png
-npm run check-listing  # fails if the kit disagrees with the code (also runs in npm test)
-```
-
-`AGENTS.md` (imported by `CLAUDE.md`) tells coding agents to update the kit in the same
-commit as any change that affects it: permissions, description, version, features,
-data handling or UI. It also requires running the `update-scam-catalogue` skill
-(`.claude/skills/update-scam-catalogue/SKILL.md`) before finishing any change, so the
-brand, TLD, phrase, chat-scheme and shared-host lists are reviewed against current scam
-reporting; the review is logged in `catalogue/last-review.json`.
+Everything for the submission is in [`store-listing/`](store-listing/README.md): listing text, permission justifications, privacy policy (Markdown and a hostable HTML copy), data-usage answers, distribution notes and generated screenshots and promo tiles. `npm run package` builds the upload zip; `npm run check-listing` (part of `npm test`) fails when the kit disagrees with the code, and `AGENTS.md` tells coding agents to update the kit in the same commit as any change that affects it.
 
 ## Third-party sources and their terms
 
-Only sources whose published terms allow this use are called. ScamAdviser (paid B2B API
-only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish
-(non-commercial, no redistribution) and the VirusTotal public API (no products) are
-deliberately not used. PhishTank data is free for use including commercial use per its
-published terms; Google Safe Browsing is free for non-commercial use with attribution.
+Only sources whose published terms allow this use are called. PhishTank data is free to use, including commercially, per its published terms; Google Safe Browsing is free for non-commercial use with attribution. ScamAdviser (paid B2B API only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish (non-commercial, no redistribution) and the VirusTotal public API (no products) are deliberately not used.
 
 ## Limitations
 
-- Heuristics, not a blocklist: a well-made scam on an old domain with careful wording can
-  score low, and an aggressive marketing page on a cheap TLD can score in the amber range.
-  Treat the banner as a prompt to look closer, not a verdict.
-- Some registries (notably `.de`, many ccTLDs) do not publish registration dates over
-  RDAP, so domain age is unknown there.
-- The public-suffix list is a curated subset; unusual multi-label suffixes may be split
-  incorrectly (this only affects which part of the host is treated as the "domain").
-- Brand coverage is a curated list; add your own in settings.
+- Heuristics, not a blocklist: a well-made scam on an old domain with careful wording can score low, and an aggressive marketing page on a cheap TLD can score amber. Treat the banner as a prompt to look closer, not a verdict.
+- Some registries (notably `.de` and many ccTLDs) do not publish registration dates over RDAP, so domain age is unknown there.
+- The public-suffix list is a curated subset; unusual multi-label suffixes may be split incorrectly.
+- Chat-area detection relies on generic markup; on unusual sites only the strong schemes apply to the whole page.
+- Known catalogue gaps: Imovirtual, Standvirtual, Continente, Pingo Doce, Worten, Via Verde and the MB WAY request-versus-send chat pattern.
+
+## License
+
+MIT
