@@ -63,6 +63,7 @@ Open source: https://github.com/neteinstein/Scam-Detector
 ## What's new (version 1.3.1)
 
 • The toolbar shield itself now changes colour, with no dot or number on top: green with a check mark (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust). Pages that cannot be checked show a blue-grey shield.
+• New About section at the end of the settings: who makes Scam Detector, a link to send feedback or report a bug, and ways to support its development (Revolut, Buy me a beer).
 
 Version 1.3.0:
 

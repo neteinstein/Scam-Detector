@@ -199,6 +199,7 @@ Open the popup → **Settings**:
 - Marketplace chat monitor on/off (on by default) and extra sites to monitor.
 - Trusted domains.
 - **Extra brands to protect**, one per line: `Name | keyword1, keyword2 | realdomain.com`.
+- **About**: version, author ([pedrovicente.pt](https://pedrovicente.pt)), feedback link, and donations via [Revolut](https://revolut.me/neteinstein) or [Buy me a beer](https://www.buymeacoffee.com/neteinstein).
 
 ## Privacy
 

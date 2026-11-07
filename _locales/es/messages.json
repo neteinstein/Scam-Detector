@@ -1141,5 +1141,26 @@
   },
   "welcome_settings_btn": {
     "message": "Abrir ajustes"
+  },
+  "opt_about_h": {
+    "message": "Acerca de"
+  },
+  "opt_about_version": {
+    "message": "Versión $1"
+  },
+  "opt_about_author": {
+    "message": "Hecho por Pedro Vicente"
+  },
+  "opt_about_feedback": {
+    "message": "Enviar comentarios o informar de un error"
+  },
+  "opt_about_donate": {
+    "message": "Si Scam Detector te ayuda a estar más seguro, una donación me ayuda a seguir desarrollando software libre y gratuito."
+  },
+  "opt_about_revolut": {
+    "message": "Donar con Revolut"
+  },
+  "opt_about_beer": {
+    "message": "Invítame a una cerveza"
   }
 }
