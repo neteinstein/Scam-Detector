@@ -5,6 +5,8 @@ traces of a scam and shows a warning banner at the top of the page when the risk
 
 ![banner](docs/banner.png)
 
+![chat banner](docs/chat-banner.png)
+
 Everything runs locally in the browser. The only network request is an optional
 lookup of the domain's registration date (see [Privacy](#privacy)).
 
@@ -46,7 +48,11 @@ score. Independent strong signals reinforce each other. Default thresholds:
 | Cross-domain submission | Credentials posted to a different registrable domain, or over plain HTTP | 20 |
 | Brand mismatch | Page title / heading / copyright claims to be a brand the domain does not belong to (ambiguous names like *Apple*, *Chase*, *Visa* need an account/login context) | 10, 22 with a form |
 | Hot-linked brand assets | Favicon or logos loaded from the real brand's servers (phishing kits do this) | 15–20 |
-| Social-engineering language | Urgency ("account suspended, verify within 24 hours"), prizes, crypto doubling / airdrops, tech-support alerts with phone numbers, gift-card-only payment, parcel-fee lures, tiny "verification fees". English, Portuguese and Spanish patterns | 5–15 per category, max 30 |
+| Social-engineering language | Urgency ("account suspended, verify within 24 hours"), prizes, tech-support alerts with phone numbers, parcel-fee lures, fake "100% safe" claims. **English, Portuguese, Spanish and French**, matched accent-insensitively | 5–15 per category |
+| Money claims | Templates of well-known money frauds: unrealistic investment returns ("5% daily, guaranteed"), advance fees to "release" funds, loans with no credit check but an upfront insurance fee, job offers that pay a fortune but charge a registration fee or need you to "recharge your account", overpayment / refund-the-difference, lottery / inheritance / unclaimed funds, fake escrow ("our shipping agent holds the money"), crypto doubling / airdrops, gift-card-only payment, tiny "verification" fees. Same four languages | 8–14 per category |
+| Money claims + a way to take your money | Card or account form next to money claims (+12), several independent money-fraud templates on one page (+10), money claims on a days-old or free-hosted site (+10) | up to 32 |
+
+All language signals together are capped at 40 points.
 | Fake navigation | Most links go to `#` / `javascript:` | 8 |
 | Deceptive links | Link text shows one domain, `href` goes to another | 6–12 |
 | Misc | Right-click disabled on a login page, decorative "secure" badges, auto-redirect to another domain, many third-party frames | 5–8 |
@@ -55,12 +61,38 @@ Pages on the real domains of known brands, on `localhost` / private networks, an
 domains you trust are never flagged. Phishing kits often inject the login form after
 load, so the page is re-scanned on DOM changes for the first 45 seconds.
 
+## Marketplace chat monitor (opt-in)
+
+Scams on classified sites rarely live on a suspicious domain: the site is OLX, Vinted,
+Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace or Idealista, and the
+fraud happens in the chat. Enable **Marketplace chat monitor** in settings and the
+extension watches the conversation area on those sites (plus any domains you add) and
+shows a blue banner explaining the scheme when the conversation matches one of the
+standard scripts, in English, Portuguese, Spanish or French:
+
+| Scheme | Typical message |
+| --- | --- |
+| Courier pick-up | "I'm abroad, I'll send a courier to collect it, the transport company pays you" |
+| Payment link / card details to *receive* money | "Click the link to receive the payment and enter your card details" |
+| Look-alike link | A link in the chat whose domain imitates the marketplace or a payment brand (`olx-entregas-pagamento.com`) |
+| Fee to release the money | "The payment is held by the platform until you pay the transport insurance (refunded on delivery)" |
+| Forward the SMS code | "Send me the verification code you just received, so I know you're real" |
+| Overpayment | "I sent too much by mistake, refund the difference" |
+| Rental deposit before viewing | "Pay the deposit first, the keys will be sent by courier, Airbnb will handle it" |
+| Fake payment proof / upgrade | "I've paid, see the screenshot. It's pending until you upgrade to a business account" |
+| Pay upfront via untraceable channel | "Bank transfer / MB WAY / Bizum / PayPal friends & family / gift cards first, then I ship" |
+| Off-platform + abroad + pressure | "Let's talk on WhatsApp", "I can't come in person", "I need it today, I'll pay extra" (weak alone, alert together) |
+
+The chat text never leaves the browser. Everything runs on the page with the same
+regex catalogue used by the unit tests (`src/lib/chatSchemes.js`).
+
 ## Settings
 
 Open the popup → **Settings** (or the extension's options page):
 
 - Danger / warning thresholds, and whether the amber banner is shown.
 - Toggle the RDAP domain-age lookup and clear its cache.
+- Marketplace chat monitor on/off and extra sites to monitor.
 - Trusted domains list.
 - **Extra brands to protect**: add your own bank, employer or local services as
   `Name | keyword1, keyword2 | realdomain.com`. Keywords are matched inside hostnames and
@@ -94,7 +126,8 @@ src/lib/punycode.js    IDN decoding
 src/lib/brands.js      impersonated-brand catalogue
 src/lib/lookalike.js   typosquat / homoglyph / embedded-brand detection
 src/lib/tlds.js        TLD risk weights
-src/lib/phrases.js     scam language patterns (en/pt/es)
+src/lib/phrases.js     scam language + money-claim patterns (en/pt/es/fr, accent-insensitive)
+src/lib/chatSchemes.js marketplace chat scam scripts (en/pt/es/fr) and marketplace list
 src/lib/pageSignals.js DOM observation collector
 src/lib/scoring.js     signals → score → verdict
 popup/, options/       UI

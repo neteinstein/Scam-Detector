@@ -32,6 +32,8 @@
   $('showWarnBanner').checked = !!settings.showWarnBanner;
   $('rdapEnabled').checked = !!settings.rdapEnabled;
   $('customBrands').value = brandsToText(settings.customBrands);
+  $('chatMonitorEnabled').checked = !!settings.chatMonitorEnabled;
+  $('chatMonitorDomains').value = (settings.chatMonitorDomains || []).join('\n');
   renderAllowlist();
 
   $('addAllow').addEventListener('click', () => {
@@ -47,6 +49,8 @@
     settings = await chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', patch: {
       dangerThreshold: danger, warnThreshold: warn, showWarnBanner: $('showWarnBanner').checked, rdapEnabled: $('rdapEnabled').checked,
       allowlist: settings.allowlist, customBrands: textToBrands($('customBrands').value),
+      chatMonitorEnabled: $('chatMonitorEnabled').checked,
+      chatMonitorDomains: $('chatMonitorDomains').value.split('\n').map((l) => l.trim().toLowerCase().replace(/^https?:\/\//, '').split('/')[0]).filter(Boolean),
     } });
     $('dangerThreshold').value = settings.dangerThreshold; $('warnThreshold').value = settings.warnThreshold;
     $('status').textContent = 'Saved.';

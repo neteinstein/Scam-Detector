@@ -27,6 +27,19 @@ const PHISH_HTML = `<!doctype html><html><head><title>Log in to your PayPal acco
 <p><a href="#">Help</a> · <a href="#">Contact</a> · <a href="#">Fees</a> · <a href="#">Security</a> · <a href="#">Privacy</a> · <a href="#">Legal</a></p>
 <p>© 2026 PayPal Inc.</p></body></html>`;
 
+const CHAT_HTML = `<!doctype html><html><head><title>OLX - Mensagens</title></head>
+<body style="font-family:sans-serif;max-width:720px;margin:40px auto">
+<h1>Mensagens</h1>
+<div class="chat-thread" data-testid="chat-messages">
+  <div class="message in">Olá, o artigo ainda está disponível?</div>
+  <div class="message out">Sim, está.</div>
+  <div class="message in">Óptimo. Estou fora do país neste momento, mas envio um estafeta para levantar o artigo.
+  O pagamento é feito através da transportadora. Clica no link para receber o pagamento e introduz os dados do cartão:
+  https://olx-entregas-pagamento.com/receber/18273</div>
+</div>
+<form><textarea placeholder="Escreva uma mensagem"></textarea><button>Enviar</button></form>
+</body></html>`;
+
 const BENIGN_HTML = `<!doctype html><html><head><title>Mindera - Software Engineering</title></head>
 <body><h1>Mindera</h1><p>We build software. <a href="/about">About</a> <a href="/careers">Careers</a> <a href="/contact">Contact</a> <a href="/blog">Blog</a> <a href="/work">Work</a></p></body></html>`;
 
@@ -48,6 +61,7 @@ async function main() {
       const url = route.request().url();
       if (url.startsWith('https://paypal-secure-login-2026.xyz/')) return route.fulfill({ contentType: 'text/html; charset=utf-8', body: PHISH_HTML });
       if (url.startsWith('https://mindera.com/')) return route.fulfill({ contentType: 'text/html; charset=utf-8', body: BENIGN_HTML });
+      if (url.startsWith('https://www.olx.pt/')) return route.fulfill({ contentType: 'text/html; charset=utf-8', body: CHAT_HTML });
       if (url.startsWith('https://www.paypalobjects.com/')) return route.fulfill({ contentType: 'image/png', body: Buffer.alloc(0) });
       return route.abort();
     });
@@ -90,7 +104,30 @@ async function main() {
     check(benign.verdict === 'ok' || benign.verdict === 'trusted', 'benign page is ok');
     await page.screenshot({ path: path.join(OUT, 'benign.png') });
 
-    // 3. Popup renders for the current tab
+    // 3. Marketplace chat monitor: off by default, on when enabled in settings
+    await page.goto('https://www.olx.pt/mensagens/123', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(3000);
+    const chatBannerOff = await page.$('#scam-detector-banner-host');
+    check(!chatBannerOff, 'chat monitor is off by default (no banner on OLX chat)');
+    await sw.evaluate(async () => {
+      const s = (await chrome.storage.sync.get('settings')).settings || {};
+      await chrome.storage.sync.set({ settings: Object.assign({}, s, { chatMonitorEnabled: true }) });
+    });
+    await page.waitForTimeout(2500);
+    let chatBanner = await page.$('#scam-detector-banner-host');
+    if (!chatBanner) { await page.reload({ waitUntil: 'domcontentloaded' }); await page.waitForSelector('#scam-detector-banner-host', { timeout: 15000 }); }
+    // Ask the content script for its chat result through the service worker
+    const chatInfo = await sw.evaluate(async () => {
+      const [tab] = await chrome.tabs.query({ url: 'https://www.olx.pt/*' });
+      return chrome.tabs.sendMessage(tab.id, { type: 'GET_CHAT_RESULT' });
+    });
+    console.log(`olx chat: alert=${chatInfo && chatInfo.alert} score=${chatInfo && chatInfo.score} schemes=${chatInfo && chatInfo.schemes.map((s) => s.id).join(',')}`);
+    check(!!(chatInfo && chatInfo.alert), 'chat monitor alerts on the courier + payment-link script');
+    check(!!(chatInfo && chatInfo.schemes.some((s) => s.id === 'phishing-link')), 'look-alike OLX payment link detected in chat');
+    check(!!(chatInfo && chatInfo.schemes.some((s) => s.id === 'courier-pickup')), 'courier pick-up scheme detected (pt)');
+    await page.screenshot({ path: path.join(OUT, 'chat-banner.png') });
+
+    // 4. Popup renders for the current tab
     const popup = await ctx.newPage();
     await popup.goto(`chrome-extension://${sw.url().split('/')[2]}/popup/popup.html`);
     await popup.waitForTimeout(800);

@@ -74,7 +74,7 @@ test('phrase weights are capped', () => {
   const text = 'your account has been suspended. congratulations you have won. double your bitcoin. your computer is infected. pay only with gift cards. your package is on hold. a small fee of $1.99. 100% safe';
   const r = scoring.evaluate({ hostname: 'oldsite.org', ageDays: 5000, rdapStatus: 'ok' }, page({ phrases: phrases.scan(text) }), {});
   const total = r.signals.filter((s) => s.id.startsWith('phrase-')).reduce((a, s) => a + s.weight, 0);
-  assert.ok(total <= 30, `phrase total ${total}`);
+  assert.ok(total <= 40, `phrase total ${total}`);
 });
 
 test('thresholds are configurable', () => {
@@ -88,4 +88,16 @@ test('thresholds are configurable', () => {
 test('result is JSON-serialisable', () => {
   const r = scoring.evaluate({ hostname: 'paypa1.com', ageDays: 1 }, page({ hasPasswordField: true }), {});
   assert.doesNotThrow(() => JSON.stringify(r));
+});
+
+test('money claims combined with a card form are penalised', () => {
+  const text = 'Guaranteed returns of 5% daily. Pay the activation fee to release your profits. Enter your card.';
+  const r = scoring.evaluate({ hostname: 'invest-now.xyz', ageDays: 12, rdapStatus: 'ok' }, page({ hasCardField: true, phrases: phrases.scan(text) }), {});
+  for (const id of ['phrase-investment', 'phrase-advancefee', 'money-form', 'money-stack', 'money-young']) assert.ok(ids(r).includes(id), id);
+  assert.equal(r.verdict, 'danger');
+});
+
+test('a single money phrase on an old site stays below the warning threshold', () => {
+  const r = scoring.evaluate({ hostname: 'bank-blog.com', ageDays: 4000, rdapStatus: 'ok' }, page({ phrases: phrases.scan('Guaranteed returns are a myth, says our analyst') }), {});
+  assert.equal(r.verdict, 'ok');
 });

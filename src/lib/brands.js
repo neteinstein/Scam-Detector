@@ -148,13 +148,27 @@
     { name: 'Marktplaats', keywords: ['marktplaats'], domains: ['marktplaats.nl'] },
     { name: 'Gumtree', keywords: ['gumtree'], domains: ['gumtree.com', 'gumtree.com.au'] },
     { name: 'Craigslist', keywords: ['craigslist'], domains: ['craigslist.org'] },
+    { name: 'Kleinanzeigen', keywords: ['kleinanzeigen'], domains: ['kleinanzeigen.de', 'ebay-kleinanzeigen.de'] },
+    { name: 'Subito', keywords: ['subito'], domains: ['subito.it'] },
+    { name: 'Milanuncios', keywords: ['milanuncios'], domains: ['milanuncios.com'] },
+    { name: 'CustoJusto', keywords: ['custojusto'], domains: ['custojusto.pt'] },
+    { name: 'Idealista', keywords: ['idealista'], domains: ['idealista.com', 'idealista.pt', 'idealista.it'] },
+    { name: 'Mercado Libre', keywords: ['mercadolibre', 'mercadolivre', 'mercadopago'], domains: ['mercadolibre.com', 'mercadolibre.com.ar', 'mercadolibre.com.mx', 'mercadolivre.com.br', 'mercadopago.com', 'mercadopago.com.br', 'mlstatic.com'] },
+    { name: 'Depop', keywords: ['depop'], domains: ['depop.com'] },
+    { name: 'Etsy', keywords: ['etsy'], domains: ['etsy.com', 'etsystatic.com'] },
+    { name: 'Shpock', keywords: ['shpock'], domains: ['shpock.com'] },
+    { name: 'Kijiji', keywords: ['kijiji'], domains: ['kijiji.ca'] },
+    { name: 'Mobile.de', keywords: ['mobile-de'], domains: ['mobile.de'] },
+    { name: 'AutoScout24', keywords: ['autoscout24', 'autoscout'], domains: ['autoscout24.com', 'autoscout24.de', 'autoscout24.pt', 'autoscout24.es', 'autoscout24.fr', 'autoscout24.it'] },
+    { name: 'Bizum', keywords: ['bizum'], domains: ['bizum.es'] },
+    { name: 'Lydia', keywords: ['lydia'], domains: ['lydia-app.com'] },
     { name: 'Western Union', keywords: ['westernunion'], domains: ['westernunion.com'] },
     { name: 'MoneyGram', keywords: ['moneygram'], domains: ['moneygram.com'] },
   ];
 
   // Keywords this short or this generic only count when they are a whole
   // hostname label, never when they are merely embedded inside one.
-  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google']);
+  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy']);
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [

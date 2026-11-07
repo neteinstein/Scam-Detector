@@ -18,6 +18,7 @@
         "src/lib/phrases.js",
         "src/lib/lookalike.js",
         "src/lib/pageSignals.js",
+        "src/lib/chatSchemes.js",
         "src/content.js"
       ],
       "run_at": "document_idle",

@@ -31,6 +31,11 @@
   <p class="muted">Sends the site's domain name (never the full URL) to <code>rdap.org</code>, which redirects to the registry's public RDAP service. Results are cached for 7 days. Freshly registered domains are one of the strongest scam indicators, so this is on by default.</p>
   <button id="clearCache">Clear cached lookups</button>
 
+  <h2>Marketplace chat monitor</h2>
+  <label><input type="checkbox" id="chatMonitorEnabled"> Watch conversations on selling sites (OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista…) for known scam scripts</label>
+  <p class="muted">Off by default. When on, chat text on those sites is checked locally (nothing is sent anywhere) for schemes such as "I'll send a courier, click the link to receive the payment", "forward me the SMS code", "the payment is held until you pay the insurance", "send the deposit before the viewing" or overpayment refunds, in English, Portuguese, Spanish and French. A blue banner explains the scheme when one appears.</p>
+  <label>Extra sites to monitor (one domain per line):<br><textarea id="chatMonitorDomains" placeholder="example-classifieds.com"></textarea></label>
+
   <h2>Trusted domains</h2>
   <p class="muted">Domains you have chosen to trust are never flagged.</p>
   <ul class="list" id="allowlist"></ul>

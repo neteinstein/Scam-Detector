@@ -52,9 +52,21 @@
     }
   }
 
+  async function loadChat() {
+    const box = $('chat');
+    let r = null;
+    try { r = await chrome.tabs.sendMessage(tab.id, { type: 'GET_CHAT_RESULT' }); } catch (e) { r = null; }
+    box.classList.toggle('hidden', !r);
+    box.innerHTML = '';
+    if (!r) return;
+    const b = document.createElement('b'); b.textContent = 'Chat scam pattern: ' + r.schemes[0].title; box.appendChild(b);
+    for (const s of r.schemes) { const d = document.createElement('div'); d.className = 'd'; d.textContent = `• ${s.title} — "${s.match}"`; box.appendChild(d); }
+  }
+
   async function load() {
     const result = await chrome.runtime.sendMessage({ type: 'GET_RESULT', tabId: tab.id, url: tab.url });
     render(result && !result.error ? result : null);
+    loadChat();
   }
 
   $('rescan').addEventListener('click', async () => {

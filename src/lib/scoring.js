@@ -6,7 +6,7 @@
   if (typeof module === 'object' && module.exports) module.exports = factory(require('./domain.js'), require('./brands.js'), require('./tlds.js'), require('./lookalike.js'), require('./punycode.js'));
   else { root.SD = root.SD || {}; root.SD.scoring = factory(root.SD.domain, root.SD.brands, root.SD.tlds, root.SD.lookalike, root.SD.punycode); }
 })(typeof self !== 'undefined' ? self : this, function (domain, brands, tlds, lookalike, punycode) {
-  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [] };
+  const DEFAULT_SETTINGS = { dangerThreshold: 60, warnThreshold: 35, rdapEnabled: true, showWarnBanner: true, allowlist: [], customBrands: [], chatMonitorEnabled: false, chatMonitorDomains: [] };
 
   const HOST_RED_FLAG_TOKENS = new Set([
     'login', 'signin', 'logon', 'secure', 'security', 'verify', 'verification', 'account', 'accounts', 'update', 'support', 'auth',
@@ -132,19 +132,28 @@
       const imgAsset = (pageInfo.brandAssets || []).find((a) => a.kind !== 'favicon');
       if (imgAsset && hasCredentialForm) signals.push(signal('brand-assets', `Logos/styles hot-linked from ${imgAsset.brand}'s real site on a credential page`, 15, imgAsset.host, 'page'));
 
-      // Language
+      // Language (social engineering + money claims)
+      const PHRASE_CAP = 40;
       let phraseTotal = 0;
       const byCat = new Map();
       for (const p of (pageInfo.phrases || [])) {
         const prev = byCat.get(p.category);
         if (prev) { prev.weight = Math.min(prev.weight + Math.round(p.weight / 2), p.weight * 2); prev.detail += ` · "${p.match}"`; continue; }
-        byCat.set(p.category, { label: p.label, weight: p.weight, detail: `"${p.match}"`, category: p.category });
+        byCat.set(p.category, { label: p.label, weight: p.weight, detail: `"${p.match}"`, category: p.category, money: !!p.money });
       }
-      for (const [cat, s] of byCat) {
-        if (phraseTotal >= 30) break;
-        const w = Math.min(s.weight, 30 - phraseTotal);
+      const sortedCats = Array.from(byCat.entries()).sort((a, b) => b[1].weight - a[1].weight);
+      for (const [cat, s] of sortedCats) {
+        if (phraseTotal >= PHRASE_CAP) break;
+        const w = Math.min(s.weight, PHRASE_CAP - phraseTotal);
         phraseTotal += w;
-        signals.push(signal('phrase-' + cat, s.label, w, s.detail, 'page'));
+        signals.push(signal('phrase-' + cat, s.label, w, s.detail, s.money ? 'money' : 'page'));
+      }
+      // Money claims combined with a way to take your money or data
+      const moneyCats = sortedCats.filter(([, s]) => s.money);
+      if (moneyCats.length) {
+        if (pageInfo.hasCardField || pageInfo.hasPasswordField) signals.push(signal('money-form', 'Asks for card or account details next to money claims', 12, moneyCats.map(([c]) => c).join(', '), 'money'));
+        if (moneyCats.length >= 2) signals.push(signal('money-stack', 'Several independent money-scam templates on one page', 10, moneyCats.map(([, s]) => s.label).join('; '), 'money'));
+        if (young || parsed.freeHosting) signals.push(signal('money-young', `Money claims on a ${parsed.freeHosting ? 'free-hosting' : 'very recently registered'} site`, 10, '', 'money'));
       }
 
       const L = pageInfo.links || {};
