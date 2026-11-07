@@ -1107,7 +1107,7 @@
     "message": "Cada vez que abres una página, Scam Detector la comprueba en tu ordenador en busca de señales de alerta: un sitio creado hace pocos días, una dirección que se hace pasar por un banco o una marca conocida, una página que pide tu contraseña o tarjeta en el sitio equivocado y frases típicas de estafas (premios, pagos urgentes, \"paga una tasa para recibir tu dinero\"). Si el riesgo es alto, aparece un aviso en la parte superior de la página."
   },
   "welcome_badge_h": {
-    "message": "El punto de color en el icono de Scam Detector"
+    "message": "El color del icono de Scam Detector"
   },
   "welcome_badge_green": {
     "message": "Verde: no se encontraron señales de alerta."
@@ -1120,6 +1120,9 @@
   },
   "welcome_badge_grey": {
     "message": "Gris con una marca de verificación: un sitio en el que elegiste confiar."
+  },
+  "welcome_badge_neutral": {
+    "message": "Aún no comprobado (por ejemplo, una página del navegador): gris azulado."
   },
   "welcome_chat_h": {
     "message": "Chats en sitios de compraventa"

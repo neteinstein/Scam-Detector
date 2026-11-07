@@ -212,19 +212,27 @@
   }
 
   /**
-   * Toolbar badge for a result: green = no risk signals, yellow = some signals
-   * but no banner, red = a warning banner is showing, grey with a check = trusted.
-   * No score number: the colour carries the meaning (a blank text still draws the dot).
+   * Toolbar state for a result. The whole shield icon changes colour (icons/state/<state>-<size>.png):
+   * green check = no risk signals, yellow ! = some signals but no banner,
+   * red ! = a warning banner is showing, grey check = trusted, neutral ! = not checked.
+   * No badge text: the icon colour carries the meaning.
    */
-  const BADGE_COLORS = { green: '#2e7d32', yellow: '#f9a825', red: '#d32f2f', grey: '#757575' };
+  const BADGE_COLORS = { green: '#2e7d32', yellow: '#f9a825', red: '#d32f2f', grey: '#757575', neutral: '#546e7a' };
+  function iconPaths(state) {
+    const p = {};
+    for (const size of [16, 32, 48]) p[size] = `/icons/state/${state}-${size}.png`;
+    return p;
+  }
   function badgeFor(result, settings) {
-    if (!result || result.verdict === 'skipped' || result.error) return { text: '', color: BADGE_COLORS.grey, state: 'none' };
-    if (result.verdict === 'trusted') return { text: '✓', color: BADGE_COLORS.grey, state: 'trusted' };
-    const showWarn = (settings || result.settings || {}).showWarnBanner !== false;
-    const banner = result.verdict === 'danger' || (result.verdict === 'warning' && showWarn);
-    if (banner) return { text: ' ', color: BADGE_COLORS.red, state: 'red' };
-    if ((result.signals || []).length || result.verdict === 'warning') return { text: ' ', color: BADGE_COLORS.yellow, state: 'yellow' };
-    return { text: ' ', color: BADGE_COLORS.green, state: 'green' };
+    let state;
+    if (!result || result.verdict === 'skipped' || result.error) state = 'neutral';
+    else if (result.verdict === 'trusted') state = 'grey';
+    else {
+      const showWarn = (settings || result.settings || {}).showWarnBanner !== false;
+      const banner = result.verdict === 'danger' || (result.verdict === 'warning' && showWarn);
+      state = banner ? 'red' : (result.signals || []).length || result.verdict === 'warning' ? 'yellow' : 'green';
+    }
+    return { state, text: '', color: BADGE_COLORS[state], icon: iconPaths(state) };
   }
 
   return { evaluate, badgeFor, DEFAULT_SETTINGS };

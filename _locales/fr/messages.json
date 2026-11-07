@@ -1107,7 +1107,7 @@
     "message": "Chaque fois que vous ouvrez une page, Scam Detector la vérifie sur votre ordinateur à la recherche de signes d'alerte : un site créé il y a quelques jours, une adresse qui se fait passer pour une banque ou une marque connue, une page qui demande votre mot de passe ou votre carte sur le mauvais site, et des formules typiques d'arnaque (gains, paiements urgents, « payez des frais pour recevoir votre argent »). Si le risque est élevé, une alerte apparaît en haut de la page."
   },
   "welcome_badge_h": {
-    "message": "Le point de couleur sur l'icône Scam Detector"
+    "message": "La couleur de l'icône Scam Detector"
   },
   "welcome_badge_green": {
     "message": "Vert : aucun signe d'alerte trouvé."
@@ -1120,6 +1120,9 @@
   },
   "welcome_badge_grey": {
     "message": "Gris avec une coche : un site auquel vous avez choisi de faire confiance."
+  },
+  "welcome_badge_neutral": {
+    "message": "Pas encore vérifié (par exemple une page du navigateur) : gris-bleu."
   },
   "welcome_chat_h": {
     "message": "Discussions sur les sites de vente"

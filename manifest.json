@@ -47,9 +47,9 @@
     "default_popup": "popup/popup.html",
     "default_title": "Scam Detector",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "16": "icons/state/neutral-16.png",
+      "32": "icons/state/neutral-32.png",
+      "48": "icons/state/neutral-48.png"
     }
   },
   "options_ui": {

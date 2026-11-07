@@ -31,7 +31,7 @@ Every page you open is scored from 0 to 100 for the traces scams leave behind: a
 | **35 – 59** | 🟠 **This website looks suspicious** | Some indicators. Look closer before trusting it. |
 | 0 – 34 | none | The popup shows the score and lists any minor observations. |
 
-The toolbar icon carries a coloured dot instead of a number: 🟢 nothing found, 🟡 minor signals, 🔴 a warning banner is showing, ⚪ grey with ✓ on a site you trust.
+The toolbar shield itself changes colour, with no number on it: 🟢 green with ✓ when nothing was found, 🟡 yellow when there are minor signals, 🔴 red when a warning banner is showing, grey with ✓ on a site you trust, and blue-grey on pages that were not checked.
 
 > **Do not trust it blindly.** Scam Detector recognises the traces of known scams. It will miss some, and it will most likely miss new schemes nobody has identified yet. No warning does not mean safe. A welcome page says this on first install.
 

@@ -14,8 +14,7 @@
     .caution h2 { margin-top: 0; color: #b45309; }
     .caution p { margin: 6px 0; }
     ul.dots { list-style: none; padding: 0; } ul.dots li { display: flex; gap: 10px; align-items: center; margin: 8px 0; }
-    .dot { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-    .green { background: #2e7d32; } .yellow { background: #f9a825; } .red { background: #d32f2f; } .grey { background: #757575; }
+    ul.dots img { flex: 0 0 auto; width: 24px; height: 24px; }
     .muted { color: var(--muted); }
     button { font: inherit; padding: 9px 16px; border-radius: 6px; border: 1px solid #1565c0; background: #1565c0; color: #fff; cursor: pointer; margin-top: 12px; }
   </style>
@@ -35,12 +34,13 @@
   <h2 data-i18n="welcome_what_h">What it does</h2>
   <p data-i18n="welcome_what_p">Every time you open a page, Scam Detector checks it on your computer for warning signs: a website created only days ago, an address pretending to be a bank or a well-known brand, a page asking for your password or card on the wrong website, and wording typical of scams (prizes, urgent payments, "pay a fee to receive your money"). If the risk is high, a warning appears at the top of the page.</p>
 
-  <h2 data-i18n="welcome_badge_h">The coloured dot on the Scam Detector icon</h2>
+  <h2 data-i18n="welcome_badge_h">The colour of the Scam Detector icon</h2>
   <ul class="dots">
-    <li><span class="dot green"></span><span data-i18n="welcome_badge_green">Green: no warning signs found.</span></li>
-    <li><span class="dot yellow"></span><span data-i18n="welcome_badge_yellow">Yellow: a few small warning signs. Click the icon to see them.</span></li>
-    <li><span class="dot red"></span><span data-i18n="welcome_badge_red">Red: a warning is showing on the page. Be very careful.</span></li>
-    <li><span class="dot grey">✓</span><span data-i18n="welcome_badge_grey">Grey with a check mark: a website you chose to trust.</span></li>
+    <li><img src="../icons/state/green-48.png" alt=""><span data-i18n="welcome_badge_green">Green: no warning signs found.</span></li>
+    <li><img src="../icons/state/yellow-48.png" alt=""><span data-i18n="welcome_badge_yellow">Yellow: a few small warning signs. Click the icon to see them.</span></li>
+    <li><img src="../icons/state/red-48.png" alt=""><span data-i18n="welcome_badge_red">Red: a warning is showing on the page. Be very careful.</span></li>
+    <li><img src="../icons/state/grey-48.png" alt=""><span data-i18n="welcome_badge_grey">Grey with a check mark: a website you chose to trust.</span></li>
+    <li><img src="../icons/state/neutral-48.png" alt=""><span data-i18n="welcome_badge_neutral">Not checked yet (for example a browser page): blue-grey.</span></li>
   </ul>
 
   <h2 data-i18n="welcome_chat_h">Chats on selling websites</h2>

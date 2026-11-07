@@ -1107,7 +1107,7 @@
     "message": "Every time you open a page, Scam Detector checks it on your computer for warning signs: a website created only days ago, an address pretending to be a bank or a well-known brand, a page asking for your password or card on the wrong website, and wording typical of scams (prizes, urgent payments, \"pay a fee to receive your money\"). If the risk is high, a warning appears at the top of the page."
   },
   "welcome_badge_h": {
-    "message": "The coloured dot on the Scam Detector icon"
+    "message": "The colour of the Scam Detector icon"
   },
   "welcome_badge_green": {
     "message": "Green: no warning signs found."
@@ -1120,6 +1120,9 @@
   },
   "welcome_badge_grey": {
     "message": "Grey with a check mark: a website you chose to trust."
+  },
+  "welcome_badge_neutral": {
+    "message": "Not checked yet (for example a browser page): blue-grey."
   },
   "welcome_chat_h": {
     "message": "Chats on selling websites"
