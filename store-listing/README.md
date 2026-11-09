@@ -4,6 +4,8 @@ Everything needed to publish **Scam Detector** on the Chrome Web Store lives in 
 folder. Files are organised by the tabs of the developer dashboard
 (https://chrome.google.com/webstore/devconsole).
 
+Published listing: https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod
+
 | File | Where it goes |
 | --- | --- |
 | `../dist/scam-detector-<version>.zip` (run `npm run package`) | **Package → Upload new package** |
