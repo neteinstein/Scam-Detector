@@ -5,7 +5,7 @@ is a second pair of eyes, not a guarantee.
 
 | Language | Video | Poster |
 | --- | --- | --- |
-| English | [scam-detector-en.mp4](scam-detector-en.mp4) | [scam-detector-en.jpg](scam-detector-en.jpg) |
+| English | [scam-detector-en.mp4](scam-detector-en.mp4) · [GIF for the README](scam-detector-en.gif) | [scam-detector-en.jpg](scam-detector-en.jpg) |
 | Português (Portugal) | [scam-detector-pt.mp4](scam-detector-pt.mp4) | [scam-detector-pt.jpg](scam-detector-pt.jpg) |
 
 Both are 1920×1080, 30 fps, 24.6 s, H.264 + AAC. Frame 0 is the poster, so it is also the
@@ -61,7 +61,13 @@ STILLS=stills node render.js en stills 3.7,8.85,14.5,20.5,23.5   # quick visual 
 ```
 
 Then pull the poster frame (`ffmpeg -ss 8.85 -i <video> -frames:v 1 -q:v 2 <poster>.jpg`) and
-overlay it on frame 0. Requires Node with Playwright (a dev dependency), Python 3 with numpy,
+overlay it on frame 0. The README shows a silent GIF of the English video so it plays on its own:
+
+```bash
+ffmpeg -i ../scam-detector-en.mp4 -vf "fps=15,scale=960:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle" -loop 0 ../scam-detector-en.gif
+```
+
+Requires Node with Playwright (a dev dependency), Python 3 with numpy,
 and ffmpeg. The music and sound effects are synthesised by `synth.py`, so there are no
 third-party audio licences. The videos were planned with the
 [`/brag`](https://github.com/latent-spaces/brag) skill.
