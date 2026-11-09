@@ -1,0 +1,474 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Scam Detector brag</title>
+<style>
+  :root { --navy: #141a46; --navy2: #1a237e; --red: #b71c1c; --redbg: #fdecea; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--navy); }
+  body { font-family: Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  #stage { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 30% 20%, #232c6e 0%, #141a46 55%, #0e1233 100%); }
+  .scene { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+  .abs { position: absolute; }
+
+  /* ---------- Scene 1: phone + text message ---------- */
+  #phone { left: 250px; top: 80px; width: 520px; height: 920px; border-radius: 64px; background: #0b0b0f; box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 0 0 3px #2a2a33; }
+  #screen { position: absolute; inset: 16px; border-radius: 50px; background: #f2f2f7; overflow: hidden; }
+  #notch { position: absolute; left: 50%; top: 14px; width: 140px; height: 34px; margin-left: -70px; background: #0b0b0f; border-radius: 20px; }
+  .status { position: absolute; top: 18px; left: 44px; font-size: 22px; font-weight: 600; color: #111; }
+  .thread-head { position: absolute; top: 70px; left: 0; right: 0; text-align: center; padding-bottom: 18px; border-bottom: 1px solid #d8d8de; background: #f7f7fa; }
+  .avatar { width: 72px; height: 72px; border-radius: 50%; margin: 6px auto 8px; background: #9aa0ab; color: #fff; font-weight: 700; font-size: 28px; display: flex; align-items: center; justify-content: center; }
+  .sender { font-size: 24px; font-weight: 600; color: #111; }
+  .meta { position: absolute; top: 250px; left: 0; right: 0; text-align: center; font-size: 18px; color: #8a8a90; }
+  #sms { left: 22px; top: 290px; width: 444px; padding: 22px 26px; border-radius: 30px; background: #e5e5ea; color: #111; font-size: 29px; line-height: 1.34; }
+  #sms .link { color: #0a5ed7; text-decoration: underline; white-space: nowrap; display: inline-block; }
+  #tap { width: 90px; height: 90px; border-radius: 50%; border: 5px solid rgba(10,94,215,.85); background: rgba(10,94,215,.18); }
+  #finger { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.92); box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+  #cap1 { left: 900px; top: 360px; width: 960px; color: #fff; font-size: 108px; font-weight: 800; line-height: 1.04; letter-spacing: -2px; }
+
+  /* ---------- Browser window ---------- */
+  .win { left: 120px; top: 70px; width: 1680px; height: 940px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 40px 120px rgba(0,0,0,.5); }
+  .tabs { height: 54px; background: #dee1e6; position: relative; }
+  .tab { position: absolute; left: 18px; bottom: 0; height: 44px; width: 460px; background: #fff; border-radius: 12px 12px 0 0; display: flex; align-items: center; gap: 12px; padding: 0 18px; font-size: 19px; color: #202124; white-space: nowrap; overflow: hidden; }
+  .fav { width: 20px; height: 20px; border-radius: 4px; flex: 0 0 auto; }
+  .dots { position: absolute; right: 22px; top: 18px; display: flex; gap: 10px; }
+  .dots i { width: 16px; height: 16px; border-radius: 50%; background: #b9bec6; display: block; }
+  .toolbar { height: 64px; display: flex; align-items: center; gap: 18px; padding: 0 20px; border-bottom: 1px solid #e3e5e8; }
+  .nav { width: 26px; height: 26px; color: #5f6368; }
+  .omni { flex: 1; height: 44px; border-radius: 22px; background: #f1f3f4; display: flex; align-items: center; gap: 12px; padding: 0 20px; font-size: 22px; color: #202124; }
+  .omni .host { color: #202124; }
+  .omni .path { color: #70757a; }
+  .ext { width: 40px; height: 40px; position: relative; }
+  .viewport { position: absolute; left: 0; right: 0; top: 118px; bottom: 0; overflow: hidden; background: #f5f7fa; }
+
+  /* Fake pages (from the repository's own demo pages) */
+  .card { position: absolute; left: 50%; width: 600px; margin-left: -300px; background: #fff; border-radius: 16px; box-shadow: 0 4px 18px rgba(0,0,0,.08); padding: 44px 52px; }
+  .card h1 { margin: 0 0 10px; font-size: 48px; }
+  .card h2 { margin: 0 0 8px; font-size: 28px; color: #222; }
+  .card p { margin: 0 0 8px; font-size: 21px; color: #444; line-height: 1.45; }
+  .card label { display: block; margin: 16px 0 6px; font-size: 18px; color: #555; }
+  .card .in { height: 50px; border: 1px solid #c9ccd1; border-radius: 8px; background: #fff; }
+  .card .btn { margin-top: 24px; height: 58px; border-radius: 30px; color: #fff; font-weight: 700; font-size: 22px; display: flex; align-items: center; justify-content: center; }
+
+  /* Banner: src/content.js styles, scaled 1.75x for 1080p */
+  .bar { position: absolute; left: 0; right: 0; top: 0; color: #1a1a1a; box-shadow: 0 4px 22px rgba(0,0,0,.25); padding: 21px 28px; font-size: 25px; line-height: 1.4; border-bottom: 7px solid var(--c); background: var(--bg); }
+  .bar .row { display: flex; align-items: flex-start; gap: 21px; }
+  .bar .icon { flex: 0 0 auto; width: 63px; height: 63px; border-radius: 50%; background: var(--c); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 38px; }
+  .bar .body { flex: 1 1 auto; min-width: 0; }
+  .bar .title { font-weight: 700; font-size: 30px; color: var(--c); margin: 0 0 4px; }
+  .bar .sub { margin: 0; }
+  .bar .score { display: inline-block; margin-left: 14px; padding: 2px 14px; border-radius: 18px; background: var(--c); color: #fff; font-size: 21px; font-weight: 600; vertical-align: middle; }
+  .bar ul { margin: 10px 0 0; padding-left: 32px; }
+  .bar li { margin: 4px 0; }
+  .bar li { opacity: 0; }
+  .bar .advice { margin: 10px 0 0; color: #333; font-size: 22px; }
+  .bar .actions { flex: 0 0 auto; display: flex; gap: 14px; align-items: center; }
+  .bar .b { border-radius: 10px; padding: 12px 21px; font-size: 23px; font-weight: 600; border: 2px solid var(--c); background: #fff; color: var(--c); white-space: nowrap; }
+  .bar .b.primary { background: var(--c); color: #fff; }
+  .bar .b.link { border-color: transparent; background: transparent; color: #444; text-decoration: underline; font-weight: 500; padding: 12px 6px; }
+  #bar3 { font-size: 27px; } #bar3 .title { font-size: 33px; } #bar3 .advice { font-size: 25px; } #bar3 .icon { width: 68px; height: 68px; }
+  #cursor { width: 44px; height: 44px; z-index: 50; filter: drop-shadow(0 3px 6px rgba(0,0,0,.35)); }
+  #ring { width: 70px; height: 70px; border-radius: 50%; border: 4px solid rgba(183,28,28,.7); z-index: 49; }
+
+  /* ---------- Scene 3: chat ---------- */
+  #cap3 { left: 120px; top: 52px; width: 1680px; color: #fff; font-size: 64px; font-weight: 800; letter-spacing: -1px; }
+  #cap3 small { display: block; font-size: 30px; font-weight: 500; color: #c5cae9; letter-spacing: 0; margin-top: 8px; }
+  .win.chat { top: 230px; height: 810px; }
+  .chatwrap { position: absolute; top: 28px; left: 50%; width: 1160px; margin-left: -580px; background: #fff; border-radius: 14px; padding: 26px 32px; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+  .chatwrap h3 { margin: 0 0 18px; font-size: 24px; color: #002f34; }
+  .msg { max-width: 80%; padding: 16px 22px; border-radius: 22px; margin: 12px 0; font-size: 26px; line-height: 1.4; color: #111; }
+  .msg.in { background: #eef2f3; }
+  .msg.out { background: #d7f3e3; margin-left: auto; width: fit-content; }
+  .msg .link { color: #0a5ed7; text-decoration: underline; }
+
+  /* ---------- Scene 4: honesty ---------- */
+  #s4 { background: radial-gradient(ellipse at 25% 50%, #1d2560 0%, #121738 70%); }
+  #bigshield { left: 210px; top: 270px; width: 460px; height: 540px; }
+  #col4 { left: 790px; top: 0; bottom: 0; width: 1050px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+  #kick4 { color: #fbbf24; font-size: 36px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: -10px; }
+  .l4 { color: #fff; font-weight: 800; letter-spacing: -1.5px; line-height: 1.08; }
+  #l4a { font-size: 84px; }
+  #l4b { font-size: 60px; color: #e8eaf6; font-weight: 700; line-height: 1.15; }
+  #l4c { font-size: 50px; color: #fbbf24; font-weight: 700; letter-spacing: -.5px; }
+
+  /* ---------- Scene 5: outro ---------- */
+  #s5 { background: linear-gradient(135deg, #1a237e 0%, #4a1c5e 55%, #b71c1c 100%); }
+  #logo { left: 50%; top: 170px; width: 220px; height: 260px; margin-left: -110px; }
+  #name { left: 0; right: 0; top: 450px; text-align: center; color: #fff; font-size: 132px; font-weight: 800; letter-spacing: -3px; }
+  #line5 { left: 0; right: 0; top: 628px; text-align: center; color: #fff; font-size: 54px; font-weight: 600; }
+  #facts { left: 0; right: 0; top: 780px; text-align: center; color: #e8eaf6; font-size: 32px; font-weight: 500; }
+  #url { left: 50%; top: 852px; transform-origin: center; white-space: nowrap; color: #1a1a1a; background: #fff; border-radius: 40px; padding: 14px 34px; font-size: 34px; font-weight: 700; }
+  #fade { position: absolute; inset: 0; background: #0e1233; opacity: 0; pointer-events: none; z-index: 100; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Scene 1 -->
+  <div class="scene" id="s1">
+    <div class="abs" id="phone">
+      <div id="screen">
+        <div id="notch"></div>
+        <div class="status">9:41</div>
+        <div class="thread-head"><div class="avatar" id="avatar"></div><div class="sender" id="sender"></div></div>
+        <div class="meta" id="smsmeta"></div>
+        <div class="abs" id="sms"><span id="smstext"></span> <span class="link" id="smslink"></span></div>
+      </div>
+    </div>
+    <div class="abs" id="tap"></div>
+    <div class="abs" id="finger"></div>
+    <div class="abs" id="cap1"></div>
+  </div>
+
+  <!-- Scene 2 -->
+  <div class="scene" id="s2">
+    <div class="abs win" id="win2">
+      <div class="tabs"><div class="tab"><span class="fav" id="fav2"></span><span id="tabtitle"></span></div><div class="dots"><i></i><i></i><i></i></div></div>
+      <div class="toolbar">
+        <svg class="nav" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="nav" viewBox="0 0 24 24" style="opacity:.45"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="nav" viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.05-4.95M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="omni">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5z" fill="none" stroke="#5f6368" stroke-width="2"/></svg>
+          <span><span class="host" id="host2"></span><span class="path" id="path2"></span></span>
+        </div>
+        <div class="ext"><svg id="tbshield" viewBox="0 0 100 100" width="40" height="40"></svg></div>
+      </div>
+      <div class="viewport" id="vp2">
+        <div id="page2"></div>
+        <div class="bar" id="bar2" style="--c:#b71c1c;--bg:#fdecea">
+          <div class="row">
+            <div class="icon">!</div>
+            <div class="body">
+              <p class="title"><span id="b2title"></span><span class="score" id="b2score"></span></p>
+              <p class="sub" id="b2sub"></p>
+              <ul id="b2list"><li id="r1"></li><li id="r2"></li></ul>
+            </div>
+            <div class="actions">
+              <span class="b primary" id="bleave"></span><span class="b" id="bwhy"></span><span class="b link" id="btrust"></span><span class="b link" id="bdismiss"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="abs" id="ring"></div>
+    <svg class="abs" id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 11.5-6.6.9 3.9 7.4-3 1.6-3.9-7.5L4 20z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Scene 3 -->
+  <div class="scene" id="s3">
+    <div class="abs" id="cap3"></div>
+    <div class="abs win chat" id="win3">
+      <div class="tabs"><div class="tab"><span class="fav" style="background:#002f34"></span><span id="tab3"></span></div><div class="dots"><i></i><i></i><i></i></div></div>
+      <div class="toolbar">
+        <svg class="nav" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="nav" viewBox="0 0 24 24" style="opacity:.45"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="nav" viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.05-4.95M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="omni"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14v11H5z" fill="none" stroke="#5f6368" stroke-width="2"/></svg><span class="host" id="host3"></span></div>
+        <div class="ext"><svg id="tbshield3" viewBox="0 0 100 100" width="40" height="40"></svg></div>
+      </div>
+      <div class="viewport" style="background:#f2f4f5">
+        <div class="chatwrap" id="chatwrap">
+          <h3 id="chathead"></h3>
+          <div class="msg in" id="m1"></div>
+          <div class="msg out" id="m2"></div>
+          <div class="msg in" id="m3"><span id="m3text"></span> <span class="link" id="m3link"></span></div>
+        </div>
+        <div class="bar" id="bar3" style="--c:#b71c1c;--bg:#fdecea">
+          <div class="row">
+            <div class="icon" style="font-size:32px">💬</div>
+            <div class="body">
+              <p class="title"><span id="b3title"></span><span class="score" id="b3score"></span></p>
+              <p class="sub" id="b3sub"></p>
+              <p class="advice" id="b3adv"></p>
+            </div>
+            <div class="actions"><span class="b" id="b3details"></span><span class="b link" id="b3dismiss"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 4 -->
+  <div class="scene" id="s4">
+    <svg class="abs" id="bigshield" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="abs" id="col4">
+      <div id="kick4"></div>
+      <div class="l4" id="l4a"></div>
+      <div class="l4" id="l4b"></div>
+      <div class="l4" id="l4c"></div>
+    </div>
+  </div>
+
+  <!-- Scene 5 -->
+  <div class="scene" id="s5">
+    <svg class="abs" id="logo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="abs" id="name">Scam Detector</div>
+    <div class="abs" id="line5"></div>
+    <div class="abs" id="facts"></div>
+    <div class="abs" id="url"></div>
+  </div>
+
+  <div id="fade"></div>
+</div>
+
+<script>
+// ---------------------------------------------------------------- strings
+// Product strings are copied from _locales/{en,pt}/messages.json (non-tech wording).
+const STR = {
+  en: {
+    sender: 'PayPal', avatar: 'P', smsMeta: 'Text Message · Today 09:41',
+    smsText: 'Your PayPal account has been limited. Verify your identity within 24 hours:',
+    smsLink: 'paypal-secure-login.com',
+    cap1: 'Looks real,<br>doesn’t it?',
+    tab: 'Log in to your PayPal account', host: 'paypal-secure-login.com', path: '/verify',
+    favColor: '#003087', page: 'paypal',
+    bTitle: 'This website is likely a scam', bScore: 'risk 100/100',
+    bSub: 'Do not enter passwords, card numbers or personal details here. (paypal-secure-login.com)',
+    r1: 'The website address pretends to be PayPal',
+    r2: 'The page asks for your password on a website pretending to be PayPal',
+    leave: 'Leave this site', why: 'Why?', trust: 'Trust this site', dismiss: 'Dismiss',
+    cap3: 'Selling something online? It reads the chat too.',
+    cap3s: 'On sites such as OLX, Vinted, Wallapop, Leboncoin or Facebook Marketplace',
+    tab3: 'Messages', host3: 'marketplace.example', chatHead: 'Conversation with “Mark B.”',
+    m1: 'Hi, is the bike still available?', m2: 'Yes, it is.',
+    m3: 'Great! I’m abroad right now, but I’ll send a courier to collect it. Click the link to receive the payment:',
+    m3link: 'secure-delivery-payment.com/receive',
+    b3Title: 'This conversation matches a known scam pattern', b3Score: '3 patterns',
+    b3Sub: 'Buyer wants to send a courier and pay remotely',
+    b3Adv: 'A well-known scam on selling sites: the “courier” or “delivery service” is fake and the payment link steals your card details. Only use the selling site’s own delivery and payment.',
+    details: 'Details',
+    kick4: 'Please read', l4a: 'It will miss some scams.', l4b: 'No warning does not mean a site is safe.', l4c: 'Stay alert.',
+    line5: 'A second pair of eyes in your browser.',
+    facts: 'Free and open source · English · Português · Español · Français',
+    url: 'Get it free on the Chrome Web Store',
+  },
+  pt: {
+    sender: 'CTT', avatar: 'C', smsMeta: 'Mensagem · Hoje 09:41',
+    smsText: 'A sua encomenda está retida. Pague €1,99 nas próximas 24 horas para reagendar a entrega:',
+    smsLink: 'ctt-entregas-reagendar.sbs',
+    cap1: 'Parece verdadeiro,<br>não parece?',
+    tab: 'CTT - Entrega pendente', host: 'ctt-entregas-reagendar.sbs', path: '/pagamento',
+    favColor: '#c8102e', page: 'ctt',
+    bTitle: 'Este site é provavelmente uma burla', bScore: 'risco 100/100',
+    bSub: 'Não introduza palavras-passe, números de cartão nem dados pessoais aqui. (ctt-entregas-reagendar.sbs)',
+    r1: 'O endereço do site finge ser CTT',
+    r2: 'A página pede dados do cartão num site que finge ser CTT',
+    leave: 'Sair deste site', why: 'Porquê?', trust: 'Confiar neste site', dismiss: 'Ignorar',
+    cap3: 'A vender online? Também lê a conversa.',
+    cap3s: 'Em sites como OLX, Vinted, Wallapop, Leboncoin ou Facebook Marketplace',
+    tab3: 'OLX - Mensagens', host3: 'www.olx.pt', chatHead: 'Conversa com “Pedro M.”',
+    m1: 'Olá, o artigo ainda está disponível?', m2: 'Sim, está disponível.',
+    m3: 'Ótimo! Estou fora do país, mas envio um estafeta para levantar o artigo. Clica no link para receber o pagamento:',
+    m3link: 'olx-entregas-pagamento.com/receber',
+    b3Title: 'Esta conversa corresponde a um esquema de burla conhecido', b3Score: '3 padrões',
+    b3Sub: 'O comprador quer enviar um estafeta e pagar à distância',
+    b3Adv: 'Burla muito conhecida em sites de vendas: o “estafeta” ou “serviço de entregas” é falso e o link de pagamento rouba os dados do seu cartão. Use apenas a entrega e o pagamento do próprio site.',
+    details: 'Detalhes',
+    kick4: 'Leia por favor', l4a: 'Vai deixar escapar algumas burlas.', l4b: 'Não haver aviso não quer dizer que o site seja seguro.', l4c: 'Mantenha-se atento.',
+    line5: 'Um segundo par de olhos no seu navegador.',
+    facts: 'Gratuito e de código aberto · Português · English · Español · Français',
+    url: 'Instale grátis a partir da Chrome Web Store',
+  },
+};
+const LANG = (new URLSearchParams(location.search).get('lang') || 'en');
+const S = STR[LANG];
+const $ = (id) => document.getElementById(id);
+const CWS = '<svg width="34" height="34" viewBox="0 0 24 24" style="vertical-align:-7px;margin-right:12px"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="#b71c1c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+// ---------------------------------------------------------------- shield (tools/make-icons.js geometry)
+function shieldSVG(fill, mark, markColor) {
+  // Shield: rectangle from v=.08 to .55 between u=.1 and .9, then a parabola to the point at v=.97.
+  let d = 'M10 8 H90 V55';
+  for (let i = 1; i <= 20; i++) { const tt = i / 20; const v = 55 + 42 * tt; const half = 40 * (1 - tt * tt); d += ` L${(50 + half).toFixed(2)} ${v.toFixed(2)}`; }
+  for (let i = 19; i >= 0; i--) { const tt = i / 20; const v = 55 + 42 * tt; const half = 40 * (1 - tt * tt); d += ` L${(50 - half).toFixed(2)} ${v.toFixed(2)}`; }
+  d += ' Z';
+  let m = '';
+  if (mark === 'check') m = `<path d="M30 50 L45 65 L72 33" fill="none" stroke="${markColor}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>`;
+  else m = `<rect x="42.5" y="26" width="15" height="34" rx="7.5" fill="${markColor}"/><circle cx="50" cy="73" r="8.7" fill="${markColor}"/>`;
+  return `<path d="${d}" fill="${fill}"/>${m}`;
+}
+const SH = {
+  neutral: shieldSVG('#546e7a', 'mark', '#fff'),
+  red: shieldSVG('#d32f2f', 'mark', '#fff'),
+  green: shieldSVG('#2e7d32', 'check', '#fff'),
+};
+
+// ---------------------------------------------------------------- fill content
+function fill() {
+  $('avatar').textContent = S.avatar; $('sender').textContent = S.sender; $('smsmeta').textContent = S.smsMeta;
+  $('smstext').textContent = S.smsText; $('smslink').textContent = S.smsLink; $('cap1').innerHTML = S.cap1;
+  $('tabtitle').textContent = S.tab; $('host2').textContent = S.host; $('path2').textContent = S.path; $('fav2').style.background = S.favColor;
+  $('b2title').textContent = S.bTitle; $('b2score').textContent = S.bScore; $('b2sub').textContent = S.bSub;
+  $('r1').textContent = S.r1; $('r2').textContent = S.r2;
+  $('bleave').textContent = S.leave; $('bwhy').textContent = S.why; $('btrust').textContent = S.trust; $('bdismiss').textContent = S.dismiss;
+  $('page2').innerHTML = S.page === 'paypal'
+    ? `<div class="card" id="card2" style="top:150px"><h1 style="color:#003087;font-style:italic">PayPal</h1>
+        <p>Your account has been limited. Verify your identity within 24 hours or your account will be suspended.</p>
+        <label>Email</label><div class="in"></div><label>Password</label><div class="in"></div>
+        <div class="btn" style="background:#0070ba">Log In</div></div>`
+    : `<div class="card" id="card2" style="top:130px"><h1 style="color:#c8102e">CTT</h1><h2>A sua encomenda está retida</h2>
+        <p>Pague <b>€1,99</b> nas próximas 24 horas para reagendar a entrega.</p>
+        <label>Nome completo</label><div class="in"></div><label>Número do cartão</label><div class="in"></div>
+        <div class="btn" style="background:#c8102e;border-radius:10px">Pagar €1,99 e reagendar</div></div>`;
+  $('cap3').innerHTML = `${S.cap3}<small>${S.cap3s}</small>`;
+  $('tab3').textContent = S.tab3; $('host3').textContent = S.host3; $('chathead').textContent = S.chatHead;
+  $('m1').textContent = S.m1; $('m2').textContent = S.m2; $('m3text').textContent = S.m3; $('m3link').textContent = S.m3link;
+  $('b3title').textContent = S.b3Title; $('b3score').textContent = S.b3Score; $('b3sub').textContent = S.b3Sub; $('b3adv').textContent = S.b3Adv;
+  $('b3details').textContent = S.details; $('b3dismiss').textContent = S.dismiss;
+  $('tbshield3').innerHTML = SH.red;
+  $('bigshield').innerHTML = SH.green; $('logo').innerHTML = SH.red;
+  $('kick4').textContent = S.kick4; $('l4a').textContent = S.l4a; $('l4b').textContent = S.l4b; $('l4c').textContent = S.l4c;
+  $('line5').textContent = S.line5; $('facts').textContent = S.facts; $('url').innerHTML = CWS + S.url;
+}
+
+// ---------------------------------------------------------------- timing helpers
+const BEAT = 0.6; const B = (k) => k * BEAT;           // 100 BPM grid counted from frame 0
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const inOut = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const outBack = (x) => { const c1 = 1.3, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const p = (t, t0, d, e = outCubic) => e(clamp((t - t0) / d));
+const lerp = (a, b, x) => a + (b - a) * x;
+function style(el, o) {
+  if (typeof el === 'string') el = $(el);
+  if (o.o != null) el.style.opacity = o.o;
+  const x = o.x || 0, y = o.y || 0, s = o.s == null ? 1 : o.s;
+  el.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+}
+// scene window: fades in over `fin` from start, out over `fout` before end (old out, then new in)
+function sceneAlpha(t, start, end, fin = .35, fout = .3) {
+  if (t < start || t >= end) return 0;
+  return Math.min(p(t, start, fin, inOut), 1 - p(t, end - fout, fout, inOut));
+}
+
+// cursor path: list of [time, x, y]
+function pathAt(t, pts) {
+  if (t <= pts[0][0]) return [pts[0][1], pts[0][2]];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [t0, x0, y0] = pts[i], [t1, x1, y1] = pts[i + 1];
+    if (t <= t1) { const k = inOut(clamp((t - t0) / (t1 - t0))); return [lerp(x0, x1, k), lerp(y0, y1, k)]; }
+  }
+  const last = pts[pts.length - 1]; return [last[1], last[2]];
+}
+
+// cached layout positions (measured once)
+let POS = {};
+function measure() {
+  const r = (id) => $(id).getBoundingClientRect();
+  // measure with scenes at identity transform
+  const link = r('smslink'); POS.link = { x: link.left + Math.min(link.width, 300) * .5, y: link.top + link.height / 2 };
+  POS.bar2H = $('bar2').offsetHeight; POS.bar3H = $('bar3').offsetHeight;
+  $('b2list').style.display = 'none'; POS.bar2Hcollapsed = $('bar2').offsetHeight; $('b2list').style.display = '';
+  const why = r('bwhy'), leave = r('bleave');
+  POS.why = { x: why.left + why.width * .5, y: why.top + why.height * .55 };
+  POS.leave = { x: leave.left + leave.width * .5, y: leave.top + leave.height * .55 };
+  POS.m3H = $('chatwrap').offsetHeight;
+  POS.urlW = $('url').offsetWidth;
+}
+
+// ---------------------------------------------------------------- render(t): pure function of time
+const T = { s1: [0, B(7)], s2: [B(7), B(18)], s3: [B(18), B(28)], s4: [B(28), B(35)], s5: [B(35), B(41)] };
+const DURATION = B(41); // 24.6 s
+
+function render(t) {
+  // Scene 1: hook ---------------------------------------------------------
+  {
+    const [a, b] = T.s1; const al = sceneAlpha(t, a, b, 0.001, .3);
+    style('s1', { o: al, s: lerp(1, .97, p(t, b - .3, .3, inOut)) });
+    const ph = p(t, 0, .7);
+    style('phone', { o: 1, y: lerp(40, 0, ph) });
+    const sm = p(t, B(1), .45, outBack);                       // beat-grid: SMS at k1 (0.6 s)
+    style('sms', { o: clamp((t - B(1)) / .25), y: lerp(30, 0, sm), s: lerp(.92, 1, sm) });
+    const c = p(t, B(4), .5);                                   // caption at k4 (2.4 s)
+    style('cap1', { o: c, x: lerp(40, 0, c) });
+    // finger tap at k6 (3.6 s)
+    const fx = POS.link.x - 32, fy = POS.link.y - 32;
+    const fin = p(t, B(6) - .55, .5, inOut);
+    const press = t >= B(6) && t < B(6) + .18 ? .85 : 1;
+    style('finger', { o: fin * (t < B(6) + .45 ? 1 : 1 - p(t, B(6) + .45, .2)), x: fx + lerp(160, 0, fin), y: fy + lerp(220, 0, fin), s: press });
+    const rp = clamp((t - B(6)) / .5);
+    style('tap', { o: t >= B(6) ? (1 - rp) : 0, x: POS.link.x - 45, y: POS.link.y - 45, s: lerp(.4, 1.6, outCubic(rp)) });
+  }
+  // Scene 2: page warning ------------------------------------------------
+  {
+    const [a, b] = T.s2; const al = sceneAlpha(t, a, b, .4, .3);
+    const enter = p(t, a, .6);
+    // camera: push in on the reasons after "Why?" (k11 -> k12), ease back out before "Leave" (k15 -> k16)
+    const push = p(t, B(11) + .15, .8, inOut) * (1 - p(t, B(15), .75, inOut));
+    $('s2').style.transformOrigin = '120px 190px';
+    style('s2', { o: al, y: lerp(30, 0, enter), s: 1 + .2 * push });
+    // banner slides down at k9 (5.4 s)                          // beat-locked: 5.40 s
+    const bar = p(t, B(9), .55, outCubic);
+    const open = t >= B(11) + .05;                              // "Why?" clicked at k11
+    $('b2list').style.display = open ? '' : 'none';
+    const h = open ? POS.bar2H : POS.bar2Hcollapsed;
+    style('bar2', { y: lerp(-h - 20, 0, bar) });
+    $('tbshield').innerHTML = t >= B(9) ? SH.red : SH.neutral;
+    style('tbshield', { s: t >= B(9) ? 1 + .35 * Math.sin(Math.PI * clamp((t - B(9)) / .4)) : 1 });
+    // reasons: beat-grid k12 (7.2 s), k14 (8.4 s) — two beats apart so each line can be read
+    style('r1', { o: p(t, B(12), .35), x: lerp(-16, 0, p(t, B(12), .35)) });
+    style('r2', { o: p(t, B(14), .35), x: lerp(-16, 0, p(t, B(14), .35)) });
+    // cursor: enters, clicks Why? at k11 (6.6 s), then Leave this site at k16 (9.6 s)
+    const start = { x: 1500, y: 900 };
+    const [cx, cy] = pathAt(t, [[B(9) + .2, start.x, start.y], [B(11) - .1, POS.why.x, POS.why.y], [B(15), POS.why.x, POS.why.y], [B(16) - .1, POS.leave.x, POS.leave.y]]);
+    const cAl = p(t, B(9) + .1, .3) * (1 - p(t, B(17), .3));
+    const click = (k) => t >= B(k) && t < B(k) + .14;
+    style('cursor', { o: cAl, x: cx - 6, y: cy - 4, s: click(11) || click(16) ? .86 : 1 });
+    const ringK = t >= B(16) ? 16 : 11; const rr = clamp((t - B(ringK)) / .45);
+    style('ring', { o: t >= B(11) && rr < 1 ? 1 - rr : 0, x: (ringK === 16 ? POS.leave.x : POS.why.x) - 35, y: (ringK === 16 ? POS.leave.y : POS.why.y) - 35, s: lerp(.5, 1.5, outCubic(rr)) });
+    $('bwhy').style.background = t >= B(11) && t < B(11) + .25 ? '#fbd5d0' : '#fff';
+    $('bleave').style.filter = t >= B(16) && t < B(16) + .25 ? 'brightness(.8)' : 'none';
+  }
+  // Scene 3: chat ---------------------------------------------------------
+  {
+    const [a, b] = T.s3; const al = sceneAlpha(t, a, b, .4, .3);
+    style('s3', { o: al });
+    const c = p(t, a, .5); style('cap3', { o: c, y: lerp(20, 0, c) });
+    const w = p(t, a + .15, .6); style('win3', { o: w, y: lerp(40, 0, w) });
+    style('m1', { o: 1 }); style('m2', { o: 1 });
+    const m3 = p(t, B(19), .45, outBack);                       // beat-grid: message at k19 (11.4 s)
+    style('m3', { o: clamp((t - B(19)) / .25), y: lerp(24, 0, m3), s: lerp(.96, 1, m3) });
+    const bar = p(t, B(21), .55);                               // beat-locked: chat banner at k21 (12.6 s)
+    style('bar3', { y: lerp(-POS.bar3H - 20, 0, bar) });
+    // chat content sits below the banner once it is down
+    style('chatwrap', { y: lerp(0, POS.bar3H - 20, p(t, B(21), .55)) });
+  }
+  // Scene 4: honesty ------------------------------------------------------
+  {
+    const [a, b] = T.s4; const al = sceneAlpha(t, a, b, .45, .3);
+    style('s4', { o: al });
+    const sh = p(t, a, .7, outBack); style('bigshield', { o: p(t, a, .3), s: lerp(.85, 1, sh) });
+    const k = p(t, a + .1, .4); style('kick4', { o: k, y: lerp(14, 0, k) });
+    const l1 = p(t, B(29), .45); style('l4a', { o: l1, y: lerp(24, 0, l1) });     // k29 (17.4 s)
+    const l2 = p(t, B(31), .45); style('l4b', { o: l2, y: lerp(24, 0, l2) });     // k31 (18.6 s)
+    const l3 = p(t, B(33), .45); style('l4c', { o: l3, y: lerp(24, 0, l3) });     // k33 (19.8 s)
+  }
+  // Scene 5: outro --------------------------------------------------------
+  {
+    const [a, b] = T.s5; const al = sceneAlpha(t, a, b + 1, .45, .3);
+    style('s5', { o: al });
+    const lg = p(t, a, .7, outBack); style('logo', { o: p(t, a, .3), s: lerp(.7, 1, lg) });  // beat-locked: logo k35 (21.0 s)
+    const n = p(t, B(36), .5); style('name', { o: n, y: lerp(24, 0, n) });
+    const l = p(t, B(37), .5); style('line5', { o: l, y: lerp(20, 0, l) });
+    const f = p(t, B(38), .5); style('facts', { o: f }); style('url', { o: f, x: -POS.urlW / 2, s: lerp(.94, 1, f) });
+    $('fade').style.opacity = p(t, DURATION - .45, .45, inOut);
+  }
+}
+
+window.DURATION = DURATION;
+window.render = render;
+window.ready = (async () => {
+  fill();
+  await document.fonts.ready;
+  await Promise.all([...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; })));
+  // measure at rest
+  for (const s of document.querySelectorAll('.scene')) { s.style.opacity = 1; s.style.transform = 'none'; }
+  measure();
+  render(0);
+  return true;
+})();
+</script>
+</body>
+</html>

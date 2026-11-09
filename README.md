@@ -6,6 +6,7 @@
 
 **A Chrome extension that warns you before a scam website gets your passwords, card details or money.**
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/lgppgajjfgffahljkkgcnjjelnbgjaod?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
 [![CI](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/neteinstein/Scam-Detector?label=release&color=2e7d32)](https://github.com/neteinstein/Scam-Detector/releases/latest)
@@ -17,7 +18,17 @@
 
 *A fake PayPal login on a look-alike domain. The banner explains why, in plain words, and offers a one-click way out.*
 
+**[Add it to Chrome from the Chrome Web Store](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)**, free.
+
 </div>
+
+## Watch: 25 seconds, in plain words
+
+<a href="docs/video/scam-detector-en.mp4"><img src="docs/video/scam-detector-en.jpg" width="900" alt="Scam Detector video (English): a fake PayPal text message, the warning banner explaining why, a marketplace chat scam, and a reminder that no tool catches every scam"></a>
+
+*Click to play.* A fake "your account has been limited" text, the warning that appears when the link is opened, a marketplace chat scam, and the honest part: it will miss some scams, so stay alert. Made for people who are not technical, so share it with parents and grandparents.
+
+🇵🇹 **Em português:** [vídeo](docs/video/scam-detector-pt.mp4) com a burla da encomenda dos CTT. Share text and how to re-render: [`docs/video/`](docs/video/README.md).
 
 ---
 
@@ -176,7 +187,9 @@ The chat text never leaves the browser. On sites without a recognisable chat are
 
 ## Install
 
-Until the Chrome Web Store listing is live, install the latest build from the
+**[Install Scam Detector from the Chrome Web Store](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)**, the easiest way, with automatic updates.
+
+To install a specific build by hand instead, use the
 [Releases page](https://github.com/neteinstein/Scam-Detector/releases/latest):
 
 1. Download `scam-detector-<version>.zip` and unzip it (check it against `SHA256SUMS.txt` if you like).
@@ -264,7 +277,7 @@ Two GitHub Actions workflows in `.github/workflows/`:
 
 ## Publishing to the Chrome Web Store
 
-Everything for the submission is in [`store-listing/`](store-listing/README.md): listing text, permission justifications, privacy policy (Markdown and a hostable HTML copy), data-usage answers, distribution notes and generated screenshots and promo tiles. `npm run package` builds the upload zip; `npm run check-listing` (part of `npm test`) fails when the kit disagrees with the code, and `AGENTS.md` tells coding agents to update the kit in the same commit as any change that affects it.
+The extension is live at [https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod). Everything for the submission is in [`store-listing/`](store-listing/README.md): listing text, permission justifications, privacy policy (Markdown and a hostable HTML copy), data-usage answers, distribution notes and generated screenshots and promo tiles. `npm run package` builds the upload zip; `npm run check-listing` (part of `npm test`) fails when the kit disagrees with the code, and `AGENTS.md` tells coding agents to update the kit in the same commit as any change that affects it.
 
 ## Third-party sources and their terms
 
