@@ -11,7 +11,7 @@
 [![CI](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/neteinstein/Scam-Detector?label=release&color=2e7d32)](https://github.com/neteinstein/Scam-Detector/releases/latest)
 [![Languages](https://img.shields.io/badge/UI%20%26%20detection-EN%20%C2%B7%20PT%20%C2%B7%20ES%20%C2%B7%20FR-b45309)](_locales/)
-[![No build step](https://img.shields.io/badge/build-none%20needed-6c757d)](#development)
+[![Donate](https://img.shields.io/badge/Donate-%E2%9D%A4-e11d48)](https://www.pedrovicente.pt/donate)
 [![License](https://img.shields.io/badge/license-MIT-blue)](package.json)
 
 <img src="docs/scenario-phishing-login.png" width="900" alt="Red warning banner on a fake PayPal login page, with the reasons expanded">
