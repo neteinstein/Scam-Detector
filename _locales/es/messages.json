@@ -1162,5 +1162,11 @@
   },
   "opt_about_beer": {
     "message": "Invítame a una cerveza"
+  },
+  "popup_no_access": {
+    "message": "Scam Detector todavía no tiene acceso a los sitios web, así que no se está comprobando ninguna página."
+  },
+  "btn_grant_access": {
+    "message": "Permitir acceso a los sitios web"
   }
 }

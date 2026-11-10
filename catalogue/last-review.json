@@ -1,26 +1,20 @@
 {
-  "reviewedAt": "2026-11-07",
+  "reviewedAt": "2026-11-10",
   "sources": [
-    "https://4gnews.pt/banco-de-portugal-deixa-alerta-aos-utilizadores-do-olx-e-vinted/",
-    "https://ovilaverdense.pt/rede-de-burlas-no-olx-e-marketplace-lesou-mais-de-20-vitimas-no-minho/",
-    "https://www.deco.proteste.pt/tecnologia/ciberseguranca/noticias/portugueses-alvo-tentativa-burla-online-chegaram-77-por-cento-2025",
-    "https://theportugalpost.com/posts/world-cup-2026-scams-hit-portugal-how-to-spot-fake-tickets-and-panini-stickers-before-you-lose-money",
-    "https://lisboeta.news/story/2026-05-12/internet-fraud-and-spoofing-scams-rising-across-portugal",
-    "PhishTank online-valid feed, 2026-11-07 (48,552 verified URLs; top hosts qrco.de, docs.google.com, q-r.to, l.ead.me, bit.ly, sites.google.com)",
-    "https://portaldaqueixa.com/news/alerta-de-phishing-com-uso-abusivo-do-nome-continente",
-    "https://cibercrime.ministeriopublico.pt/en/destaque/phishing-continente-card",
-    "https://www.cmjornal.pt/portugal/detalhe/apanhado-cabecilha-de-rede-que-sacou-300-mil-euros-em-nome-da-via-verde"
+    "https://blog.checkpoint.com/research/the-black-friday-cyber-crime-economy-surge-in-fraudulent-domains-and-ecommerce-scams/",
+    "https://www.techradar.com/pro/security/take-extra-care-shopping-for-black-friday-deals-experts-find-thousands-of-fake-websites-looking-to-steal-your-details",
+    "https://www.darktrace.com/es/blog/phishing-attacks-surge-by-620-in-the-lead-up-to-black-friday",
+    "https://4gnews.pt/estas-a-receber-estes-alertas-podes-estar-a-ser-alvo-de-phishing/",
+    "https://www.magazine-hd.com/apps/wp/seguranca-social-alerta-nova-mensagem-fraudulenta-enviada-email-deixa-aviso-perigosa-burla/",
+    "https://selectra.info/telecom/actualites/marche/faux-sms-remboursement-impots-arnaque-ete-2026",
+    "https://www.lesfrontaliers.lu/?p=1227391"
   ],
   "added": [
-    "Shared-host list seeded from PhishTank host statistics: QR/link shorteners (qrco.de, q-r.to, l.ead.me, l.wl.co, did.li, zpr.io, surl.li, flowcode, qr-codes.io), form builders (hsforms, powr.io), link-in-bio (linkin.bio, linqapp), Google Docs/Sites, Adobe Express, Dropbox, WeTransfer, Mockplus, ipfs gateways",
-    "Brands from PhishTank most-targeted list: Allegro, Bradesco, Banco do Brasil, Itau, Nubank, Optus, Societe Generale, La Banque Postale, Credit Agricole, BNP Paribas, Free Mobile, Ameli, impots.gouv.fr, ANTAI, SMBC, Interactive Brokers, ABN AMRO, Rabobank, DBS, Scotiabank, Raiffeisen, Swiss Post, Intesa Sanpaolo, UniCredit, Poste Italiane, ABSA, Huntington, AEON, Sparkasse, Commerzbank, Postbank, DKB, Hermes DE",
-    "Marketplace list and PT banks/couriers/public bodies from Banco de Portugal, PJ and DECO reporting",
-    "Phrase categories fakeregulator (investment firm 'authorised by the UK government') and brokerplatform (CFD/forex trading pitch) in en/pt/es/fr, from a user-reported clone broker (quinaspro.com, registered 2026-05-27)",
-    "Closed brand TLDs (.microsoft, .google, .apple, ...) treated as the brand's own; top-100 user-content/CDN hosts added to shared hosts after validating against the Tranco top 100",
-    "Brands Continente (fake cartaocontinente.vc points-expiry / prize SMS, 2026; official continente.pt, cartaocontinente.pt) and Via Verde (fake toll-debt SMS); both kept out of page-title matching because they are ordinary Portuguese words",
-    "Revolut: added the official revolut.me payment-link domain to the brand's real domains (false positive on a genuine revolut.me page)"
+    "Brand HOKA (Black Friday 2026 fake shops reported by Check Point; official hoka.com, hokaoneone.com); whole-label keyword and kept out of page-text matching because retailers sell it legitimately",
+    "Brand Chave Movel Digital (2026 PT SMS campaign leading to non-gov.pt login pages; official autenticacao.gov.pt)"
   ],
   "notes": [
-    "Worten: only 2020 reporting found, not added. Imovirtual, Standvirtual, Pingo Doce and the MB WAY request-vs-send chat pattern remain known gaps (see README limitations)"
+    "Checked and already covered: AliExpress, Temu, Shein, Amazon (Black Friday), Seguranca Social (Sept 2026 email campaign), French DGFiP refund SMS (impots); .shop is already a weighted risky TLD. Samsung, Ray-Ban and Jo Malone fake .shop stores not added as brands: sold by many legitimate resellers. Luxembourg CNAP SMS (Oct 2026) not added: outside the extension's main markets",
+    "Worten, Imovirtual, Standvirtual, Pingo Doce and the MB WAY request-vs-send chat pattern remain known gaps (see README limitations)"
   ]
 }

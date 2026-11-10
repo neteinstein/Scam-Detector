@@ -4,7 +4,7 @@
 
 # Scam Detector
 
-**A Chrome extension that warns you before a scam website gets your passwords, card details or money.**
+**A Chrome and Firefox extension that warns you before a scam website gets your passwords, card details or money.**
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/lgppgajjfgffahljkkgcnjjelnbgjaod?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
@@ -192,11 +192,19 @@ The chat text never leaves the browser. On sites without a recognisable chat are
 To install a specific build by hand instead, use the
 [Releases page](https://github.com/neteinstein/Scam-Detector/releases/latest):
 
-1. Download `scam-detector-<version>.zip` and unzip it (check it against `SHA256SUMS.txt` if you like).
+Every release has two packages built from the same code: `scam-detector-<version>-chrome.zip` and `scam-detector-<version>-firefox.zip` (check them against `SHA256SUMS.txt` if you like).
+
+**Chrome, Edge, Brave and other Chromium browsers**
+
+1. Download the Chrome zip and unzip it.
 2. Open `chrome://extensions`, enable **Developer mode** (top right).
 3. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
 
 Developers can load the repository folder directly the same way.
+
+**Firefox 140+ (desktop) and Firefox for Android 142+**
+
+Release builds of Firefox only install add-ons signed by Mozilla, so the Firefox zip is meant for the Firefox Add-ons submission (see [`store-listing/firefox.md`](store-listing/firefox.md)) and for testing: open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on…** and pick the zip. It stays loaded until Firefox restarts. If Firefox has not given the extension access to websites, the popup says so and offers an **Allow access to websites** button.
 
 The shield icon shows the risk score of the current tab (red, amber, or a green tick for known and trusted sites). Click it for the full list of findings, to re-scan, or to trust a site.
 
@@ -221,7 +229,7 @@ Open the popup → **Settings**:
 | Registrable domain name (never the URL or page content) | `rdap.org`, which redirects to the domain's registry, to learn the registration date. Cached 7 days | on, can be disabled |
 | Nothing about you | `data.phishtank.com`: the extension *downloads* the public reports feed a few times a day. Matching is local | on, can be disabled |
 | Full page URL | `safebrowsing.googleapis.com`, only if you enable it and provide your own key | **off** |
-| Page content, chat text, settings | Processed in memory; settings sync via Chrome; per-tab results live in session storage | never sent |
+| Page content, chat text, settings | Processed in memory; settings sync via the browser's sync (Chrome sync or Firefox Sync); per-tab results live in session storage | never sent |
 
 No analytics, no accounts, no remote code. The full policy is in [`store-listing/privacy-policy.md`](store-listing/privacy-policy.md).
 
@@ -231,13 +239,14 @@ No analytics, no accounts, no remote code. The full policy is in [`store-listing
 npm test               # unit tests + store-listing consistency check + catalogue report
 npm run e2e            # loads the extension into Chromium with Playwright and checks every scenario
 npm run icons          # regenerate icons/*.png
-npm run package        # dist/scam-detector-<version>.zip, runtime files only
+npm run package        # dist/scam-detector-<version>-chrome.zip and -firefox.zip, runtime files only
+node tools/firefox-manifest.js   # print the generated Firefox manifest
 npm run store-assets   # regenerate store-listing/assets/*.png (1280×800 screenshots, promo tiles)
 node tools/docs-screenshots.js   # regenerate the README screenshots in docs/
 node tools/catalogue-report.js [--feed online-valid.csv]   # catalogue stats, stale-review warning, brands missing vs. PhishTank targets
 ```
 
-No build step and no runtime dependencies. The library files use a tiny UMD wrapper so the same code runs in the service worker (`importScripts`), in content scripts and under Node for tests.
+No build step and no runtime dependencies. The library files use a tiny UMD wrapper so the same code runs in the Chrome service worker (`importScripts`), the Firefox background script (listed in the generated manifest), in content scripts and under Node for tests. The Firefox package differs from the Chrome one only in `manifest.json`, which `tools/firefox-manifest.js` derives from the Chrome manifest at package time: background scripts instead of a service worker, the Gecko add-on ID, minimum Firefox versions and the data-collection declaration.
 
 ```
 manifest.json
@@ -260,7 +269,7 @@ tools/                 icon generator, packager, screenshot generators, catalogu
 test/                  unit tests
 catalogue/             review log for the scam catalogue
 .github/workflows/     CI and release pipelines
-store-listing/         Chrome Web Store submission kit
+store-listing/         Chrome Web Store submission kit (+ firefox.md for Firefox Add-ons)
 .claude/skills/        update-scam-catalogue skill
 ```
 
@@ -272,12 +281,12 @@ Detection is only as good as the lists it ships. The `update-scam-catalogue` ski
 
 Two GitHub Actions workflows in `.github/workflows/`:
 
-- **CI** (`ci.yml`) runs on every push and pull request: unit tests, the store-listing consistency check, the catalogue report, a package build attached as an artifact, and the Playwright end-to-end scenarios in Chromium with their screenshots.
-- **Release** (`release.yml`) runs on every push to `main` (or on manual dispatch). If no tag exists for the manifest version it runs the tests, builds `scam-detector-<version>.zip`, writes `SHA256SUMS.txt`, takes the release notes from the *What's new* section of `store-listing/listing.md`, tags `v<version>` and publishes a GitHub Release with the zip and install instructions. Bumping the version is therefore the whole release procedure; pushes that do not bump it are a no-op.
+- **CI** (`ci.yml`) runs on every push and pull request: unit tests, the store-listing consistency check, the catalogue report, the Chrome and Firefox package builds attached as an artifact, `web-ext lint` on the Firefox package, and the Playwright end-to-end scenarios in Chromium with their screenshots.
+- **Release** (`release.yml`) runs on every push to `main` (or on manual dispatch). If no tag exists for the manifest version it runs the tests, builds `scam-detector-<version>-chrome.zip` and `scam-detector-<version>-firefox.zip`, lints the Firefox package with `web-ext lint`, writes `SHA256SUMS.txt`, takes the release notes from the *What's new* section of `store-listing/listing.md`, tags `v<version>` and publishes a GitHub Release with both zips and install instructions for each browser. Bumping the version is therefore the whole release procedure; pushes that do not bump it are a no-op.
 
 ## Publishing to the Chrome Web Store
 
-The extension is live at [https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod). Everything for the submission is in [`store-listing/`](store-listing/README.md): listing text, permission justifications, privacy policy (Markdown and a hostable HTML copy), data-usage answers, distribution notes and generated screenshots and promo tiles. `npm run package` builds the upload zip; `npm run check-listing` (part of `npm test`) fails when the kit disagrees with the code, and `AGENTS.md` tells coding agents to update the kit in the same commit as any change that affects it.
+The extension is live at [https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod). Everything for the submission is in [`store-listing/`](store-listing/README.md): listing text, permission justifications, privacy policy (Markdown and a hostable HTML copy), data-usage answers, distribution notes and generated screenshots and promo tiles. `npm run package` builds the upload zips (Chrome and Firefox); the Firefox Add-ons submission notes are in [`store-listing/firefox.md`](store-listing/firefox.md); `npm run check-listing` (part of `npm test`) fails when the kit disagrees with the code, and `AGENTS.md` tells coding agents to update the kit in the same commit as any change that affects it.
 
 ## Third-party sources and their terms
 

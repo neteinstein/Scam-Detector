@@ -119,7 +119,26 @@
     await chrome.runtime.sendMessage({ type: 'RESCAN', tabId: tab.id });
     setTimeout(load, 800);
   });
+  // Firefox lets the user withhold or revoke website access; without it the
+  // content script never runs, so say so and offer to grant it.
+  const ALL_SITES = { origins: ['<all_urls>'] };
+  async function checkAccess() {
+    let ok = true;
+    try { ok = !chrome.permissions || await chrome.permissions.contains(ALL_SITES); } catch (e) { ok = true; }
+    $('access').classList.toggle('hidden', ok);
+  }
+  $('grant').addEventListener('click', () => {
+    // request() must be the first call in the click handler (user-gesture rule).
+    chrome.permissions.request(ALL_SITES).then((granted) => {
+      if (!granted) return;
+      $('access').classList.add('hidden');
+      // Content scripts only attach on load, so reload the page to check it now.
+      chrome.tabs.reload(tab.id).catch(() => {});
+      setTimeout(load, 1500);
+    }).catch(() => {});
+  });
   $('options').addEventListener('click', (e) => { e.preventDefault(); chrome.runtime.openOptionsPage(); });
 
+  checkAccess();
   load();
 })();

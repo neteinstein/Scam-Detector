@@ -91,6 +91,7 @@
     { name: 'AliExpress', keywords: ['aliexpress', 'alibaba'], domains: ['aliexpress.com', 'alibaba.com', 'aliexpress.us', 'alicdn.com', 'alipay.com', 'taobao.com'] },
     { name: 'Temu', keywords: ['temu'], domains: ['temu.com'] },
     { name: 'Shein', keywords: ['shein'], domains: ['shein.com', 'shein.co.uk', 'sheincorp.com'] },
+    { name: 'HOKA', keywords: ['hoka', 'hokaone', 'hokaoneone'], domains: ['hoka.com', 'hokaoneone.com'] },
     { name: 'Shopify', keywords: ['shopify'], domains: ['shopify.com', 'myshopify.com', 'shopifycdn.com'] },
     { name: 'Booking.com', keywords: ['booking'], domains: ['booking.com', 'bstatic.com'] },
     { name: 'Airbnb', keywords: ['airbnb'], domains: ['airbnb.com', 'airbnb.co.uk', 'airbnb.pt', 'airbnb.es', 'airbnb.fr', 'airbnb.de'] },
@@ -119,6 +120,7 @@
     { name: 'GOV.UK', keywords: ['govuk'], domains: ['gov.uk', 'service.gov.uk'] },
     { name: 'Autoridade Tributária', keywords: ['financas', 'portaldasfinancas', 'autoridadetributaria'], domains: ['gov.pt', 'portaldasfinancas.gov.pt', 'at.gov.pt'] },
     { name: 'Segurança Social', keywords: ['segurancasocial', 'seg-social'], domains: ['seg-social.pt', 'gov.pt'] },
+    { name: 'Chave Móvel Digital', keywords: ['chavemovel', 'chavemoveldigital', 'autenticacaogov'], domains: ['autenticacao.gov.pt', 'gov.pt'] },
     { name: 'Social Security Administration', keywords: ['ssa'], domains: ['ssa.gov'] },
     { name: 'Medicare', keywords: ['medicare'], domains: ['medicare.gov', 'cms.gov'] },
     { name: 'Agencia Tributaria', keywords: ['agenciatributaria'], domains: ['agenciatributaria.gob.es', 'agenciatributaria.es'] },
@@ -204,7 +206,7 @@
 
   // Keywords this short or this generic only count when they are a whole
   // hostname label, never when they are merely embedded inside one.
-  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus', 'continente']);
+  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus', 'continente', 'hoka']);
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [

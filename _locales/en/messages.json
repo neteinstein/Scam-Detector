@@ -1162,5 +1162,11 @@
   },
   "opt_about_beer": {
     "message": "Buy me a beer"
+  },
+  "popup_no_access": {
+    "message": "Scam Detector does not have access to websites yet, so no page is being checked."
+  },
+  "btn_grant_access": {
+    "message": "Allow access to websites"
   }
 }

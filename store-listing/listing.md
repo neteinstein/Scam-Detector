@@ -60,7 +60,13 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.3.2)
+## What's new (version 1.4.0)
+
+• Scam Detector now also runs in Firefox (desktop 140 and later, Android 142 and later). Every release ships a Chrome package and a Firefox package built from the same code, with the same checks, languages and settings.
+• If the browser has not given the extension access to websites (Firefox lets you withhold or revoke it), the popup now says so and offers a one-click button to allow it; until then no page can be checked.
+• Catalogue: fake HOKA shoe shops (a Black Friday favourite) and fake Chave Móvel Digital login pages are now recognised.
+
+Version 1.3.2:
 
 • Fixed a false warning on Revolut's own payment-link pages (revolut.me), which were wrongly reported as a fake Revolut site.
 
