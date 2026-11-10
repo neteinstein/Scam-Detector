@@ -241,7 +241,7 @@ npm run e2e            # loads the extension into Chromium with Playwright and c
 npm run icons          # regenerate icons/*.png
 npm run package        # dist/scam-detector-<version>-chrome.zip and -firefox.zip, runtime files only
 node tools/firefox-manifest.js   # print the generated Firefox manifest
-npm run store-assets   # regenerate store-listing/assets/*.png (1280×800 screenshots, promo tiles)
+npm run store-assets   # regenerate store-listing/assets/ (Chrome) and assets-firefox/ (Firefox) PNGs
 node tools/docs-screenshots.js   # regenerate the README screenshots in docs/
 node tools/catalogue-report.js [--feed online-valid.csv]   # catalogue stats, stale-review warning, brands missing vs. PhishTank targets
 ```

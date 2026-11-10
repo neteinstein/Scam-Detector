@@ -24,7 +24,17 @@ Submit at https://addons.mozilla.org/developers/ → **Submit a New Add-on** →
 - **Support website:** https://github.com/neteinstein/Scam-Detector/issues
 - **License:** MIT.
 - **Privacy policy:** paste the text of `privacy-policy.md` (AMO stores the policy text, not a URL).
-- **Screenshots:** the PNGs in `assets/` can be reused.
+- **Icon:** `assets-firefox/icon-128x128.png` (*Edit Product Page → Images → Icon*; AMO
+  otherwise takes the icon from the package).
+- **Screenshots:** `assets-firefox/screenshot-*.png` (1280×800, the size AMO displays), in
+  numbered order, with these captions:
+  1. `screenshot-1-phishing-banner.png`: A fake login page gets a red warning before you type anything.
+  2. `screenshot-2-popup.png`: The toolbar popup lists every signal behind the score.
+  3. `screenshot-3-chat-monitor.png`: Marketplace chats are checked for known scam scripts, such as fake courier payments.
+  4. `screenshot-4-settings.png`: Settings explain in plain words what is checked and what, if anything, leaves your computer.
+
+  AMO has no promo tiles. `npm run store-assets` writes this folder together with `assets/`,
+  and `npm run check-listing` fails if the two sets of screenshots differ.
 
 ## Data collection
 
