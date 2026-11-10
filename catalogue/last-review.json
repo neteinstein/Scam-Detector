@@ -17,7 +17,8 @@
     "Marketplace list and PT banks/couriers/public bodies from Banco de Portugal, PJ and DECO reporting",
     "Phrase categories fakeregulator (investment firm 'authorised by the UK government') and brokerplatform (CFD/forex trading pitch) in en/pt/es/fr, from a user-reported clone broker (quinaspro.com, registered 2026-05-27)",
     "Closed brand TLDs (.microsoft, .google, .apple, ...) treated as the brand's own; top-100 user-content/CDN hosts added to shared hosts after validating against the Tranco top 100",
-    "Brands Continente (fake cartaocontinente.vc points-expiry / prize SMS, 2026; official continente.pt, cartaocontinente.pt) and Via Verde (fake toll-debt SMS); both kept out of page-title matching because they are ordinary Portuguese words"
+    "Brands Continente (fake cartaocontinente.vc points-expiry / prize SMS, 2026; official continente.pt, cartaocontinente.pt) and Via Verde (fake toll-debt SMS); both kept out of page-title matching because they are ordinary Portuguese words",
+    "Revolut: added the official revolut.me payment-link domain to the brand's real domains (false positive on a genuine revolut.me page)"
   ],
   "notes": [
     "Worten: only 2020 reporting found, not added. Imovirtual, Standvirtual, Pingo Doce and the MB WAY request-vs-send chat pattern remain known gaps (see README limitations)"

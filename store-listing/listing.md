@@ -60,7 +60,11 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.3.1)
+## What's new (version 1.3.2)
+
+• Fixed a false warning on Revolut's own payment-link pages (revolut.me), which were wrongly reported as a fake Revolut site.
+
+Version 1.3.1:
 
 • The toolbar shield itself now changes colour, with no dot or number on top: green with a check mark (nothing found), yellow (minor signals), red (warning showing), grey with a check mark (a site you trust). Pages that cannot be checked show a blue-grey shield.
 • New About section at the end of the settings: who makes Scam Detector, a link to send feedback or report a bug, and ways to support its development (Revolut, Buy me a beer).

@@ -6,7 +6,7 @@ function brandOf(host) { const r = lookalike.detect(host); return r ? r.brand : 
 function reasonOf(host) { const r = lookalike.detect(host); return r ? r.reason : null; }
 
 test('legitimate brand domains are never flagged', () => {
-  for (const h of ['paypal.com', 'www.paypal.com', 'accounts.google.com', 'login.microsoftonline.com', 'www.amazon.co.uk', 'github.com', 'paypalobjects.com', 'cgd.pt', 'www.dhl.com', 'apple.com', 'icloud.com']) {
+  for (const h of ['paypal.com', 'www.paypal.com', 'accounts.google.com', 'login.microsoftonline.com', 'www.amazon.co.uk', 'github.com', 'paypalobjects.com', 'cgd.pt', 'www.dhl.com', 'apple.com', 'icloud.com', 'revolut.com', 'revolut.me']) {
     assert.equal(lookalike.detect(h), null, h);
   }
 });

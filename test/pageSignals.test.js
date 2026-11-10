@@ -36,3 +36,12 @@ test('a favicon on customer cloud storage is not a hot-linked brand asset', () =
   assert.equal(hot.length, 1);
   assert.equal(hot[0].brand, 'PayPal');
 });
+
+test('a page titled Revolut.Me on revolut.me is not an impersonation, but on another host it is', () => {
+  const brands = require('../src/lib/brands.js');
+  const revolut = brands.findByDomain('revolut.me');
+  assert.equal(revolut.name, 'Revolut');
+  assert.ok(revolut.domains.includes('revolut.com'));
+  assert.equal(brands.findByDomain('revolut-me.com'), null);
+  assert.deepEqual(pageSignals.brandsInText('Revolut.Me'), ['Revolut']);
+});

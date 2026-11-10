@@ -14,7 +14,7 @@
     { name: 'Zelle', keywords: ['zelle'], domains: ['zellepay.com', 'zelle.com'] },
     { name: 'Cash App', keywords: ['cashapp'], domains: ['cash.app', 'squareup.com', 'block.xyz'] },
     { name: 'Wise', keywords: ['transferwise'], domains: ['wise.com', 'transferwise.com'] },
-    { name: 'Revolut', keywords: ['revolut'], domains: ['revolut.com'] },
+    { name: 'Revolut', keywords: ['revolut'], domains: ['revolut.com', 'revolut.me'] },
     { name: 'N26', keywords: ['n26'], domains: ['n26.com'] },
     { name: 'Stripe', keywords: ['stripe'], domains: ['stripe.com'] },
     { name: 'Klarna', keywords: ['klarna'], domains: ['klarna.com'] },
