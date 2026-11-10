@@ -24,9 +24,9 @@
 
 ## Watch: 25 seconds, in plain words
 
-<a href="docs/video/scam-detector-en.mp4"><img src="docs/video/scam-detector-en.jpg" width="900" alt="Scam Detector video (English): a fake PayPal text message, the warning banner explaining why, a marketplace chat scam, and a reminder that no tool catches every scam"></a>
+<a href="docs/video/scam-detector-en.mp4"><img src="docs/video/scam-detector-en.gif" width="900" alt="Scam Detector video (English): a fake PayPal text message, the warning banner explaining why, a marketplace chat scam, and a reminder that no tool catches every scam"></a>
 
-*Click to play.* A fake "your account has been limited" text, the warning that appears when the link is opened, a marketplace chat scam, and the honest part: it will miss some scams, so stay alert. Made for people who are not technical, so share it with parents and grandparents.
+*It plays above without sound. Click it for the full video with music.* A fake "your account has been limited" text, the warning that appears when the link is opened, a marketplace chat scam, and the honest part: it will miss some scams, so stay alert. Made for people who are not technical, so share it with parents and grandparents.
 
 🇵🇹 **Em português:** [vídeo](docs/video/scam-detector-pt.mp4) com a burla da encomenda dos CTT. Share text and how to re-render: [`docs/video/`](docs/video/README.md).
 
