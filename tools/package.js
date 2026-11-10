@@ -1,6 +1,7 @@
-// Builds the Chrome Web Store upload: dist/scam-detector-<version>.zip containing
-// only the files the extension needs at runtime. No dependencies.
-// Run: node tools/package.js
+// Builds the store uploads from one source tree, containing only the files the
+// extension needs at runtime. No dependencies. Run: node tools/package.js
+//   dist/scam-detector-<version>-chrome.zip   Chrome Web Store (manifest.json as is)
+//   dist/scam-detector-<version>-firefox.zip  Firefox Add-ons (manifest from tools/firefox-manifest.js)
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
@@ -8,7 +9,7 @@ const zlib = require('zlib');
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.json'), 'utf8'));
 const OUT_DIR = path.join(ROOT, 'dist');
-const OUT = path.join(OUT_DIR, `scam-detector-${manifest.version}.zip`);
+const { firefoxManifest } = require('./firefox-manifest');
 
 // Everything the manifest references, plus the files those pages load.
 const INCLUDE = ['manifest.json', '_locales', 'src', 'popup', 'options', 'welcome', 'icons'];
@@ -42,12 +43,12 @@ function dosDateTime(d) {
   return { time, date };
 }
 
-function zip(files) {
+function zip(files, overrides = {}) {
   const locals = [], centrals = [];
   let offset = 0;
   const { time, date } = dosDateTime(new Date());
   for (const rel of files) {
-    const data = fs.readFileSync(path.join(ROOT, rel));
+    const data = overrides[rel] || fs.readFileSync(path.join(ROOT, rel));
     const deflated = zlib.deflateRawSync(data, { level: 9 });
     const useDeflate = deflated.length < data.length;
     const body = useDeflate ? deflated : data;
@@ -75,11 +76,19 @@ function zip(files) {
 }
 
 const files = INCLUDE.flatMap((p) => walk(p, []));
-// Sanity: every file the manifest points at must be in the bundle.
-const referenced = [manifest.background.service_worker, manifest.action.default_popup, manifest.options_ui.page, ...Object.values(manifest.icons), ...manifest.content_scripts.flatMap((c) => c.js)];
-for (const r of referenced) if (!files.includes(r)) { console.error('manifest references a file that is not packaged: ' + r); process.exit(1); }
+const ffManifest = firefoxManifest(manifest, fs.readFileSync(path.join(ROOT, manifest.background.service_worker), 'utf8'));
+// Sanity: every file each manifest points at must be in the bundle.
+const referenced = (m) => [...(m.background.scripts || [m.background.service_worker]), m.action.default_popup, m.options_ui.page, ...Object.values(m.icons), ...Object.values(m.action.default_icon || {}), ...m.content_scripts.flatMap((c) => c.js)];
+for (const r of [...referenced(manifest), ...referenced(ffManifest)]) if (!files.includes(r)) { console.error('manifest references a file that is not packaged: ' + r); process.exit(1); }
 
+const builds = [
+  ['chrome', {}],
+  ['firefox', { 'manifest.json': Buffer.from(JSON.stringify(ffManifest, null, 2) + '\n') }],
+];
 fs.mkdirSync(OUT_DIR, { recursive: true });
-fs.writeFileSync(OUT, zip(files));
-console.log(`${OUT} (${files.length} files, ${(fs.statSync(OUT).size / 1024).toFixed(1)} KB)`);
+for (const [browser, overrides] of builds) {
+  const out = path.join(OUT_DIR, `scam-detector-${manifest.version}-${browser}.zip`);
+  fs.writeFileSync(out, zip(files, overrides));
+  console.log(`${out} (${files.length} files, ${(fs.statSync(out).size / 1024).toFixed(1)} KB)`);
+}
 for (const f of files) console.log('  ' + f);

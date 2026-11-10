@@ -1,4 +1,4 @@
-# Builds an installable package for every version and publishes it as a
+# Builds the Chrome and Firefox packages for every version and publishes it as a
 # GitHub Release. Runs on every push to main (or manually); the release is
 # created only if a tag for the manifest version does not exist yet, so a
 # push that does not bump the version is a cheap no-op.
@@ -40,6 +40,12 @@ jobs:
           npm run package
           cd dist && sha256sum *.zip > SHA256SUMS.txt && cat SHA256SUMS.txt
 
+      - name: Validate the Firefox package (addons-linter)
+        if: steps.v.outputs.exists == 'false'
+        run: |
+          mkdir -p dist/firefox && cd dist/firefox && unzip -q ../scam-detector-${{ steps.v.outputs.version }}-firefox.zip
+          npx --yes web-ext@8 lint --source-dir .
+
       - name: Release notes from store-listing/listing.md
         if: steps.v.outputs.exists == 'false'
         run: |
@@ -53,7 +59,7 @@ jobs:
         run: |
           V=${{ steps.v.outputs.version }}
           git tag "v$V" && git push origin "v$V"
-          gh release create "v$V" dist/scam-detector-$V.zip dist/SHA256SUMS.txt --title "Scam Detector $V" --notes-file dist/RELEASE_NOTES.md
+          gh release create "v$V" dist/scam-detector-$V-chrome.zip dist/scam-detector-$V-firefox.zip dist/SHA256SUMS.txt --title "Scam Detector $V" --notes-file dist/RELEASE_NOTES.md
 
       - name: Already released
         if: steps.v.outputs.exists == 'true'

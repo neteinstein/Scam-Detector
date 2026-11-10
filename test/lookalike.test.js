@@ -85,3 +85,18 @@ test('Continente and Via Verde impersonation (2026 PT SMS campaigns)', () => {
   // Near-miss: ordinary words, not the brand.
   assert.equal(lookalike.detect('continentes-viagens.pt'), null);
 });
+
+test('HOKA fake shops and Chave Movel Digital phishing (Nov 2026 reporting)', () => {
+  const lookalike = require('../src/lib/lookalike.js');
+  const brands = require('../src/lib/brands.js');
+  assert.equal(lookalike.detect('hoka-outlet-sale.shop').brand, 'HOKA');
+  assert.equal(lookalike.detect('hokaoneone-blackfriday.com').brand, 'HOKA');
+  assert.equal(lookalike.detect('www.hoka.com'), null);
+  assert.equal(brands.findByDomain('hoka.com').name, 'HOKA');
+  assert.equal(lookalike.detect('chavemovel-digital.com').brand, 'Chave Móvel Digital');
+  assert.equal(lookalike.detect('autenticacaogov-pt.top').brand, 'Chave Móvel Digital');
+  assert.equal(lookalike.detect('www.autenticacao.gov.pt'), null);
+  // Near-misses: words that merely contain the letters.
+  assert.equal(lookalike.detect('shokamura.jp'), null);
+  assert.equal(lookalike.detect('chaves-moveis.pt'), null);
+});

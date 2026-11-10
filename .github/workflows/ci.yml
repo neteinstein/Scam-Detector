@@ -16,8 +16,13 @@ jobs:
           node-version: 22
       - name: Unit tests + store-listing consistency + catalogue report
         run: npm test
-      - name: Build the installable package (sanity)
+      - name: Build the Chrome and Firefox packages (sanity)
         run: npm run package
+      - name: Lint the Firefox package (addons-linter)
+        run: |
+          V=$(node -p "require('./manifest.json').version")
+          mkdir -p dist/firefox && cd dist/firefox && unzip -q ../scam-detector-$V-firefox.zip
+          npx --yes web-ext@8 lint --source-dir .
       - uses: actions/upload-artifact@v4
         with:
           name: scam-detector-unpacked-${{ github.sha }}

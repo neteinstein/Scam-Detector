@@ -8,7 +8,8 @@ Published listing: https://chromewebstore.google.com/detail/scam-detector/lgppga
 
 | File | Where it goes |
 | --- | --- |
-| `../dist/scam-detector-<version>.zip` (run `npm run package`) | **Package → Upload new package** |
+| `../dist/scam-detector-<version>-chrome.zip` (run `npm run package`) | **Package → Upload new package** |
+| `firefox.md` and `../dist/scam-detector-<version>-firefox.zip` | Firefox Add-ons (AMO) submission: listing fields, data collection, reviewer notes |
 | `listing.md` | **Store listing**: title, summary, description, category, language |
 | `assets/screenshot-*.png` (1280×800) | **Store listing → Screenshots** (upload in the numbered order) |
 | `assets/promo-small-440x280.png` | **Store listing → Small promo tile** (required) |
@@ -30,7 +31,7 @@ Chromium through Playwright; takes about 20 s).
    ```
    npm test            # all unit tests must pass
    npm run e2e         # banner smoke test in Chromium
-   npm run package     # writes dist/scam-detector-<version>.zip
+   npm run package     # writes dist/scam-detector-<version>-chrome.zip (and -firefox.zip)
    ```
    Bump `version` in `manifest.json` before every upload; the store rejects a version
    that is not higher than the published one.
@@ -59,10 +60,10 @@ Chromium through Playwright; takes about 20 s).
 
 Every version is also published as a GitHub Release by `.github/workflows/release.yml`:
 on every push to `main` (or on manual dispatch) the workflow reads the manifest version
-and, if no `v<version>` tag exists yet, runs the tests, builds `scam-detector-<version>.zip`
-with `npm run package`, tags `v<version>` and attaches the zip plus `SHA256SUMS.txt` with
+and, if no `v<version>` tag exists yet, runs the tests, builds `scam-detector-<version>-chrome.zip`
+and `scam-detector-<version>-firefox.zip` with `npm run package`, tags `v<version>` and attaches both zips plus `SHA256SUMS.txt` with
 release notes taken from *What's new* in `listing.md` (`tools/release-notes.js`).
-The same zip is what gets uploaded to the store. CI (`ci.yml`) also attaches the package
+The Chrome zip is what gets uploaded to the Chrome Web Store and the Firefox zip what gets uploaded to Firefox Add-ons. CI (`ci.yml`) also attaches the package
 to every workflow run as an artifact.
 
 ## Pre-submission checklist

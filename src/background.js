@@ -2,7 +2,10 @@
  * Service worker: domain intelligence (RDAP registration age with caching),
  * scoring, per-tab result storage and toolbar badge.
  */
-importScripts(
+// Chrome runs this file as a service worker and loads the libraries here. Firefox
+// runs it as a background script with the libraries listed before it in the
+// manifest (tools/firefox-manifest.js reads this call to build that list).
+if (typeof importScripts === 'function') importScripts(
   'lib/punycode.js', 'lib/domain.js', 'lib/brands.js', 'lib/tlds.js', 'lib/phrases.js', 'lib/lookalike.js', 'lib/scoring.js', 'lib/urlmatch.js'
 );
 

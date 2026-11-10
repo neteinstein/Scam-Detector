@@ -1,6 +1,6 @@
 # Scam Detector – Privacy Policy
 
-_Last updated: 7 November 2026_
+_Last updated: 10 November 2026_
 
 Scam Detector is a browser extension that warns you when a website shows signs of being a scam. This policy explains what the extension does with data.
 
@@ -20,7 +20,7 @@ Nothing else is sent anywhere. The extension has no servers of its own, no accou
 
 ## What is stored on your device
 
-- Your settings (risk thresholds, trusted domains, extra brands, chat-monitor and plain-language options) in Chrome's extension storage, which Chrome may sync between your own signed-in browsers.
+- Your settings (risk thresholds, trusted domains, extra brands, chat-monitor and plain-language options) in the browser's extension storage, which the browser (Chrome, or Firefox with Firefox Sync) may sync between your own signed-in browsers.
 - Cached domain-registration lookups (domain name, registration date, registrar name) for seven days.
 - The phishing-reports feed as hashes (no readable addresses), replaced on every refresh.
 - Cached Safe Browsing answers for the current browser session only, when that check is enabled.

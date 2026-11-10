@@ -99,6 +99,21 @@ if (mdDate && htmlDate && mdDate.trim() !== htmlDate.trim()) fail(`privacy polic
 const mdHeadings = [...policyMd.matchAll(/^## (.+)$/gm)].map((m) => m[1].trim());
 for (const h of mdHeadings) if (!policyHtml.includes('<h2>' + h.replace(/&/g, '&amp;') + '</h2>')) fail(`privacy-policy.html: missing section "${h}" present in the Markdown; regenerate the HTML`);
 
+// --- Firefox (store-listing/firefox.md) ---------------------------------------
+if (!exists('store-listing/firefox.md')) fail('store-listing/firefox.md: missing (Firefox Add-ons submission notes)');
+else {
+  const ffDoc = read('store-listing/firefox.md');
+  const ff = require('./firefox-manifest').buildFromRepo();
+  const g = ff.browser_specific_settings.gecko;
+  if (!ffDoc.includes('`' + g.id + '`')) fail(`firefox.md: does not state the add-on ID \`${g.id}\``);
+  if (!ffDoc.includes('`' + g.strict_min_version + '`')) fail(`firefox.md: does not state the minimum Firefox version ${g.strict_min_version}`);
+  const and = ff.browser_specific_settings.gecko_android;
+  if (and && !ffDoc.includes('`' + and.strict_min_version + '`')) fail(`firefox.md: does not state the minimum Firefox for Android version ${and.strict_min_version}`);
+  const dc = g.data_collection_permissions || {};
+  for (const c of [...(dc.required || []), ...(dc.optional || [])]) if (!ffDoc.includes('`' + c + '`')) fail(`firefox.md: data-collection category "${c}" is declared in the Firefox manifest but not explained`);
+  if (manifest.description.length > 250) fail('manifest.json: description is longer than the 250-character AMO summary');
+}
+
 // --- assets -----------------------------------------------------------------
 function pngSize(p) {
   const b = fs.readFileSync(path.join(ROOT, p));
