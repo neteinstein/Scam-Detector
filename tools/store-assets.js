@@ -1,7 +1,10 @@
 /*
- * Generates Chrome Web Store assets into store-listing/assets/:
- *   screenshot-1..4 (1280x800), promo-small-440x280.png, promo-marquee-1400x560.png
- * Uses the bundled Chromium with the unpacked extension loaded. Run: node tools/store-assets.js
+ * Generates the store assets. Uses the bundled Chromium with the unpacked extension
+ * loaded. Run: node tools/store-assets.js
+ *   store-listing/assets/          Chrome Web Store: screenshot-1..4 (1280x800),
+ *                                  promo-small-440x280.png, promo-marquee-1400x560.png
+ *   store-listing/assets-firefox/  Firefox Add-ons: the same screenshots (AMO shows
+ *                                  1280x800) and icon-128x128.png. AMO has no promo tiles.
  */
 const path = require('path');
 const fs = require('fs');
@@ -9,7 +12,9 @@ const { chromium } = require('playwright');
 
 const EXT = path.resolve(__dirname, '..');
 const OUT = path.join(EXT, 'store-listing', 'assets');
+const OUT_FF = path.join(EXT, 'store-listing', 'assets-firefox');
 fs.mkdirSync(OUT, { recursive: true });
+fs.mkdirSync(OUT_FF, { recursive: true });
 const ICON = 'data:image/png;base64,' + fs.readFileSync(path.join(EXT, 'icons', 'icon128.png')).toString('base64');
 
 const PHISH_HTML = `<!doctype html><html><head><meta charset="utf-8"><title>Log in to your PayPal account</title>
@@ -108,8 +113,14 @@ async function main() {
       await p.waitForTimeout(200);
       await p.screenshot({ path: path.join(OUT, name) });
     }
-    console.log('assets written to ' + OUT);
-    for (const f of fs.readdirSync(OUT)) console.log('  ' + f);
+    // Firefox Add-ons: same screenshots, plus the listing icon.
+    for (const f of fs.readdirSync(OUT_FF)) if (/\.png$/.test(f)) fs.unlinkSync(path.join(OUT_FF, f));
+    for (const f of fs.readdirSync(OUT)) if (/^screenshot-.*\.png$/.test(f)) fs.copyFileSync(path.join(OUT, f), path.join(OUT_FF, f));
+    fs.copyFileSync(path.join(EXT, 'icons', 'icon128.png'), path.join(OUT_FF, 'icon-128x128.png'));
+    for (const dir of [OUT, OUT_FF]) {
+      console.log('assets written to ' + dir);
+      for (const f of fs.readdirSync(dir)) console.log('  ' + f);
+    }
   } finally {
     await ctx.close();
   }

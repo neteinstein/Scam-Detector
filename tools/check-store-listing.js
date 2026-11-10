@@ -140,6 +140,20 @@ const newestUi = Math.max(...uiFiles.map((f) => fs.statSync(path.join(ROOT, f)).
 const oldestShot = Math.min(...shots.map((f) => fs.statSync(path.join(ROOT, 'store-listing/assets', f)).mtimeMs));
 if (shots.length && process.env.CI !== 'true' && oldestShot + 1000 < newestUi) fail('store-listing/assets: UI files are newer than the screenshots; run `npm run store-assets` (set CI=true to skip this check)');
 
+// --- Firefox Add-ons assets ----------------------------------------------------
+// store-listing/assets-firefox/ holds the AMO screenshots and listing icon, written by
+// `npm run store-assets`. They must be the same files as the Chrome screenshots and the
+// packaged 128 px icon, so the two listings never show different versions of the UI.
+const FF_DIR = 'store-listing/assets-firefox';
+if (!fs.existsSync(path.join(ROOT, FF_DIR))) fail(`missing ${FF_DIR}/; run \`npm run store-assets\``);
+else {
+  const same = (a, b) => exists(a) && exists(b) && fs.readFileSync(path.join(ROOT, a)).equals(fs.readFileSync(path.join(ROOT, b)));
+  const ffShots = fs.readdirSync(path.join(ROOT, FF_DIR)).filter((f) => /^screenshot-/.test(f));
+  for (const f of shots) if (!same('store-listing/assets/' + f, `${FF_DIR}/${f}`)) fail(`${FF_DIR}/${f} is missing or differs from store-listing/assets/${f}; run \`npm run store-assets\``);
+  for (const f of ffShots) if (!shots.includes(f)) fail(`${FF_DIR}/${f} has no matching Chrome screenshot; run \`npm run store-assets\``);
+  if (!same('icons/icon128.png', `${FF_DIR}/icon-128x128.png`)) fail(`${FF_DIR}/icon-128x128.png is missing or differs from icons/icon128.png; run \`npm run store-assets\``);
+}
+
 // --- icons --------------------------------------------------------------------
 for (const [size, p] of Object.entries(manifest.icons || {})) {
   const s = pngSize(p);

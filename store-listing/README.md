@@ -15,12 +15,13 @@ Published listing: https://chromewebstore.google.com/detail/scam-detector/lgppga
 | `assets/promo-small-440x280.png` | **Store listing → Small promo tile** (required) |
 | `assets/promo-marquee-1400x560.png` | **Store listing → Marquee promo tile** (optional) |
 | `../icons/icon128.png` | Store icon (taken from the package automatically) |
+| `assets-firefox/` | Firefox Add-ons: listing icon and screenshots (see `firefox.md`) |
 | `privacy-policy.md` / `privacy-policy.html` | **Privacy → Privacy policy URL** (host the HTML, see below) |
 | `privacy-practices.md` | **Privacy → Single purpose, permission justifications, data usage, remote code** |
 | `distribution.md` | **Distribution**: visibility, regions, pricing |
 
 Regenerate screenshots and promo tiles with `npm run store-assets` (uses the bundled
-Chromium through Playwright; takes about 20 s).
+Chromium through Playwright; takes about 20 s). It also refreshes `assets-firefox/`.
 
 ## Step by step
 
