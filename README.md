@@ -7,6 +7,7 @@
 **A Chrome and Firefox extension that warns you before a scam website gets your passwords, card details or money.**
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/lgppgajjfgffahljkkgcnjjelnbgjaod?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)
+[![Firefox Add-ons](https://img.shields.io/amo/v/scam-detector-firefox?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/en-US/firefox/addon/scam-detector-firefox/)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
 [![CI](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/neteinstein/Scam-Detector?label=release&color=2e7d32)](https://github.com/neteinstein/Scam-Detector/releases/latest)
