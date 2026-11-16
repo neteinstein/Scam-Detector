@@ -7,7 +7,7 @@
 **A Chrome and Firefox extension that warns you before a scam website gets your passwords, card details or money.**
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/lgppgajjfgffahljkkgcnjjelnbgjaod?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=4285F4)](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)
-[![Firefox Add-ons](https://img.shields.io/amo/v/scam-detector-firefox?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/en-US/firefox/addon/scam-detector-firefox/)
+[![Firefox Add-ons](https://img.shields.io/amo/v/scam-detector-firefox?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139)](https://addons.mozilla.org/addon/scam-detector-firefox/)
 [![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=googlechrome&logoColor=white)](manifest.json)
 [![CI](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/neteinstein/Scam-Detector/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/neteinstein/Scam-Detector?label=release&color=2e7d32)](https://github.com/neteinstein/Scam-Detector/releases/latest)
@@ -19,7 +19,7 @@
 
 *A fake PayPal login on a look-alike domain. The banner explains why, in plain words, and offers a one-click way out.*
 
-**[Add it to Chrome from the Chrome Web Store](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)**, free.
+**[Add it to Chrome](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)** or **[add it to Firefox](https://addons.mozilla.org/addon/scam-detector-firefox/)**, free.
 
 </div>
 
@@ -188,7 +188,7 @@ The chat text never leaves the browser. On sites without a recognisable chat are
 
 ## Install
 
-**[Install Scam Detector from the Chrome Web Store](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod)**, the easiest way, with automatic updates.
+**Install Scam Detector from the [Chrome Web Store](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod) or [Firefox Add-ons](https://addons.mozilla.org/addon/scam-detector-firefox/)**, the easiest way, with automatic updates.
 
 To install a specific build by hand instead, use the
 [Releases page](https://github.com/neteinstein/Scam-Detector/releases/latest):
