@@ -623,6 +623,18 @@
   "sig_seed_phrase_plain": {
     "message": "A página pede as palavras secretas de recuperação ou a chave de uma carteira de criptomoedas"
   },
+  "sig_clickfix": {
+    "message": "A página manda colar e executar um comando no seu computador"
+  },
+  "sig_clickfix_plain": {
+    "message": "A página manda colar um comando no seu computador. Nenhum site verdadeiro pede isto: instala vírus"
+  },
+  "sig_fake_captcha": {
+    "message": "Pede para provar que é humano, mas sem um serviço CAPTCHA verdadeiro"
+  },
+  "sig_fake_captcha_plain": {
+    "message": "Mostra uma falsa verificação \"não sou um robô\""
+  },
   "sig_cred_lookalike": {
     "message": "Formulário de login num domínio que imita $1"
   },
@@ -860,6 +872,12 @@
   "phrase_fakeproof_plain": {
     "message": "Falsas garantias de confiança"
   },
+  "phrase_fakesale": {
+    "message": "Liquidação por encerramento com descontos extremos"
+  },
+  "phrase_fakesale_plain": {
+    "message": "História de \"vamos fechar, tudo a 80%\", típica de lojas falsas"
+  },
   "phrase_investment": {
     "message": "Promessa de retornos de investimento irrealistas"
   },
@@ -889,6 +907,18 @@
   },
   "phrase_escrow_plain": {
     "message": "\"Intermediário\" falso que diz guardar o pagamento"
+  },
+  "phrase_tollfine": {
+    "message": "Cobrança de portagem ou multa por pagar"
+  },
+  "phrase_tollfine_plain": {
+    "message": "Pede-lhe que pague uma portagem ou uma multa"
+  },
+  "phrase_recovery": {
+    "message": "Promete recuperar dinheiro perdido em burlas"
+  },
+  "phrase_recovery_plain": {
+    "message": "Oferece-se para recuperar o dinheiro que perdeu numa burla (é outra burla)"
   },
   "phrase_fakeregulator": {
     "message": "Empresa de investimento diz ser licenciada por um governo"

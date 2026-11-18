@@ -124,6 +124,12 @@
 
       if (pageInfo.hasSeedPhraseField) signals.push(signal('seed-phrase', 'Page asks for a crypto wallet seed / recovery phrase or private key', 35, 'No legitimate service ever asks for this', 'page', { detailKey: 'det_seed' }));
 
+      // ClickFix: a fake check or error page that has you paste a command into Run / Terminal.
+      if (pageInfo.clickFix) signals.push(signal('clickfix', 'Page tells you to paste and run a command on your computer', 50, `"${pageInfo.clickFix}"`, 'page'));
+      // A "verify you are human" box that no real CAPTCHA service is behind: phishing kits
+      // put one in front of the fake page so security scanners never see it.
+      if (pageInfo.humanCheck && !pageInfo.captchaProvider) signals.push(signal('fake-captcha', 'Asks you to prove you are human, but no real CAPTCHA service is used', 12, '', 'page'));
+
       if (pageInfo.hasPasswordField) {
         if (la) signals.push(signal('cred-lookalike', `Login form on a domain impersonating ${la.brand}`, 22, 'Classic credential-phishing setup', 'page', { args: [la.brand], detailKey: 'det_cred_classic' }));
         if (young) signals.push(signal('cred-young', 'Login form on a very recently registered domain', 15, '', 'page'));
@@ -165,8 +171,10 @@
       const imgAsset = (pageInfo.brandAssets || []).find((a) => a.kind !== 'favicon' && !isOwn(a.brand));
       if (imgAsset && hasCredentialForm) signals.push(signal('brand-assets', `Logos/styles hot-linked from ${imgAsset.brand}'s real site on a credential page`, 15, imgAsset.host, 'page', { args: [imgAsset.brand] }));
 
-      // Language (social engineering + money claims)
-      const PHRASE_CAP = 40;
+      // Language (social engineering + money claims). Pages that warn about scams quote
+      // the same wording, so there it counts for little and builds no money combinations.
+      const aware = !!pageInfo.awareness;
+      const PHRASE_CAP = aware ? 15 : 40;
       let phraseTotal = 0;
       const byCat = new Map();
       for (const p of (pageInfo.phrases || [])) {
@@ -183,7 +191,7 @@
       }
       // Money claims combined with a way to take your money or data
       const moneyCats = sortedCats.filter(([, s]) => s.money);
-      if (moneyCats.length) {
+      if (moneyCats.length && !aware) {
         if (pageInfo.hasCardField || pageInfo.hasPasswordField) signals.push(signal('money-form', 'Asks for card or account details next to money claims', 12, moneyCats.map(([c]) => c).join(', '), 'money'));
         if (moneyCats.length >= 2) signals.push(signal('money-stack', 'Several independent money-scam templates on one page', 10, moneyCats.map(([, s]) => s.label).join('; '), 'money'));
         if (young || parsed.freeHosting) signals.push(signal('money-young', `Money claims on a ${parsed.freeHosting ? 'free-hosting' : 'very recently registered'} site`, 10, '', 'money', { key: parsed.freeHosting ? 'sig_money_young_free' : 'sig_money_young_new' }));

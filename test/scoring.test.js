@@ -171,3 +171,38 @@ test('toolbar icon: green, yellow, red, grey check, no badge text', () => {
     for (const p of Object.values(b.icon)) assert.ok(fs.existsSync(path.join(__dirname, '..', p)), `${p} exists`);
   }
 });
+
+test('ClickFix page warns on its own and is danger behind a fake human check', () => {
+  const step = 'press windows + r, press ctrl + v';
+  const alone = scoring.evaluate({ hostname: 'old-blog.example', ageDays: 3000 }, page({ clickFix: step }), {});
+  assert.ok(ids(alone).includes('clickfix'));
+  assert.notEqual(alone.verdict, 'ok');
+  const gate = scoring.evaluate({ hostname: 'old-blog.example', ageDays: 3000 }, page({ clickFix: step, humanCheck: true, captchaProvider: false }), {});
+  assert.ok(ids(gate).includes('fake-captcha'));
+  assert.equal(gate.verdict, 'danger');
+});
+
+test('a real CAPTCHA service is not a fake human check', () => {
+  const r = scoring.evaluate({ hostname: 'shop.example', ageDays: 3000 }, page({ humanCheck: true, captchaProvider: true }), {});
+  assert.ok(!ids(r).includes('fake-captcha'));
+  assert.equal(r.verdict, 'ok');
+});
+
+test('toll fine demand with a card form counts as a money scam', () => {
+  const r = scoring.evaluate({ hostname: 'ezpass-pay.top', ageDays: 2 }, page({ hasCardField: true, phrases: phrases.scan('You have an unpaid toll balance. To avoid late fees pay today.') }), {});
+  assert.ok(ids(r).includes('phrase-tollfine'));
+  assert.ok(ids(r).includes('money-form'));
+  assert.equal(r.verdict, 'danger');
+});
+
+test('a Reddit r/Scams thread quoting scam texts is not flagged', () => {
+  const quoted = 'Got this text: "Notice of toll evasion: you have an unpaid toll bill, pay a small fee of $1.50 to avoid late fees. Final notice." '
+    + 'Another one said "our experts can help you recover your lost funds". Is this a scam?';
+  const info = page({ title: 'Unpaid toll text, is this a scam? : r/Scams', awareness: true, phrases: phrases.scan(quoted) });
+  const r = scoring.evaluate({ hostname: 'www.reddit.com', ageDays: 7000 }, info, {});
+  assert.equal(r.verdict, 'ok', JSON.stringify(r.signals.map((s) => s.id + ':' + s.weight)));
+  // the same wording on a page that does not warn about scams still counts
+  const scam = scoring.evaluate({ hostname: 'www.reddit.com', ageDays: 7000 }, page({ phrases: phrases.scan(quoted) }), {});
+  assert.ok(scam.score > r.score);
+  assert.ok(scam.signals.some((s) => s.id === 'money-stack'));
+});

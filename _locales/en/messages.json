@@ -623,6 +623,18 @@
   "sig_seed_phrase_plain": {
     "message": "The page asks for the secret recovery words or key of a crypto wallet"
   },
+  "sig_clickfix": {
+    "message": "Page tells you to paste and run a command on your computer"
+  },
+  "sig_clickfix_plain": {
+    "message": "The page tells you to paste a command into your computer. Real sites never ask this: it installs malware"
+  },
+  "sig_fake_captcha": {
+    "message": "Asks you to prove you are human, but no real CAPTCHA service is used"
+  },
+  "sig_fake_captcha_plain": {
+    "message": "Shows a fake \"I am not a robot\" check"
+  },
   "sig_cred_lookalike": {
     "message": "Login form on a domain impersonating $1"
   },
@@ -860,6 +872,12 @@
   "phrase_fakeproof_plain": {
     "message": "Fake claims of being trustworthy"
   },
+  "phrase_fakesale": {
+    "message": "Closing-down sale with extreme discounts"
+  },
+  "phrase_fakesale_plain": {
+    "message": "A \"we are closing, everything 80% off\" story, typical of fake shops"
+  },
   "phrase_investment": {
     "message": "Unrealistic investment returns promised"
   },
@@ -889,6 +907,18 @@
   },
   "phrase_escrow_plain": {
     "message": "Fake \"middleman\" said to be holding the payment"
+  },
+  "phrase_tollfine": {
+    "message": "Unpaid toll or traffic fine demand"
+  },
+  "phrase_tollfine_plain": {
+    "message": "Asks you to pay a toll or traffic fine"
+  },
+  "phrase_recovery": {
+    "message": "Promises to recover money lost to scams"
+  },
+  "phrase_recovery_plain": {
+    "message": "Offers to get back money you lost to a scam (a second scam)"
   },
   "phrase_fakeregulator": {
     "message": "Investment firm claims to be licensed by a government"

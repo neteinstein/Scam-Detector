@@ -24,18 +24,19 @@ WHAT IT CHECKS
 
 Domain
 • How recently the domain was registered (brand-new domains are the strongest scam signal)
-• Impersonation of ~150 frequently abused brands: banks, payment apps, couriers, tax authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains, and "brand-com.xyz" tricks
+• Impersonation of ~190 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
 • Raw IP addresses, high-abuse top-level domains, phishing words in the address, missing HTTPS
 
 Page
-• Password, card or crypto seed-phrase forms on look-alike, brand-new, free-hosted or IP-addressed sites
+• Password, card or crypto seed-phrase forms on look-alike, brand-new, free-hosted (including AI and no-code site builders) or IP-addressed sites
+• Fake "verify you are human" pages that tell you to press Win+R or open Terminal and paste a command (the "ClickFix" malware trick), and "I'm not a robot" boxes with no real CAPTCHA behind them
 • Credentials sent to another domain or over plain HTTP
 • Pages that call themselves a brand they are not, or borrow the real brand's logo and favicon
-• Social-engineering wording: urgency, prizes, tech-support alerts, parcel-fee lures, tiny "verification fees"
-• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops, and fake online brokers ("clone firms") claiming to be licensed by a government
+• Social-engineering wording: urgency, prizes, tech-support alerts, parcel-fee lures, tiny "verification fees", fake closing-down sales with 70–99% off
+• Money-fraud templates: guaranteed returns, advance fees to "release" funds, no-credit-check loans with upfront fees, jobs that charge a registration fee, overpayment refunds, lottery and inheritance lures, fake escrow, crypto doubling and airdrops, fake online brokers ("clone firms") claiming to be licensed by a government, unpaid toll and traffic-fine demands, and "we recover your lost money" recovery scams
 • Fake navigation, deceptive links, decorative "secure" badges
 
-Wording is recognised in English, Portuguese, Spanish and French.
+Wording is recognised in English, Portuguese, Spanish and French. Pages that warn about scams (news, consumer advice, forums such as Reddit's r/Scams) quote scam wording, so there it counts for much less.
 
 VERIFIED PHISHING REPORTS (on by default)
 A local copy of PhishTank's community-verified phishing addresses (about 50,000, refreshed a few times a day) is kept on your device as hashes. A page that is in it, or a site with several verified reports, is flagged immediately, even when it sits on a big platform such as Google Docs or a link shortener. Matching is local: the pages you visit are never sent to PhishTank.
@@ -60,7 +61,14 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.4.0)
+## What's new (version 1.5.0)
+
+• New: recognises "ClickFix" pages, the fake "verify you are human" or "fix this error" screens that tell you to press Win+R (or open Terminal) and paste a command, which installs password-stealing malware. Also flags "I'm not a robot" boxes that have no real CAPTCHA behind them, a gate phishing kits use to hide from security scanners.
+• New wording checks in English, Portuguese, Spanish and French: unpaid toll and traffic-fine demands (among the most reported scam text messages), "we can recover the money you lost" recovery scams, and fake closing-down sales with 70–99% off.
+• Fewer false alarms on pages that warn about scams, such as news articles, consumer advice and Reddit's r/Scams, which quote scam wording.
+• Catalogue: E-ZPass, SunPass, Spain's DGT (traffic fines) and Seguridad Social, Portugal's SNS 24, InPost, PKO BP, WeTransfer, RuneScape and Poshmark. Better at spotting brand names glued to phishing words or misspelt in rotating subdomains, and knows about 40 more site builders and free subdomain services that host phishing (Lovable, Bolt, Framer, Wix Studio, Square Online, GitBook, Cloudflare tunnels…). Government websites are no longer mistaken for impersonations.
+
+Version 1.4.0:
 
 • Scam Detector now also runs in Firefox (desktop 140 and later, Android 142 and later). Every release ships a Chrome package and a Firefox package built from the same code, with the same checks, languages and settings.
 • If the browser has not given the extension access to websites (Firefox lets you withhold or revoke it), the popup now says so and offers a one-click button to allow it; until then no page can be checked.

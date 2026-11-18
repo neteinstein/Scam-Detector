@@ -62,7 +62,7 @@
     { name: 'Uniswap', keywords: ['uniswap'], domains: ['uniswap.org', 'app.uniswap.org'] },
     // Tech / cloud
     { name: 'Apple', keywords: ['apple', 'icloud', 'appleid', 'itunes'], domains: ['apple.com', 'icloud.com', 'apple.co', 'itunes.com', 'me.com', 'mac.com', 'apple-dns.net', 'mzstatic.com'] },
-    { name: 'Microsoft', keywords: ['microsoft', 'office365', 'outlook', 'onedrive', 'sharepoint', 'hotmail', 'msonline', 'azure', 'xbox'], domains: ['microsoft.com', 'live.com', 'office.com', 'office365.com', 'outlook.com', 'microsoftonline.com', 'sharepoint.com', 'onedrive.com', 'hotmail.com', 'azure.com', 'windows.com', 'msn.com', 'bing.com', 'xbox.com', 'skype.com', 'visualstudio.com', 'azurewebsites.net', 'windows.net', 'microsoft.net', 'msftconnecttest.com', 'linkedin.com', 'github.com', 'microsoftstore.com', 'msauth.net', 'microsoftonline-p.com', 'onmicrosoft.com', 'sharepointonline.com', 'office.net', 'powerbi.com', 'dynamics.com'] },
+    { name: 'Microsoft', keywords: ['microsoft', 'office365', 'outlook', 'onedrive', 'sharepoint', 'hotmail', 'msonline', 'azure', 'xbox'], domains: ['microsoft.com', 'live.com', 'office.com', 'office365.com', 'outlook.com', 'microsoftonline.com', 'sharepoint.com', 'onedrive.com', 'hotmail.com', 'azure.com', 'windows.com', 'msn.com', 'bing.com', 'xbox.com', 'skype.com', 'visualstudio.com', 'azurewebsites.net', 'windows.net', 'microsoft.net', 'msftconnecttest.com', 'linkedin.com', 'github.com', 'microsoftstore.com', 'msauth.net', 'microsoftonline-p.com', 'onmicrosoft.com', 'sharepointonline.com', 'office.net', 'powerbi.com', 'dynamics.com', 'microsoftazuread-sso.com'] },
     { name: 'Google', keywords: ['google', 'gmail', 'youtube', 'gdrive'], domains: ['google.com', 'gmail.com', 'youtube.com', 'googleapis.com', 'gstatic.com', 'googleusercontent.com', 'goo.gl', 'g.co', 'google.co.uk', 'google.pt', 'google.de', 'google.fr', 'google.es', 'google.it', 'google.ca', 'google.com.au', 'google.com.br', 'withgoogle.com', 'googleadservices.com', 'googlesyndication.com', 'google-analytics.com', 'googletagmanager.com', 'youtu.be', 'android.com', 'blogger.com', 'blogspot.com', 'firebase.com', 'firebaseapp.com', 'appspot.com', 'googleblog.com', 'ggpht.com', 'googlevideo.com', 'doubleclick.net', 'chrome.com', 'googledrive.com'] },
     { name: 'Amazon', keywords: ['amazon', 'primevideo', 'audible'], domains: ['amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.fr', 'amazon.es', 'amazon.it', 'amazon.ca', 'amazon.com.au', 'amazon.co.jp', 'amazon.in', 'amazon.com.br', 'amazon.com.mx', 'amazon.nl', 'amazon.se', 'amazon.pl', 'amazonaws.com', 'aws.amazon.com', 'primevideo.com', 'audible.com', 'a2z.com', 'amazon.jobs', 'media-amazon.com', 'ssl-images-amazon.com', 'amazonpay.com', 'amazon.dev', 'awsstatic.com', 'cloudfront.net', 'amazontrust.com', 'images-amazon.com'] },
     { name: 'Facebook / Meta', keywords: ['facebook', 'instagram', 'whatsapp', 'messenger', 'metamail'], domains: ['facebook.com', 'fb.com', 'fb.me', 'instagram.com', 'whatsapp.com', 'whatsapp.net', 'messenger.com', 'meta.com', 'fbcdn.net', 'cdninstagram.com', 'facebook.net', 'oculus.com', 'threads.net', 'workplace.com'] },
@@ -72,6 +72,7 @@
     { name: 'Spotify', keywords: ['spotify'], domains: ['spotify.com', 'scdn.co', 'spotifycdn.com'] },
     { name: 'Disney+', keywords: ['disneyplus'], domains: ['disneyplus.com', 'disney.com', 'disney.co.uk', 'disney.pt', 'bamgrid.com'] },
     { name: 'Dropbox', keywords: ['dropbox'], domains: ['dropbox.com', 'dropboxusercontent.com', 'db.tt', 'dropboxstatic.com'] },
+    { name: 'WeTransfer', keywords: ['wetransfer'], domains: ['wetransfer.com', 'we.tl', 'wetransfer.net'] },
     { name: 'DocuSign', keywords: ['docusign'], domains: ['docusign.com', 'docusign.net'] },
     { name: 'Adobe', keywords: ['adobe', 'acrobat'], domains: ['adobe.com', 'adobelogin.com', 'acrobat.com', 'adobe.io', 'typekit.net', 'adobesign.com', 'adobe.net'] },
     { name: 'Zoom', keywords: ['zoom'], domains: ['zoom.us', 'zoom.com', 'zoomgov.com'] },
@@ -80,6 +81,7 @@
     { name: 'Telegram', keywords: ['telegram'], domains: ['telegram.org', 't.me', 'telegram.me', 'telegram.dog', 'telesco.pe'] },
     { name: 'Steam', keywords: ['steam', 'steamcommunity', 'steampowered'], domains: ['steampowered.com', 'steamcommunity.com', 'steamgames.com', 'steamstatic.com', 'valvesoftware.com', 'steam-chat.com', 'steamcontent.com', 'steamusercontent.com'] },
     { name: 'Roblox', keywords: ['roblox', 'robux'], domains: ['roblox.com', 'rbxcdn.com'] },
+    { name: 'RuneScape', keywords: ['runescape'], fillers: ['osrs', 'oldschool', 'jagex'], domains: ['runescape.com', 'jagex.com', 'runescape.wiki'] },
     { name: 'Epic Games', keywords: ['epicgames', 'fortnite'], domains: ['epicgames.com', 'fortnite.com', 'unrealengine.com'] },
     { name: 'PlayStation', keywords: ['playstation'], domains: ['playstation.com', 'sony.com', 'playstation.net', 'sonyentertainmentnetwork.com'] },
     { name: 'Nintendo', keywords: ['nintendo'], domains: ['nintendo.com', 'nintendo.net', 'nintendo.co.uk', 'nintendo.pt'] },
@@ -106,6 +108,8 @@
     { name: 'CTT', keywords: ['ctt'], domains: ['ctt.pt'] },
     { name: 'Continente', keywords: ['cartaocontinente', 'continente'], domains: ['continente.pt', 'cartaocontinente.pt', 'sonae.pt'] },
     { name: 'Via Verde', keywords: ['viaverde'], domains: ['viaverde.pt', 'brisa.pt'] },
+    { name: 'E-ZPass', keywords: ['ezpass', 'zpass'], domains: ['e-zpassiag.com', 'e-zpassgroup.org', 'e-zpassgroup.com', 'e-zpassny.com', 'ezpassnj.com', 'ezpassva.com', 'ezpassmd.com', 'ezpassde.com', 'ezpassnh.com', 'ezpassri.com', 'ezpassmaineturnpike.com'] },
+    { name: 'SunPass', keywords: ['sunpass'], domains: ['sunpass.com', 'floridasturnpike.com'] },
     { name: 'Correos', keywords: ['correos'], domains: ['correos.es', 'correos.com'] },
     { name: 'Canada Post', keywords: ['canadapost'], domains: ['canadapost-postescanada.ca', 'canadapost.ca'] },
     { name: 'Australia Post', keywords: ['auspost'], domains: ['auspost.com.au'] },
@@ -113,6 +117,7 @@
     { name: 'La Poste', keywords: ['laposte', 'colissimo'], domains: ['laposte.fr', 'colissimo.fr'] },
     { name: 'Deutsche Post', keywords: ['deutschepost'], domains: ['deutschepost.de'] },
     { name: 'PostNL', keywords: ['postnl'], domains: ['postnl.nl'] },
+    { name: 'InPost', keywords: ['inpost'], domains: ['inpost.pl', 'inpost.eu', 'inpost-group.com', 'inpost.co.uk', 'inpost.it', 'inpost.es', 'inpost.pt'] },
     // Government / tax
     { name: 'IRS', keywords: ['irs'], domains: ['irs.gov'] },
     { name: 'HMRC', keywords: ['hmrc'], domains: ['gov.uk', 'hmrc.gov.uk', 'tax.service.gov.uk'] },
@@ -124,6 +129,9 @@
     { name: 'Social Security Administration', keywords: ['ssa'], domains: ['ssa.gov'] },
     { name: 'Medicare', keywords: ['medicare'], domains: ['medicare.gov', 'cms.gov'] },
     { name: 'Agencia Tributaria', keywords: ['agenciatributaria'], domains: ['agenciatributaria.gob.es', 'agenciatributaria.es'] },
+    { name: 'DGT (tráfico)', keywords: ['dgt'], domains: ['dgt.es', 'dgt.gob.es'] },
+    { name: 'Seguridad Social', keywords: ['segsocial', 'seguridadsocial'], domains: ['seg-social.es', 'seg-social.gob.es'] },
+    { name: 'SNS 24', keywords: ['sns24'], domains: ['sns24.gov.pt', 'sns.gov.pt', 'min-saude.pt', 'gov.pt'] },
     // Telecom / utilities
     { name: 'Verizon', keywords: ['verizon'], domains: ['verizon.com', 'verizonwireless.com', 'vzw.com'] },
     { name: 'AT&T', keywords: ['att'], domains: ['att.com', 'att.net'] },
@@ -144,9 +152,9 @@
     { name: 'Proton', keywords: ['protonmail'], domains: ['proton.me', 'protonmail.com'] },
     { name: 'GitHub', keywords: ['github'], domains: ['github.com', 'github.io', 'githubusercontent.com', 'githubassets.com'] },
     { name: 'Canva', keywords: ['canva'], domains: ['canva.com'] },
-    { name: 'Trezor', keywords: ['trezor'], domains: ['trezor.io'] },
     { name: 'OLX', keywords: ['olx'], domains: ['olx.pt', 'olx.com', 'olx.pl', 'olx.ro', 'olx.ua', 'olx.com.br', 'olx.in', 'olxstatic.com'] },
     { name: 'Vinted', keywords: ['vinted'], domains: ['vinted.com', 'vinted.pt', 'vinted.fr', 'vinted.co.uk', 'vinted.de', 'vinted.es', 'vinted.it', 'vinted.nl', 'vinted.pl', 'vinted.lt'] },
+    { name: 'Poshmark', keywords: ['poshmark'], domains: ['poshmark.com', 'poshmark.ca', 'posh.mk'] },
     { name: 'Wallapop', keywords: ['wallapop'], domains: ['wallapop.com'] },
     { name: 'Leboncoin', keywords: ['leboncoin'], domains: ['leboncoin.fr'] },
     { name: 'Marktplaats', keywords: ['marktplaats'], domains: ['marktplaats.nl'] },
@@ -202,11 +210,17 @@
     { name: 'Postbank', keywords: ['postbank'], domains: ['postbank.de'] },
     { name: 'DKB', keywords: ['dkb'], domains: ['dkb.de'] },
     { name: 'Hermes (DE)', keywords: ['myhermes'], domains: ['myhermes.de'] },
+    { name: 'PKO BP', keywords: ['pkobp', 'ipko', 'pkobiznes'], domains: ['pkobp.pl', 'ipko.pl', 'ipkobiznes.pl', 'pkopte.pl', 'pkofaktoring.pl'] },
   ];
 
   // Keywords this short or this generic only count when they are a whole
   // hostname label, never when they are merely embedded inside one.
-  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus', 'continente', 'hoka']);
+  const WHOLE_LABEL_ONLY = new Set(['ups', 'att', 'irs', 'ssa', 'meo', 'nos', 'edp', 'ctt', 'cgd', 'bpi', 'dhl', 'ing', 'amex', 'visa', 'zoom', 'slack', 'okta', 'olx', 'n26', 'apple', 'chase', 'ledger', 'phantom', 'orange', 'target', 'booking', 'steam', 'blockchain', 'millennium', 'hermes', 'nitro', 'evri', 'uber', 'temu', 'bofa', 'kraken', 'canva', 'wise', 'lloyds', 'halifax', 'stripe', 'klarna', 'norton', 'twitter', 'hmrc', 'dvla', 'medicare', 'telegram', 'spotify', 'adobe', 'google', 'subito', 'lydia', 'depop', 'etsy', 'intesa', 'scotia', 'absa', 'aeon', 'dkb', 'posb', 'ameli', 'impots', 'amendes', 'smbc', 'huntington', 'optus', 'continente', 'hoka', 'ezpass', 'zpass', 'dgt', 'inpost', 'ipko']);
+
+  // Keywords whose spelling sits one or two letters from unrelated real names
+  // (An Post / InPost, Enpass / E-ZPass, UN ESCAP / RuneScape, WebMoney's
+  // wmtransfer / WeTransfer): maximum typo distance, 0 = no typo matching.
+  const TYPO_MAX = { inpost: 0, ezpass: 0, zpass: 0, segsocial: 0, wetransfer: 0, runescape: 1 };
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [
@@ -219,6 +233,21 @@
     'airdrop', 'mint', 'connect', 'sync', 'app', 'web', 'my', 'mobile', 'info', 'mail', 'email', 'webmail', 'cloud', 'drive', 'docs',
     'share', 'file', 'document', 'signature', 'esign', 'tax', 'refunds', 'rebate', 'benefit', 'benefits', 'renewal', 'renew',
     'subscription', 'membership', 'activate', 'activation', 'kyc', 'identity', 'limited', 'restricted', 'hold', 'unusual', 'activity',
+    // Seen glued to brand names in 2026 phishing feeds (amazoncheckout, trezorvault, sunpasstollsbill, costcomember)
+    'checkout', 'purchase', 'vault', 'suite', 'member', 'mailer', 'toll', 'tolls', 'bill', 'bills', 'fine', 'fines', 'penalty',
+  ];
+
+  // Words that ask the visitor to do something. When two or more words are glued
+  // to a brand name, one of them must be an action word: "paypalloginverify" is a
+  // phishing name, "amazonwebservices" and "mcafeemobilesecurity" are the brands' own.
+  const ACTION_TOKENS = [
+    'login', 'signin', 'logon', 'verify', 'verification', 'verified', 'account', 'accounts', 'update', 'updates', 'auth',
+    'authentication', 'confirm', 'confirmation', 'billing', 'payment', 'payments', 'pay', 'wallet', 'recovery', 'recover', 'reset',
+    'unlock', 'locked', 'suspended', 'alert', 'alerts', 'notice', 'notification', 'session', 'validate', 'validation', 'appeal',
+    'case', 'refund', 'refunds', 'invoice', 'delivery', 'parcel', 'package', 'tracking', 'track', 'redelivery', 'reschedule',
+    'shipment', 'gift', 'giveaway', 'bonus', 'reward', 'rewards', 'prize', 'claim', 'airdrop', 'mint', 'connect', 'sync', 'kyc',
+    'limited', 'restricted', 'hold', 'unusual', 'activity', 'helpdesk', 'support', 'help', 'checkout', 'purchase', 'toll', 'tolls',
+    'bill', 'bills', 'fine', 'fines', 'penalty',
   ];
 
   const byDomain = new Map();
@@ -244,5 +273,5 @@
     return (dot > 0 && Object.prototype.hasOwnProperty.call(BRAND_TLDS, tld) && byName.get(BRAND_TLDS[tld])) || null;
   }
 
-  return { BRANDS, WHOLE_LABEL_ONLY, SUSPICIOUS_TOKENS, BRAND_TLDS, findByDomain };
+  return { BRANDS, WHOLE_LABEL_ONLY, TYPO_MAX, SUSPICIOUS_TOKENS, ACTION_TOKENS, BRAND_TLDS, findByDomain };
 });
