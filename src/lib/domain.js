@@ -9,6 +9,16 @@
   // Multi-label public suffixes we care about. Anything not listed is treated
   // as a single-label suffix (".com", ".xyz", ...). This is a deliberately
   // compact subset of the Public Suffix List that covers the common cases.
+  // AI / no-code site builders, free subdomains and tunnels seen hosting phishing
+  // (PhishTank, Sep-Nov 2026): wixstudio.com, start.page, framer.app, lovable.app, bolt.host...
+  const SITE_BUILDERS = [
+    'wixstudio.com', 'start.page', 'myportfolio.com', 'framer.app', 'framer.website', 'framer.ai', 'w3spaces.com', 'square.site',
+    'gitbook.io', 'lovable.app', 'bolt.host', 'plutio.com', 'boxmode.io', 'typedream.app', 'eu.cc', 'edgeone.app', 'edgeone.dev',
+    'iceiy.com', 'craftum.io', 'hstn.me', 'mybluehost.me', 'trycloudflare.com', 'webadorsite.com', 'zya.me', 'jimdofree.com',
+    'jimdosite.com', 'dream.space', 'flazio.com', 'flazio.online', 'cfolks.pl', 'plesk.page', 'ddnss.de', 'ddnss.org',
+    'home-webserver.de', 'unaux.com', 'kesug.com', 'lovestoblog.com', 'page.gd', 'dpdns.org', 'qzz.io', 'us.kg',
+  ];
+
   const MULTI_LABEL_SUFFIXES = new Set([
     'co.uk', 'org.uk', 'me.uk', 'ltd.uk', 'plc.uk', 'ac.uk', 'gov.uk', 'nhs.uk', 'sch.uk',
     'com.au', 'net.au', 'org.au', 'edu.au', 'gov.au', 'id.au',
@@ -33,6 +43,8 @@
     'ipfs.dweb.link', 'weeblysite.com', 'yolasite.com', 'strikingly.com', 'ucoz.net', 'ucoz.com', '000webhostapp.com',
     'wuaze.com', 'rf.gd', 'epizy.com', 'infinityfreeapp.com', 'great-site.net', 'free.nf', 'onrender.com', 'fly.dev',
     'koyeb.app', 'railway.app', 'deno.dev', 'val.run', 'pages.github.io', 'b-cdn.net', 'linodeobjects.com', 'digitaloceanspaces.com',
+    'biz.id',
+    ...SITE_BUILDERS,
   ]);
 
   // Hosting / sandbox suffixes where the first label is a free tenant name, so a
@@ -46,6 +58,7 @@
     'weeblysite.com', 'yolasite.com', 'strikingly.com', 'ucoz.net', 'ucoz.com', '000webhostapp.com', 'wuaze.com', 'rf.gd',
     'epizy.com', 'infinityfreeapp.com', 'great-site.net', 'free.nf', 'onrender.com', 'fly.dev', 'koyeb.app', 'railway.app',
     'deno.dev', 'val.run', 'b-cdn.net', 'linodeobjects.com', 'digitaloceanspaces.com', 'cloudfront.net', 'amazonaws.com',
+    ...SITE_BUILDERS,
   ]);
 
   function normalizeHost(hostname) {

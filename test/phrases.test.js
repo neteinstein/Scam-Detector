@@ -71,3 +71,36 @@ test('benign multilingual copy does not trigger', () => {
     'The UK government announced new rules for investment firms regulated by the FCA.',
   ]) assert.ok(!phrases.scan(t).some((p) => p.category === 'fakeregulator'), t);
 });
+
+test('unpaid toll and traffic fine demands in four languages', () => {
+  const t = {
+    en: 'Notice of toll evasion: you have an unpaid toll bill. To avoid late fees, pay within 12 hours.',
+    pt: 'Via Verde: tem portagens em atraso. Regularize hoje para evitar acréscimos e juros.',
+    es: 'DGT: tiene una multa pendiente de pago. Abone hoy para evitar recargos.',
+    fr: 'ANTAI : votre amende impayée sera majorée si vous ne réglez pas sous 24 h.',
+  };
+  for (const [lang, s] of Object.entries(t)) assert.ok(phrases.scan(s).some((p) => p.category === 'tollfine' && p.lang === lang && p.money), lang);
+  for (const s of ['Pay your toll online with your account', 'Como pagar portagens online', 'Consulte el estado de su peaje', 'Payer un péage en ligne']) assert.ok(!cats(s).includes('tollfine'), s);
+});
+
+test('fund recovery pitches in four languages', () => {
+  const t = {
+    en: 'Our experts can help you recover your lost funds. Crypto recovery specialists, 98% recovery rate.',
+    pt: 'Foi vítima de burla? Recuperamos o seu dinheiro perdido.',
+    es: 'Recuperación de fondos: especialistas garantizados. Recupere su dinero perdido.',
+    fr: 'Récupérez vos fonds perdus avec nos spécialistes.',
+  };
+  for (const [lang, s] of Object.entries(t)) assert.ok(phrases.scan(s).some((p) => p.category === 'recovery' && p.lang === lang && p.money), lang);
+  for (const s of ['Recover your lost password', 'Recuperação de dados perdidos', 'Recuperar archivos borrados', 'Récupérer un fichier supprimé']) assert.ok(!cats(s).includes('recovery'), s);
+});
+
+test('closing-down sales with extreme discounts in four languages', () => {
+  const t = {
+    en: 'We are closing down after 20 years - everything up to 80% off',
+    pt: 'Encerramento da loja: até 80% de desconto, tudo tem de sair',
+    es: 'Liquidación total por cierre de tienda: hasta un 90% de descuento',
+    fr: "Liquidation totale pour fermeture définitive : jusqu'à -80%",
+  };
+  for (const [lang, s] of Object.entries(t)) assert.ok(phrases.scan(s).some((p) => p.category === 'fakesale' && p.lang === lang && !p.money), lang);
+  for (const s of ['Summer sale: up to 50% off selected items', 'Black Friday: 70% off everything', 'Our store is closing at 6pm today', 'Saldos: até 70% de desconto', 'Rebajas: hasta un 70% de descuento', 'Soldes : jusqu\'à -70%']) assert.ok(!cats(s).includes('fakesale'), s);
+});

@@ -623,6 +623,18 @@
   "sig_seed_phrase_plain": {
     "message": "La página pide las palabras secretas de recuperación o la clave de un monedero de criptomonedas"
   },
+  "sig_clickfix": {
+    "message": "La página le indica pegar y ejecutar un comando en su ordenador"
+  },
+  "sig_clickfix_plain": {
+    "message": "La página le pide pegar un comando en su ordenador. Ninguna web real pide esto: instala virus"
+  },
+  "sig_fake_captcha": {
+    "message": "Le pide demostrar que es humano, pero sin un servicio CAPTCHA real"
+  },
+  "sig_fake_captcha_plain": {
+    "message": "Muestra una falsa comprobación \"no soy un robot\""
+  },
   "sig_cred_lookalike": {
     "message": "Formulario de inicio de sesión en un dominio que suplanta a $1"
   },
@@ -860,6 +872,12 @@
   "phrase_fakeproof_plain": {
     "message": "Falsas promesas de ser de confianza"
   },
+  "phrase_fakesale": {
+    "message": "Liquidación por cierre con descuentos extremos"
+  },
+  "phrase_fakesale_plain": {
+    "message": "Historia de \"cerramos, todo al 80 %\", típica de tiendas falsas"
+  },
   "phrase_investment": {
     "message": "Promesa de rendimientos de inversión irreales"
   },
@@ -889,6 +907,18 @@
   },
   "phrase_escrow_plain": {
     "message": "\"Intermediario\" falso que dice retener el pago"
+  },
+  "phrase_tollfine": {
+    "message": "Reclamación de peaje o multa pendiente"
+  },
+  "phrase_tollfine_plain": {
+    "message": "Le pide pagar un peaje o una multa"
+  },
+  "phrase_recovery": {
+    "message": "Promete recuperar el dinero perdido en estafas"
+  },
+  "phrase_recovery_plain": {
+    "message": "Se ofrece a recuperar el dinero que perdió en una estafa (es otra estafa)"
   },
   "phrase_fakeregulator": {
     "message": "Empresa de inversión afirma estar autorizada por un gobierno"

@@ -42,7 +42,7 @@
 
   function signature(pageInfo) {
     if (!pageInfo) return '';
-    return [pageInfo.hasPasswordField, pageInfo.hasCardField, pageInfo.hasSeedPhraseField, pageInfo.forms.length, pageInfo.titleBrands.join(','), pageInfo.phrases.length, pageInfo.brandAssets.length, pageInfo.links.mismatched, Math.round(pageInfo.textLength / 500)].join('|');
+    return [pageInfo.hasPasswordField, pageInfo.hasCardField, pageInfo.hasSeedPhraseField, pageInfo.forms.length, pageInfo.titleBrands.join(','), pageInfo.phrases.length, pageInfo.brandAssets.length, pageInfo.links.mismatched, Math.round(pageInfo.textLength / 500), pageInfo.humanCheck, pageInfo.clickFix].join('|');
   }
 
   async function scan(force) {

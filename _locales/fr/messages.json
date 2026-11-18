@@ -623,6 +623,18 @@
   "sig_seed_phrase_plain": {
     "message": "La page demande les mots secrets de récupération ou la clé d'un portefeuille crypto"
   },
+  "sig_clickfix": {
+    "message": "La page vous demande de coller et d’exécuter une commande sur votre ordinateur"
+  },
+  "sig_clickfix_plain": {
+    "message": "La page vous demande de coller une commande dans votre ordinateur. Aucun vrai site ne demande cela : cela installe un virus"
+  },
+  "sig_fake_captcha": {
+    "message": "Vous demande de prouver que vous êtes humain, sans vrai service CAPTCHA"
+  },
+  "sig_fake_captcha_plain": {
+    "message": "Affiche une fausse vérification « je ne suis pas un robot »"
+  },
   "sig_cred_lookalike": {
     "message": "Formulaire de connexion sur un domaine usurpant $1"
   },
@@ -860,6 +872,12 @@
   "phrase_fakeproof_plain": {
     "message": "Fausses preuves de confiance"
   },
+  "phrase_fakesale": {
+    "message": "Liquidation pour fermeture avec remises extrêmes"
+  },
+  "phrase_fakesale_plain": {
+    "message": "Histoire de « on ferme, tout à -80 % », typique des fausses boutiques"
+  },
   "phrase_investment": {
     "message": "Promesse de rendements irréalistes"
   },
@@ -889,6 +907,18 @@
   },
   "phrase_escrow_plain": {
     "message": "Faux « intermédiaire » censé garder le paiement"
+  },
+  "phrase_tollfine": {
+    "message": "Réclamation de péage ou d’amende impayée"
+  },
+  "phrase_tollfine_plain": {
+    "message": "Vous demande de payer un péage ou une amende"
+  },
+  "phrase_recovery": {
+    "message": "Promet de récupérer l’argent perdu dans des arnaques"
+  },
+  "phrase_recovery_plain": {
+    "message": "Propose de récupérer l’argent perdu dans une arnaque (c’est une autre arnaque)"
   },
   "phrase_fakeregulator": {
     "message": "Société d'investissement prétendant être agréée par un gouvernement"

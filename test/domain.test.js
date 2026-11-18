@@ -58,3 +58,14 @@ test('punycode decoding', () => {
   assert.equal(punycode.isPunycode('xn--pypal-4ve.com'), true);
   assert.equal(punycode.isPunycode('paypal.com'), false);
 });
+
+test('AI / no-code site builders and free subdomains are free hosting', () => {
+  for (const h of ['optimistic-autonomy-775011.framer.app', 'credit-pichincha-hub.lovable.app', 'mylogis01.bolt.host', 'attmail.boxmode.io',
+    'helpus-desktop.wixstudio.com', 'recover-x.start.page', 'secu-drive1.myportfolio.com', 'att-106505.square.site', 'x.trycloudflare.com', 'a.iceiy.com']) {
+    const p = domain.parse(h);
+    assert.equal(p.freeHosting, true, h);
+    assert.equal(p.registrable, h, h);
+  }
+  assert.equal(domain.parse('maxis-al.biz.id').registrable, 'maxis-al.biz.id');
+  assert.equal(domain.parse('maxis-al.biz.id').freeHosting, false);
+});

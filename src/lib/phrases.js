@@ -296,7 +296,89 @@
       ],
     },
 
+    fakesale: {
+      // Fake shops explain impossible prices with a closure story (Reddit r/Scams, BBB
+      // "online purchase" reports). Real closing sales exist, so the weight stays low
+      // and only the closure story together with 70-99% off counts.
+      weight: 8, label: 'Closing-down sale with extreme discounts',
+      en: [
+        /\b(store|shop|business|boutique|we are|we're|everything) (is )?(closing( down)?|shutting down|going out of business|closing (our|its) doors)\b.{0,120}\b(up to )?[7-9]\d ?% off/,
+        /\b[7-9]\d ?% off\b.{0,120}\b(closing( down)? sale|store closing|going out of business|liquidation sale|bankruptcy (sale|clearance))\b/,
+        /\b(closing( down)?|liquidation|bankruptcy) sale\b.{0,80}\beverything must go\b|\beverything must go\b.{0,80}\b(closing|liquidation|bankruptcy)\b/,
+        /\b(closing|retiring|shutting down) after \d{1,2} years\b.{0,120}\b[5-9]\d ?% off/,
+      ],
+      pt: [
+        /\b(encerramento|fecho (da loja|definitivo)|fim de atividade|liquidacao total|falencia|insolvencia)\b.{0,120}\b[7-9]\d ?% (de desconto|off)/,
+        /\b[7-9]\d ?% (de desconto|off)\b.{0,120}\b(encerramento|fecho (da loja|definitivo)|liquidacao total|falencia|insolvencia)\b/,
+        /\b(tudo tem (de|que) sair|esta tudo a sair)\b.{0,80}\b(encerramento|liquidacao|fecho)\b|\b(encerramento|liquidacao|fecho)\b.{0,80}\btudo tem (de|que) sair\b/,
+      ],
+      es: [
+        /\b(cierre (de (la )?tienda|del negocio|definitivo|por jubilacion)|liquidacion total|quiebra|concurso de acreedores)\b.{0,120}\b[7-9]\d ?% (de descuento|dto|off)/,
+        /\b[7-9]\d ?% (de descuento|dto|off)\b.{0,120}\b(cierre (de (la )?tienda|del negocio|definitivo)|liquidacion total|quiebra)\b/,
+        /\b(todo debe (salir|irse)|se liquida todo)\b.{0,80}\b(cierre|liquidacion|quiebra)\b|\b(cierre|liquidacion|quiebra)\b.{0,80}\b(todo debe (salir|irse)|se liquida todo)\b/,
+      ],
+      fr: [
+        /\b(fermeture definitive|liquidation totale|cessation d'activite|faillite|liquidation judiciaire)\b.{0,120}\b[7-9]\d ?%/,
+        /\b[7-9]\d ?%.{0,120}\b(fermeture definitive|liquidation totale|cessation d'activite|faillite)\b/,
+        /\btout doit disparaitre\b.{0,80}\b(fermeture|liquidation|cessation)\b|\b(fermeture|liquidation|cessation)\b.{0,80}\btout doit disparaitre\b/,
+      ],
+    },
+
     // ---------------------------------------------------- money claims
+    tollfine: {
+      // "Unpaid toll" / "outstanding traffic ticket" smishing (FTC, state DMVs, INCIBE on
+      // fake DGT fines, cybermalveillance.gouv.fr on fake ANTAI fines, Via Verde in Portugal).
+      weight: 12, label: 'Unpaid toll or traffic fine demand',
+      en: [
+        /\b(unpaid|outstanding|overdue|unsettled) (toll|tolls|toll balance|toll bill|toll charges?|toll invoice|toll fees?|parking (fine|ticket|charge|penalty)|traffic (ticket|fine|violation|citation)|speeding (ticket|fine)|penalty charge( notice)?|congestion charge|road charge)\b/,
+        /\bnotice of toll (evasion|violation)\b|\btoll evasion\b/,
+        /\b(toll|tolls|ticket|fine|citation|violation)\b.{0,120}\b(avoid|prevent) (a |any |additional |further |the )?(late|penalty|additional|extra) (fees?|charges?|penalty|penalties)\b/,
+        /\b(suspend|suspension of|revoke|revocation of) (your )?(vehicle registration|driving privileges|driver'?s licen[cs]e)\b/,
+        /\breported to the (dmv|department of motor vehicles)\b/,
+      ],
+      pt: [
+        /\b(portage(m|ns)|coimas?|multas?( de transito)?|taxas? de (portagem|circulacao)) (em atraso|por pagar|pendentes?|nao pagas?|em divida|vencidas?)\b/,
+        /\b(portage(m|ns)|coimas?|multas?)\b.{0,100}\b(evite|evitar|para evitar|sob pena de)\b.{0,40}\b(acrescimos?|juros|coimas?|penalizac\w*|agravamentos?|processo|execucao fiscal)\b/,
+        /\b(suspensao|cassacao|apreensao|cancelamento) (da |do |de )?(carta de conducao|licenca de conducao|cnh|matricula|veiculo)\b/,
+      ],
+      es: [
+        /\b(multas?|sancion(es)?|denuncias?|peajes?|recibos? de peaje) (de trafico )?(pendientes?|impagad[oa]s?|sin pagar|no pagad[oa]s?|vencid[oa]s?)\b/,
+        /\b(multas?|sancion(es)?|peajes?)\b.{0,100}\b(evite|evitar|para evitar)\b.{0,40}\b(recargos?|embargos?|apremio|intereses|retirada de puntos|sanciones?)\b/,
+        /\b(retirada|perdida|suspension) (de |del )?(puntos|carnet|permiso de conducir|permiso de circulacion)\b.{0,80}\b(pague|abone|pago|plazo)\b/,
+      ],
+      fr: [
+        /\b(amendes?|contraventions?|peages?|frais de peage|avis de contravention|proces-verbal) (impayee?s?|non (payee?s?|reglee?s?)|en attente de (paiement|reglement)|en retard|a regulariser)\b/,
+        /\b(amendes?|contraventions?|peages?)\b.{0,100}\b(majoration|majoree|penalites? de retard|poursuites)\b/,
+        /\b(suspension|retrait|annulation) (de |du )?(votre )?(permis( de conduire)?|carte grise|certificat d'immatriculation|points)\b.{0,80}\b(payez|reglez|regularisez|paiement)\b/,
+      ],
+    },
+    recovery: {
+      // Recovery scams target people who already lost money: "we can get your crypto back",
+      // often posing as the FTC, FBI IC3 or a law firm (FTC alerts Nov 2026, r/Scams FAQ).
+      weight: 12, label: 'Promises to recover money lost to scams',
+      en: [
+        /\b(recover|retrieve|get back|reclaim) (all )?your (lost|stolen|scammed) (funds|money|crypto|bitcoin|investments?|assets|deposits?)\b/,
+        /\b(funds?|assets?|crypto|bitcoin|money|scam) recovery (services?|specialists?|experts?|company|agency|firm|team|hackers?)\b/,
+        /\b(we|our (team|experts|agents|lawyers|attorneys|hackers?)) (can|will|have) (help (you )?)?(recover(ed)?|retrieve[ds]?|trace[ds]?) (your |the |victims' )?(lost |stolen )?(funds|money|crypto|bitcoin|assets)\b/,
+        /\b(ic3|fbi|ftc|interpol|europol|sec|finra)\b.{0,60}\b(recovery|refund|compensation|reimbursement) (program|fund|department|unit|team|claim)\b/,
+        /\b(\d{2,3} ?%|guaranteed|full) (fund |funds |money |asset )?recovery\b/,
+      ],
+      pt: [
+        /\b(recuperar|recuperamos|reaver|recupere) (o seu |seu |o teu |teu |os seus |seus )?(dinheiro|fundos|investimentos?|criptomoedas?|bitcoins?|ativos) (perdid[oa]s?|roubad[oa]s?|burlad[oa]s?)\b/,
+        /\brecuperacao de (fundos|dinheiro|criptomoedas?|ativos|bitcoins?|investimentos?)\b.{0,60}\b(servicos?|especialistas?|empresa|equipa|equipe|garantid[oa]|taxa de sucesso)\b/,
+        /\bvitima de (uma )?(burla|fraude|golpe|esquema)\b.{0,100}\b(recuper|reav|devolv)\w*/,
+      ],
+      es: [
+        /\b(recuperar|recuperamos|recupere) (su |tu |sus |tus )?(dinero|fondos|inversion(es)?|criptomonedas?|bitcoins?|activos) (perdid[oa]s?|robad[oa]s?|estafad[oa]s?)\b/,
+        /\brecuperacion de (fondos|dinero|criptomonedas?|activos|bitcoins?|inversiones)\b.{0,60}\b(servicios?|especialistas?|empresa|equipo|garantizad[oa]|tasa de exito)\b/,
+        /\bvictima de (una )?(estafa|fraude|timo)\b.{0,100}\b(recuper|devolv|reembols)\w*/,
+      ],
+      fr: [
+        /\b(recuperer|recuperez|recuperons|recouvrer) (votre |vos |l'|les )?(argent|fonds|investissements?|cryptomonnaies?|cryptos?|bitcoins?|actifs) (perdus?|voles?|escroques?|detournes?)\b/,
+        /\brecuperation de (fonds|cryptomonnaies?|cryptos?|actifs|bitcoins?|votre argent)\b.{0,60}\b(services?|specialistes?|experts?|cabinet|societe|equipe|garantie?|taux de reussite)\b/,
+        /\bvictime d'une? (arnaque|escroquerie|fraude)\b.{0,100}\b(recuper|rembours|restitu)\w*/,
+      ],
+    },
     investment: {
       weight: 12, label: 'Unrealistic investment returns promised',
       en: [
@@ -591,7 +673,7 @@
     },
   };
 
-  const MONEY_CATEGORIES = ['investment', 'fakeregulator', 'brokerplatform', 'advancefee', 'loan', 'job', 'overpayment', 'lottery', 'escrow', 'payment', 'microfee', 'crypto'];
+  const MONEY_CATEGORIES = ['investment', 'fakeregulator', 'brokerplatform', 'advancefee', 'loan', 'job', 'overpayment', 'lottery', 'escrow', 'payment', 'microfee', 'crypto', 'tollfine', 'recovery'];
   const LANGS = ['en', 'pt', 'es', 'fr'];
   const MAX_MATCHES_PER_CATEGORY = 3;
 

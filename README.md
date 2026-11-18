@@ -125,7 +125,7 @@ Each observation becomes a weighted **signal**; weights add up, strong independe
 | Signal | Description | Weight |
 | --- | --- | --- |
 | Domain age | Registration date via RDAP. < 7 days: 35, < 30 days: 30, < 90: 22, < 180: 14, < 1 year: 8 | up to 35 |
-| Brand impersonation | The hostname contains, typosquats or homoglyph-mimics one of ~180 commonly impersonated brands (banks, payments, crypto, couriers, tax authorities, telecoms, marketplaces, big tech) and is **not** one of that brand's real domains. Covers `paypal-secure-login.com`, `paypa1.com`, `secure.paypal.com.evil.net`, `gooogle.com`, `xn--pypal-4ve.com` (Cyrillic а), `micros0ft-support.live`, `amazon-de.top` | 28–35 |
+| Brand impersonation | The hostname contains, typosquats or homoglyph-mimics one of ~190 commonly impersonated brands (banks, payments, crypto, couriers, toll operators, tax and traffic authorities, telecoms, marketplaces, big tech) and is **not** one of that brand's real domains. Covers `paypal-secure-login.com`, `paypa1.com`, `secure.paypal.com.evil.net`, `gooogle.com`, `xn--pypal-4ve.com` (Cyrillic а), `micros0ft-support.live`, `amazon-de.top`, glued phishing words (`sunpasstollsbill.com`, `linkedinloginserviceteamhelp.weebly.com`), a brand split by hyphens (`seg-social.icu`) and misspelt long brand names in rotating subdomains (`allegrolokainie.<random>.sbs`). Government hosts (`.gov`, `.gov.br`, `.gob.es`) are never reported | 28–35 |
 | IDN / punycode | Non-Latin hostname without a brand match | 10 |
 | Raw IP host | Site addressed by IP instead of a name | 25 |
 | Risky TLD | TLDs with a very high abuse share (`.zip`, `.top`, `.xyz`, `.tk`, `.icu`, `.sbs`, …) | 4–14 |
@@ -151,18 +151,20 @@ Each observation becomes a weighted **signal**; weights add up, strong independe
 
 | Signal | Description | Weight |
 | --- | --- | --- |
-| Credential / card form in a bad context | Password or card field on a look-alike domain, a days-old domain, a free hosting sandbox, or an IP host | 12–22 |
+| Credential / card form in a bad context | Password or card field on a look-alike domain, a days-old domain, a free hosting sandbox (including AI and no-code site builders such as Lovable, Bolt, Framer, Wix Studio, Square Online, GitBook and Cloudflare tunnels), or an IP host | 12–22 |
 | Seed phrase request | Input asking for a wallet recovery phrase / private key | 35 |
+| ClickFix | A fake check or error page tells you to press Win+R / open Terminal or PowerShell and paste a command ("Press ⊞ + R, then Ctrl + V, then Enter"). Found in any language, also when the steps are still hidden or the page script copies a PowerShell / `mshta` / `curl … \| sh` command to the clipboard. Pages that explain the attack and long tutorials are left alone | 50 |
+| Fake human check | "Verify you are human" / "I'm not a robot" with no real CAPTCHA service behind it (Cloudflare Turnstile, reCAPTCHA, hCaptcha, DataDome, Arkose, …). Phishing kits put one in front of the fake page so security scanners never see it | 12 |
 | Cross-domain submission | Credentials posted to a different registrable domain, or over plain HTTP | 20 |
 | Brand mismatch | Page title / heading / copyright claims to be a brand the domain does not belong to (ambiguous names like *Apple*, *Chase*, *Visa* need an account/login context) | 10, 22 with a form |
 | Hot-linked brand assets | Favicon or logos loaded from the real brand's servers | 15–20 |
-| Social-engineering language | Urgency, prizes, tech-support alerts, parcel-fee lures, fake "100% safe" claims | 5–15 per category |
-| Money claims | Templates of well-known money frauds: unrealistic investment returns, advance fees to "release" funds, no-credit-check loans with upfront fees, job offers that charge a registration fee, overpayment refunds, lottery / inheritance / unclaimed funds, fake escrow, crypto doubling, gift-card-only payment, tiny "verification fees" | 8–14 per category |
+| Social-engineering language | Urgency, prizes, tech-support alerts, parcel-fee lures, fake "100% safe" claims, closing-down sales with 70–99% off (a fake-shop staple) | 5–15 per category |
+| Money claims | Templates of well-known money frauds: unrealistic investment returns, advance fees to "release" funds, no-credit-check loans with upfront fees, job offers that charge a registration fee, overpayment refunds, lottery / inheritance / unclaimed funds, fake escrow, crypto doubling, gift-card-only payment, tiny "verification fees", unpaid toll or traffic fine demands (E-ZPass, SunPass, DGT, ANTAI, Via Verde), "we recover your lost funds" recovery scams | 8–14 per category |
 | Money claims + a way to take your money | Card or account form next to money claims, several fraud templates on one page, money claims on a days-old or free-hosted site | up to 32 |
 | Fake navigation / deceptive links | Most links go nowhere; link text shows one domain, `href` another | 6–12 |
 | Misc | Right-click disabled on a login page, decorative "secure" badges, auto-redirect to another domain, many third-party frames | 5–8 |
 
-All language signals together are capped at 40 points. Patterns exist in **English, Portuguese, Spanish and French**, matched accent-insensitively.
+All language signals together are capped at 40 points. Pages that warn about scams (their title or headings talk about a scam, phishing, *burla*, *estafa* or *arnaque*: news, consumer advice, Reddit r/Scams threads) quote the same wording, so there it is capped at 15 points and builds no money combinations. Patterns exist in **English, Portuguese, Spanish and French**, matched accent-insensitively.
 
 </details>
 
@@ -299,7 +301,9 @@ Only sources whose published terms allow this use are called. PhishTank data is 
 - Some registries (notably `.de` and many ccTLDs) do not publish registration dates over RDAP, so domain age is unknown there.
 - The public-suffix list is a curated subset; unusual multi-label suffixes may be split incorrectly.
 - Chat-area detection relies on generic markup; on unusual sites only the strong schemes apply to the whole page.
-- Known catalogue gaps: Imovirtual, Standvirtual, Continente, Pingo Doce, Worten, Via Verde and the MB WAY request-versus-send chat pattern.
+- Known catalogue gaps: Imovirtual, Standvirtual, Pingo Doce, Worten and the MB WAY request-versus-send chat pattern.
+- E-ZPass is recognised only when the address uses the name itself (`ezpass-pay.top`, `e-zpass.com-…`), not from page titles: its ~40 member agencies run many unrelated official domains, and matching titles would flag them.
+- A phishing kit behind a fake "verify you are human" box is only fully analysed once the box is passed and the real page loads; until then only the fake check itself and the domain count.
 
 ## License
 

@@ -1,20 +1,34 @@
 {
-  "reviewedAt": "2026-11-10",
+  "reviewedAt": "2026-11-18",
   "sources": [
-    "https://blog.checkpoint.com/research/the-black-friday-cyber-crime-economy-surge-in-fraudulent-domains-and-ecommerce-scams/",
-    "https://www.techradar.com/pro/security/take-extra-care-shopping-for-black-friday-deals-experts-find-thousands-of-fake-websites-looking-to-steal-your-details",
-    "https://www.darktrace.com/es/blog/phishing-attacks-surge-by-620-in-the-lead-up-to-black-friday",
-    "https://4gnews.pt/estas-a-receber-estes-alertas-podes-estar-a-ser-alvo-de-phishing/",
-    "https://www.magazine-hd.com/apps/wp/seguranca-social-alerta-nova-mensagem-fraudulenta-enviada-email-deixa-aviso-perigosa-burla/",
-    "https://selectra.info/telecom/actualites/marche/faux-sms-remboursement-impots-arnaque-ete-2026",
-    "https://www.lesfrontaliers.lu/?p=1227391"
+    "https://isitspamchecker.com/reports/2026-10",
+    "https://data.phishtank.com/data/online-valid.csv.gz",
+    "https://urlscan.io/api/v1/search/?q=page.title:%22verify%20you%20are%20human%22",
+    "https://www.incibe.es/ciudadania/avisos/correos-y-sms-suplantan-la-dgt-para-robar-tus-datos-con-falsas-multas",
+    "https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/campagne-de-messages-frauduleux-reclamant-le-paiement-dune-contravention",
+    "https://www.diariocoimbra.pt/2026/11/13/sns-alerta-para-circulacao-de-sms-com-sites-falsos-a-pedir-pagamentos/",
+    "https://consumer.ftc.gov/consumer-alerts",
+    "https://www.dmv.ca.gov/portal/news-and-media/dmv-warns-of-fraudulent-text-scam-asking-for-toll-payments/",
+    "https://www.aarp.org/money/scams-fraud/fake-traffic-violation-texts/",
+    "https://www.cyberfenceplatform.com/blog/clickfix-fake-captcha-attacks-2026/",
+    "https://malwaretips.com/blogs/fake-store-closing-sales-exposed/",
+    "https://www.e-zpassgroup.org/index.php",
+    "https://www.pkobp.pl/",
+    "https://inpost.eu/investors/press-releases",
+    "https://tranco-list.eu/top-1m.csv.zip"
   ],
   "added": [
-    "Brand HOKA (Black Friday 2026 fake shops reported by Check Point; official hoka.com, hokaoneone.com); whole-label keyword and kept out of page-text matching because retailers sell it legitimately",
-    "Brand Chave Movel Digital (2026 PT SMS campaign leading to non-gov.pt login pages; official autenticacao.gov.pt)"
+    "ClickFix page signal (Win+R / Terminal + paste, also hidden or in a clipboard-writing script) and fake human-check signal (no real CAPTCHA provider); urlscan showed one Chinese-language fake Cloudflare gate kit on 4+ domains in front of courier/tax phishing",
+    "Phrase categories tollfine (E-ZPass/SunPass/DMV, DGT, ANTAI, Via Verde), recovery (fund-recovery scams, fake FTC/IC3) and fakesale (closing-down 70-99% off), all four languages",
+    "Scam-awareness pages (title/headings say scam, phishing, burla, estafa, arnaque; Reddit r/Scams) cap wording at 15 and build no money combinations: AARP's fake-traffic-ticket article went from 50 to 15",
+    "Brands E-ZPass, SunPass, DGT (trafico), Seguridad Social, SNS 24, InPost, PKO BP, WeTransfer, RuneScape (PhishTank top missing target), Poshmark; duplicate Trezor removed",
+    "41 hosting platforms as free hosting (wixstudio.com 309 feed hosts, start.page 205, myportfolio.com 156, framer.app 154, w3spaces.com 139, square.site 113, gitbook.io 103, lovable.app 70, bolt.host 62, ...); biz.id as a public suffix",
+    "Hostname matching: phishing words glued in compounds (one must be an action word), one-slip phishing words, hyphen-split brand names, typos of long brand names in subdomains (57 Allegro Lokalnie and 25 Kleinanzeigen feed hosts), government hosts never impersonations. Feed: +153 lookalike hits, +97 domain-only warnings; Tranco top 100k: 0 new lookalike hits, 5 fewer"
   ],
   "notes": [
-    "Checked and already covered: AliExpress, Temu, Shein, Amazon (Black Friday), Seguranca Social (Sept 2026 email campaign), French DGFiP refund SMS (impots); .shop is already a weighted risky TLD. Samsung, Ray-Ban and Jo Malone fake .shop stores not added as brands: sold by many legitimate resellers. Luxembourg CNAP SMS (Oct 2026) not added: outside the extension's main markets",
+    "Reddit could not be read directly (API and archive mirrors blocked here); r/Scams reports were reached through isitspamchecker's monthly aggregate and search results. Its October 2026 data: 365 reported domains, 30% registered within 90 days, only 1 on any threat feed; online-purchase scams dominate",
+    "Checked and not added: Maxis (MY), STP (MX) and Matsui Securities (JP) are frequent in PhishTank but outside the main markets; TSB, FTC and IC3 not added as brands because the acronyms are whole hostname labels of unrelated organisations (recovery wording covers fake FTC/IC3 sites); Aldi and British Gas (Which?, Nov 2026) are generic names with no feed volume; MB WAY security-update SMS (Millennium bcp, 3 Nov) and the Microsoft outage calls (CNCS) are already covered",
+    "E-ZPass matches only hostname labels ezpass/zpass and is skipped in page text: about 40 member agencies use unrelated official domains (e-zpassgroup.org list)",
     "Worten, Imovirtual, Standvirtual, Pingo Doce and the MB WAY request-vs-send chat pattern remain known gaps (see README limitations)"
   ]
 }

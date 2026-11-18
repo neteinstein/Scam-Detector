@@ -92,9 +92,16 @@
     'Swiss Post': /\bswiss post\b|\bpostfinance\b|\bdie post\b|\bla poste suisse\b/,
     'Intesa Sanpaolo': /\bintesa sanpaolo\b/,
     'Poste Italiane': /\bposte italiane\b|\bpostepay\b/,
+    'SunPass': /\bsunpass\b.{0,40}\b(login|log in|sign in|account|pay|payment|toll|tolls|invoice|balance)\b|\b(unpaid|outstanding|pay)\b.{0,30}\bsunpass\b/,
+    'InPost': /\binpost\b.{0,30}\b(tracking|track|sledzenie|oplata|doplata|payment|platnosc|potwierdz|confirm|pagamento|pago|seguimiento|suivi)/,
+    'RuneScape': /\b(runescape|jagex)[\s:|\-–]*(account|login|log in|sign in|launcher|support|security|recovery|appeal)\b/,
+    'PKO BP': /\b(pko bp|pko bank polski|ipko( biznes)?)\b/,
+    'DGT (tráfico)': /\b(sede electronica (de la )?dgt|direccion general de trafico)\b|\bdgt\b.{0,40}\b(pago de multas?|multas? pendientes?|notificacion de (multa|sancion)|expediente sancionador|testra)\b/,
+    'Seguridad Social': /\bseguridad social\b.{0,40}\b(reembolso|prestacion|ayuda|notificacion|pago|tarjeta sanitaria)\b|\bimportass\b/,
+    'SNS 24': /\bsns ?24\b|\bservico nacional de saude\b/,
   };
   // Brands whose names are too generic to look for in page text at all.
-  const SKIP_IN_TEXT = new Set(['Continente', 'HOKA', 'Via Verde', 'Allegro', 'Optus', 'SMBC', 'DBS', 'AEON', 'ABSA', 'Huntington', 'Raiffeisen', 'Hermes (DE)', 'Free Mobile', 'Postbank', 'DKB', 'Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
+  const SKIP_IN_TEXT = new Set(['Continente', 'HOKA', 'E-ZPass', 'Via Verde', 'Allegro', 'Optus', 'SMBC', 'DBS', 'AEON', 'ABSA', 'Huntington', 'Raiffeisen', 'Hermes (DE)', 'Free Mobile', 'Postbank', 'DKB', 'Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
   // ...except these get the simple word-boundary check on their name.
   const SIMPLE_NAME = new Set(['PayPal', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram', 'Spotify', 'eBay', 'Walmart', 'Costco', 'AliExpress', 'Netflix', 'Okta', 'Kraken', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Klarna', 'Stripe', 'Zoom', 'Slack']);
 
@@ -136,6 +143,72 @@
       if (m && m.length) out[b.name] = m.length;
     }
     return out;
+  }
+
+  // ---------------------------------------------------------------- ClickFix
+  // Fake "verify you are human" / "fix this error" pages that tell the visitor to
+  // open the Run box, Terminal or PowerShell and paste a command the page put on
+  // the clipboard. Key combinations are written the same way in every language.
+  const WIN_KEY = '(?:\\bwin(?:dows)?(?:\\s*(?:key|button|logo key|tecla|touche|botao|boton|logo))?|⊞|❖|⊞\\s*win)';
+  const CLICKFIX_PATTERNS = [
+    // Win+R … Ctrl+V (Run dialog)
+    new RegExp(WIN_KEY + '\\s*["\'“”«»]?\\s*(?:\\+|and|e|y|et|plus)\\s*["\'“”«»]?\\s*r\\b[\\s\\S]{0,300}?\\b(?:ctrl|control|strg|cmd|command|⌘)\\s*["\'“”«»]?\\s*\\+\\s*["\'“”«»]?\\s*v\\b', 'i'),
+    // Win+X → Terminal / PowerShell … Ctrl+V
+    new RegExp(WIN_KEY + '\\s*\\+\\s*["\'“”«»]?\\s*x\\b[\\s\\S]{0,300}?\\b(?:terminal|powershell)\\b[\\s\\S]{0,300}?\\b(?:ctrl|control|cmd)\\s*\\+\\s*v\\b', 'i'),
+    // macOS: Cmd+Space → Terminal … Cmd+V
+    /\b(?:cmd|command|⌘)\s*\+\s*(?:space|espaco|espacio|espace|barra de espaco|barra espaciadora)\b[\s\S]{0,300}?\bterminal\b[\s\S]{0,300}?\b(?:cmd|command|⌘)\s*\+\s*v\b/i,
+  ];
+  // "Paste it in the Run box / PowerShell / Terminal" next to a human-check or error-fix story.
+  const PASTE_RUN = /\b(?:paste|cole|colar|pegue|pegar|pega|collez|coller)\b[\s\S]{0,80}?\b(?:run (?:dialog|box|window)|windows run|executar|ejecutar|executer|powershell|terminal|command prompt|linha de comandos|simbolo del sistema|invite de commandes)\b/i;
+  const VERIFY_STORY = /\b(?:verif\w*|human|humano|humain|robot|captcha|recaptcha|cloudflare|fix|corrig\w*|correg\w*|repar\w*|error|erro|erreur)\b/i;
+  // Pages explaining the attack (news, security blogs) describe the same keys.
+  const EXPLAINS_ATTACK = /\b(?:clickfix|click ?fix|fake ?captcha|threat actors?|attackers|infostealers?|cybercriminals?|scammers|hackers|social engineering|malware campaign|estafadores|burloes|golpistas|escrocs|cybercriminels|attaquants|atacantes)\b/i;
+  // Inline scripts that put a shell command on the clipboard.
+  const CLIPBOARD_WRITE = /navigator\.clipboard\.writeText|execCommand\(\s*['"]copy['"]\s*\)|clipboardData\.setData/;
+  const SHELL_PAYLOAD = /\b(?:powershell|pwsh)(?:\.exe)?\b[^\n]{0,120}?(?:-w(?:indowstyle)?\s+h|-enc|-e\s|iex\b|invoke-expression|iwr\b|invoke-webrequest|downloadstring|irm\b)|\bmshta(?:\.exe)?\s+["']?https?:|\bcmd(?:\.exe)?\s+\/c\b|\bcurl\b[^\n'"`]{0,120}\|\s*(?:ba|z)?sh\b|\bosascript\b|\bcertutil\b[^\n]{0,40}-urlcache|\bconhost(?:\.exe)?\s+--headless/i;
+
+  function findClickFix(text, scriptText) {
+    const t = String(text || '');
+    if (!t && !scriptText) return '';
+    if (EXPLAINS_ATTACK.test(t)) return '';
+    for (const re of CLICKFIX_PATTERNS) {
+      const m = t.match(re);
+      if (m) return m[0].replace(/\s+/g, ' ').slice(0, 120);
+    }
+    const p = t.match(PASTE_RUN);
+    if (p && VERIFY_STORY.test(t)) return p[0].replace(/\s+/g, ' ').slice(0, 120);
+    const s = String(scriptText || '');
+    if (s && CLIPBOARD_WRITE.test(s) && VERIFY_STORY.test(t)) {
+      const c = s.match(SHELL_PAYLOAD);
+      if (c) return c[0].replace(/\s+/g, ' ').slice(0, 120);
+    }
+    return '';
+  }
+
+  // Pages that warn about scams (news, consumer advice, Reddit r/Scams threads) quote
+  // scam wording word for word. Scam pages do not call themselves a scam in their
+  // title; "fraud alert" is left out because phishing pages do use it.
+  const AWARENESS = /(?<!\bnot a |\bno es una |\bnao e uma |\bpas une )\b(scams?|scammers?|scammed|phishing|smishing|r\/scams|golpes?|burlas?|burloes|estafas?|estafadores|timos?|arnaques?|escroquerie?s?|escrocs?|hameconnage)\b/;
+
+  // "Verify you are human" / "I'm not a robot" in the four languages.
+  const HUMAN_CHECK = /\b(?:verif(?:y|ying|ies)|confirm(?:ing)?|prove) (?:that )?you(?: a|')re (?:a )?human\b|\bi'?m not a robot\b|\bi am not a robot\b|\bhuman verification\b|\b(?:verifique|confirme|comprove|prove) (?:que |se )?(?:voce )?(?:e|es) (?:um )?(?:ser )?humano\b|\bverificacao humana\b|\bnao sou um robo\b|\bverifica(?:cao)? (?:de )?(?:que )?(?:eres|es) (?:un )?humano\b|\b(?:verifica|verifique|confirma|confirme|demuestra) que (?:eres|es|usted es) (?:un )?humano\b|\bno soy un robot\b|\bverification humaine\b|\b(?:verifiez|confirmez|prouvez|veuillez verifier) que vous etes (?:un )?humain\b|\bje ne suis pas un robot\b/;
+  // Real challenge services load from their own hosts (or Cloudflare's /cdn-cgi/ path).
+  const CAPTCHA_HOSTS = ['challenges.cloudflare.com', 'recaptcha.net', 'hcaptcha.com', 'captcha-delivery.com', 'arkoselabs.com', 'funcaptcha.com', 'px-cdn.net', 'px-cloud.net', 'perimeterx.net', 'awswaf.com', 'geetest.com', 'friendlycaptcha.com', 'frcapi.com', 'mtcaptcha.com', 'smartcaptcha.yandexcloud.net', 'captcha.qcloud.com', 'prosopo.io', 'captcha.eu'];
+  const CAPTCHA_PATHS = /\/recaptcha\/|\/cdn-cgi\/challenge-platform\/|\/turnstile\//;
+  const CAPTCHA_ELEMENTS = 'altcha-widget, cap-widget, .frc-captcha, #px-captcha, iframe[title*="reCAPTCHA" i], iframe[title*="hCaptcha" i]';
+
+  function hasRealCaptcha(doc, base) {
+    try {
+      if (doc.querySelector(CAPTCHA_ELEMENTS)) return true;
+      const srcs = Array.from(doc.querySelectorAll('script[src], iframe[src]')).slice(0, 200).map((el) => attr(el, 'src'));
+      for (const src of srcs) {
+        const h = safeHost(src, base);
+        if (CAPTCHA_HOSTS.some((c) => h === c || h.endsWith('.' + c))) return true;
+        if (CAPTCHA_PATHS.test(src)) return true;
+      }
+      for (const s of Array.from(doc.querySelectorAll('script:not([src])')).slice(0, 50)) if (/_cf_chl_opt|cdn-cgi\/challenge-platform/.test(s.textContent || '')) return true;
+    } catch (e) { /* ignore */ }
+    return false;
   }
 
   function safeHost(url, base) {
@@ -184,6 +257,7 @@
       titleBrands: [], bodyBrandCounts: {}, brandAssets: [], phrases: [],
       links: { total: 0, dead: 0, mismatched: 0, mismatchedSamples: [] },
       contextMenuBlocked: false, fakeBadges: 0, textLength: 0, externalMetaRefresh: '', copyright: '',
+      humanCheck: false, captchaProvider: false, clickFix: '', awareness: false,
     };
 
     try { info.title = String(doc.title || '').slice(0, 300); } catch (e) { /* ignore */ }
@@ -314,8 +388,23 @@
     // Language
     try { info.phrases = phrases.scan(lower); } catch (e) { /* ignore */ }
 
+    // Fake human checks and ClickFix ("press Win+R, Ctrl+V, Enter"). The instructions are
+    // often pre-rendered hidden or kept in a script until the fake checkbox is clicked, so
+    // hidden text and inline scripts are read too.
+    try {
+      const shortPage = info.textLength < 6000;
+      info.awareness = AWARENESS.test(phrases.normalize([info.title, info.siteName, info.headings].join(' | ')));
+      info.humanCheck = HUMAN_CHECK.test(phrases.normalize([info.title, info.headings, shortPage ? text : ''].join(' | ')));
+      info.captchaProvider = hasRealCaptcha(doc, base);
+      let all = '';
+      try { all = String((doc.body && doc.body.textContent) || '').slice(0, MAX_TEXT); } catch (e) { /* ignore */ }
+      let scripts = '';
+      try { for (const sc of Array.from(doc.querySelectorAll('script:not([src])')).slice(0, 100)) { scripts += (sc.textContent || '') + '\n'; if (scripts.length > MAX_TEXT) break; } } catch (e) { /* ignore */ }
+      if (shortPage || info.humanCheck) info.clickFix = findClickFix(phrases.normalize(all || text), scripts.slice(0, MAX_TEXT));
+    } catch (e) { /* ignore */ }
+
     return info;
   }
 
-  return { collect, brandsInText, countBrandMentions, TITLE_PATTERNS };
+  return { collect, brandsInText, countBrandMentions, findClickFix, isHumanCheck: (t) => HUMAN_CHECK.test(phrases.normalize(t)), isAwareness: (t) => AWARENESS.test(phrases.normalize(t)), TITLE_PATTERNS, CAPTCHA_HOSTS };
 });

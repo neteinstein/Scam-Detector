@@ -100,3 +100,61 @@ test('HOKA fake shops and Chave Movel Digital phishing (Nov 2026 reporting)', ()
   assert.equal(lookalike.detect('shokamura.jp'), null);
   assert.equal(lookalike.detect('chaves-moveis.pt'), null);
 });
+
+// ---- 2026-11 catalogue review (PhishTank feed, Reddit r/Scams, INCIBE, SNS 24, FTC) ----
+
+test('new brands from the November 2026 review are detected in phishing hostnames', () => {
+  const cases = {
+    'sunpasstollsbill.com': 'SunPass', 'ezpass-pay.top': 'E-ZPass', 'e-zpass-toll.com': 'E-ZPass', 'e-zpass.top': 'E-ZPass',
+    'pago-de-multas-dgt.info': 'DGT (tráfico)', 'reembolso-segsocial.com': 'Seguridad Social', 'sns24-pagamento.com': 'SNS 24',
+    'ipko-polska.com': 'PKO BP', 'ipkobiznes-bp.pl.web.do': 'PKO BP', 'inpost.pl-4f8.lol': 'InPost', 'wetransfer-mu.vercel.app': 'WeTransfer',
+    'osrsrunescape.com-challenge-assist.site': 'RuneScape', 'poshmark-verify.shop': 'Poshmark', 'p0shmark.308627951.cfd': 'Poshmark',
+  };
+  for (const [h, b] of Object.entries(cases)) assert.equal(brandOf(h), b, h);
+});
+
+test('real sites of the new brands and names close to them are not flagged', () => {
+  for (const h of ['ezpassnj.com', 'www.e-zpassny.com', 'sunpass.com', 'sede.dgt.gob.es', 'www.dgt.es', 'portal.seg-social.gob.es', 'www.sns24.gov.pt',
+    'www.ipko.pl', 'www.ipkobiznes.pl', 'inpost.co.uk', 'inpost.eu', 'secure.runescape.com', 'wetransfer.com', 'poshmark.ca',
+    // one or two letters from a new brand name, but unrelated real sites
+    'anpost.com', 'ilpost.it', 'vnpost.vn', 'enpass.io', '7pass.de', 'unescap.org', 'minescape.com', 'wmtransfer.com', 'transfer.it',
+    'mainpost.de', 'www.xtransfer.cn']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});
+
+test('government hosts are never impersonations', () => {
+  for (const h of ['miseguridadsocial.gov.co', 'esocial.gov.br', 'ausport.gov.au', 'trezor.gov.rs', 'okta.mil', 'ezpass.ny.gov']) assert.equal(lookalike.detect(h), null, h);
+});
+
+test('several phishing words glued to a brand name', () => {
+  assert.equal(brandOf('linkedinloginserviceteamhelp.weebly.com'), 'LinkedIn');
+  assert.equal(brandOf('comcastverificationupdate.weebly.com'), 'Comcast / Xfinity');
+  assert.equal(brandOf('paypalloginverify.com'), 'PayPal');
+  assert.equal(brandOf('yahoomail52.wixsite.com'), 'Yahoo');
+  assert.equal(brandOf('amazoncheckout.netlify.app'), 'Amazon');
+  // ...but brands name their own sites with plain product words
+  for (const h of ['amazonwebservices.com', 'mcafeemobilesecurity.com', 'microsoftazure.us', 'microsoftazuread-sso.com']) assert.equal(lookalike.detect(h), null, h);
+});
+
+test('one slip in a glued phishing word still counts, real words do not', () => {
+  assert.equal(brandOf('trezorwollet.webador.com'), 'Trezor');
+  assert.equal(brandOf('xfinityecure.weebly.com'), 'Comcast / Xfinity');
+  assert.equal(brandOf('paypal-verifcation.com'), 'PayPal');
+  assert.equal(lookalike.detect('paypalpreview.com'), null); // preview is a word, not a typo of review
+  assert.equal(lookalike.detect('bradescoprime.com.br'), null); // prime is not prize
+});
+
+test('brand name split by hyphens', () => {
+  assert.equal(brandOf('seg-social.icu'), 'Segurança Social');
+  assert.equal(brandOf('pay-pal-login.com'), 'PayPal');
+});
+
+test('typos of long brand names in a subdomain label', () => {
+  assert.equal(brandOf('allegrolokainie.strawberryv2.sbs'), 'Allegro');
+  assert.equal(reasonOf('allegrolokainie.strawberryv2.sbs'), 'typosquat');
+  assert.equal(brandOf('allegrolokalne.pl-84382.click'), 'Allegro');
+  assert.equal(brandOf('klelnanzeigen-deutch.xtlgj.com'), 'Kleinanzeigen');
+  // short names are not fuzzy-matched in subdomains
+  assert.equal(lookalike.detect('stream.example.com'), null);
+});

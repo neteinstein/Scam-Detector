@@ -36,7 +36,7 @@
     'wikipedia.org', 'wordpress.org', 'mail.ru', 'dzen.ru', 'yandex.net', 'yandex.ru', 'myfritz.net', 'fastly.net', 'akamaiedge.net',
     'akamaized.net', 'edgekey.net', 'cloudflare.net', 'cdn77.org', 'trafficmanager.net', 'cloudflare.com', 'mozilla.org',
   ]);
-  const INDEX_VERSION = 2; // bump when key rules change so stored indexes are rebuilt
+  const INDEX_VERSION = 3; // bump when key rules change so stored indexes are rebuilt
   const MAX_HOST_REPORTS_FOR_HOST_SIGNAL = 100; // more than this on one host = a shared platform we do not know about
   const HASH_BYTES = 12;
 

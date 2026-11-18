@@ -44,8 +44,9 @@ test('every signal the scorer can emit has a message key in every locale', () =>
     isHttps: false, title: 'Log in to PayPal', headings: '', hasPasswordField: true, hasCardField: true, hasSeedPhraseField: true, hasHiddenPasswordField: true,
     forms: [{ actionHost: 'evil.top', crossDomain: true, hasPassword: true, hasCard: false, actionIsHttp: true, method: 'get' }], crossOriginFrames: 4,
     titleBrands: ['PayPal'], bodyBrandCounts: { PayPal: 9 }, brandAssets: [{ brand: 'PayPal', host: 'paypalobjects.com', kind: 'favicon' }, { brand: 'PayPal', host: 'paypalobjects.com', kind: 'image' }],
-    phrases: phrases.scan('your account has been suspended. congratulations you have won. double your bitcoin. your computer is infected. pay only with gift cards. your package is on hold. fee of $1.99. 100% safe. guaranteed returns. pay the processing fee to release your funds. guaranteed loan approval, no credit check. earn up to $3,000 per week working from home no experience required. refund the difference. next of kin. our escrow agent will hold the funds'),
+    phrases: phrases.scan('your account has been suspended. congratulations you have won. double your bitcoin. your computer is infected. pay only with gift cards. your package is on hold. fee of $1.99. 100% safe. guaranteed returns. pay the processing fee to release your funds. guaranteed loan approval, no credit check. earn up to $3,000 per week working from home no experience required. refund the difference. next of kin. our escrow agent will hold the funds. you have an unpaid toll bill. our experts can help you recover your lost funds. we are closing down, everything 80% off'),
     links: { total: 10, dead: 9, mismatched: 2, mismatchedSamples: ['a → b'] }, contextMenuBlocked: true, fakeBadges: 2, textLength: 1000, externalMetaRefresh: 'x.com',
+    humanCheck: true, captchaProvider: false, clickFix: 'press win + r, ctrl + v',
   };
   const results = [
     scoring.evaluate({ hostname: 'paypa1-secure-login-verify.account-update.xyz', ageDays: 3, registrationDate: '2026-11-04', phishReport: { kind: 'host', count: 3 }, safeBrowsing: { threats: ['MALWARE'] } }, page, {}),
