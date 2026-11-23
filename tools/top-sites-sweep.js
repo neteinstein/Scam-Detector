@@ -14,7 +14,6 @@ const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const scoring = require(path.join(ROOT, 'src/lib/scoring.js'));
-const lookalike = require(path.join(ROOT, 'src/lib/lookalike.js'));
 
 const args = process.argv.slice(2);
 const opt = (name, dflt) => (args.indexOf(name) >= 0 ? args[args.indexOf(name) + 1] : dflt);
@@ -44,8 +43,8 @@ for (const line of fs.readFileSync(listPath, 'utf8').split('\n')) {
   const r = scoring.evaluate({ hostname: host, ageDays: 4000, rdapStatus: 'ok' }, null, {});
   if (r.namesake) namesakes++;
   if (r.score >= warn) warnings.push({ rank, host, score: r.score, signals: r.signals.map((s) => s.id).join(',') });
-  const la = r.lookalike || (r.verdict === 'trusted' ? null : lookalike.detect(host));
-  if (la && !r.namesake) {
+  const la = r.lookalike;
+  if (la) {
     impersonations++;
     if (!byBrand.has(la.brand)) byBrand.set(la.brand, []);
     byBrand.get(la.brand).push(`${rank}:${host}`);

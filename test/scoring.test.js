@@ -235,3 +235,19 @@ test('a login form on a brand-named page of a free host is not a namesake', () =
   assert.ok(r.signals.some((s) => s.id === 'lookalike') && r.signals.some((s) => s.id === 'cred-lookalike'), r.signals.map((s) => s.id).join(', '));
   assert.ok(r.score >= scoring.DEFAULT_SETTINGS.warnThreshold, String(r.score));
 });
+
+test('a one-letter typo of a short brand name needs another warning sign', () => {
+  const login = page({ hasPasswordField: true });
+  // real words and names one letter from a short brand: no impersonation on their own
+  for (const hostname of ['steem.com', 'paypai.com', 'gooogle.com', 'amazom.com']) {
+    const r = scoring.evaluate({ hostname, ageDays: 5000, rdapStatus: 'ok' }, null, {});
+    assert.ok(!r.signals.some((s) => s.id === 'lookalike'), `${hostname}: ${r.signals.map((s) => s.id).join(', ')}`);
+  }
+  // with a login form, a new domain, an abused TLD or a phishing word they are
+  for (const [hostname, ageDays, p] of [['paypai.com', null, login], ['paypai.com', 30, null], ['gooogle.top', null, null], ['paypai-login.com', null, null]]) {
+    const r = scoring.evaluate({ hostname, ageDays, rdapStatus: ageDays ? 'ok' : 'unknown' }, p, {});
+    assert.ok(r.signals.some((s) => s.id === 'lookalike'), `${hostname}: ${r.signals.map((s) => s.id).join(', ')}`);
+  }
+  // long brand names are typo-checked as before
+  assert.ok(scoring.evaluate({ hostname: 'steamcommunlty.com', ageDays: null }, null, {}).signals.some((s) => s.id === 'lookalike'));
+});

@@ -29,6 +29,19 @@
   }
 
   const NAMESAKE_MIN_AGE_DAYS = 3 * 365;
+  const SHORT_TYPO_MAX_LEN = 6;
+
+  function isShortTypo(la) {
+    return la.all.every((f) => f.reason === 'typosquat' && String((f.evidenceArgs || [])[2] || '').length <= SHORT_TYPO_MAX_LEN);
+  }
+
+  function typoContext(hostname, parsed, ageDays, pageInfo, la) {
+    if (la.isIdn || parsed.freeHosting || parsed.isIP) return true;
+    if (ageDays != null && ageDays < 365) return true;
+    if (tlds.riskWeight(parsed.suffix)) return true;
+    if (lookalike.tokens(hostname).some((t) => HOST_RED_FLAG_TOKENS.has(t) || brands.SUSPICIOUS_TOKENS.includes(t))) return true;
+    return !!(pageInfo && (pageInfo.hasPasswordField || pageInfo.hasCardField || pageInfo.hasSeedPhraseField));
+  }
 
   function isBrandNamesake(la, parsed, ageDays) {
     if (la.reason !== 'brand-in-domain' || !la.all.every((f) => f.brand === la.brand && f.reason === 'brand-in-domain')) return false;
@@ -95,6 +108,11 @@
     // own country site or a long-standing namesake, not a phishing kit: those use new,
     // decorated names (amazon-ae-refund.top). Many country registries answer no RDAP, so
     // an unknown age does not count against a country domain; a known young one does.
+    // One letter off a short brand name is very often a real, unrelated word or name
+    // (elle / Zelle, stern / Steam, optum / Optus, klara / Klarna). Such a typo counts only
+    // when something else about the site is also off; real typosquats always have that
+    // (a phishing word, a new domain, an abused TLD, look-alike letters or a login form).
+    if (la && isShortTypo(la) && !typoContext(hostname, parsed, domainInfo.ageDays, pageInfo, la)) la = null;
     const namesake = la && isBrandNamesake(la, parsed, domainInfo.ageDays);
     if (namesake) {
       result.namesake = la.brand;

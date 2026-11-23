@@ -220,3 +220,19 @@ test('phishing on a brand-owned hosting platform is judged by the tenant name', 
     assert.equal(lookalike.detect(h), null, h);
   }
 });
+
+test('a misspelt brand next to a phishing word is caught, ordinary words are not', () => {
+  assert.equal(brandOf('paypai-login.com'), 'PayPal');
+  assert.equal(brandOf('amazom-refund.com'), 'Amazon');
+  assert.equal(brandOf('netflx-billing.top'), 'Netflix');
+  assert.equal(brandOf('gooogle-verify.com'), 'Google');
+  for (const h of ['stem-support.org', 'my-stream-app.com', 'nedbank.co.za', 'commercebank.com', 'whats-on-netflix.com']) assert.equal(lookalike.detect(h), null, h);
+});
+
+test('Black Friday fake shops copying fashion brands and Aldi / Lidl (Nov 2026 reports)', () => {
+  for (const [h, b] of [['adidas-blackfriday.shop', 'Adidas'], ['adidasoutlet.com', 'Adidas'], ['ralphlauren-sale.top', 'Ralph Lauren'], ['drmartens-outlet.shop', 'Dr. Martens'],
+    ['crocsoutlet.store', 'Crocs'], ['massimoduttisale.com', 'Massimo Dutti'], ['michaelkors-outlet.com', 'Michael Kors'], ['aldi-blackfriday.shop', 'Aldi'], ['lidl-parkside.shop', 'Lidl'], ['lidlblackfriday.com', 'Lidl']]) {
+    assert.equal(brandOf(h), b, h);
+  }
+  for (const h of ['www.adidas.pt', 'www.ralphlauren.co.uk', 'lidl.pt', 'www.aldi-sued.de', 'hofer.at', 'waldi.com', 'baldinini.it', 'crocodile.com', 'salesforce.com']) assert.equal(lookalike.detect(h), null, h);
+});

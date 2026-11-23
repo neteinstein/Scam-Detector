@@ -24,7 +24,7 @@ WHAT IT CHECKS
 
 Domain
 • How recently the domain was registered (brand-new domains are the strongest scam signal)
-• Impersonation of ~200 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
+• Impersonation of ~210 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
 • Raw IP addresses, high-abuse top-level domains, phishing words in the address, missing HTTPS
 
 Page
@@ -69,6 +69,8 @@ Open source: https://github.com/neteinstein/Scam-Detector
 • Fewer false alarms on brand-named sites the extension does not know yet: a site that is exactly a brand's name on an ordinary country domain (like amazon.pk), or on a domain registered years ago, is now only noted, not called an impersonation. New or decorated look-alikes (amazon-pk.com, amazon.tk, a brand-new amazon.xx) are still flagged.
 • About 120 more popular sites are no longer flagged: the brands' own service domains (Microsoft Azure, Apple iCloud, YouTube, Slack…) and unrelated sites whose names are a letter or two from a brand (elle.com, lacoste.com, optum.com).
 • Fix: phishing pages on free hosting run by a big brand (Blogger/blogspot.com, GitHub Pages, Firebase, Canva sites) were not checked for impersonation, so a page like paypal-login.blogspot.com went unflagged. They now are, and ordinary Canva sites are no longer mistaken for fake Canva pages.
+• A one-letter typo of a short brand name (elle.com, stern.de) is no longer treated as impersonation on its own. It still is when anything else is off: a login form, a new domain, a risky ending or a phishing word. Misspelt brands joined to a phishing word (paypai-login.com, amazom-refund.com) are now caught.
+• Black Friday: fake shops copying Adidas, Ralph Lauren, Dr. Martens, Crocs, Massimo Dutti, Michael Kors, Aldi and Lidl ("brand-blackfriday.shop", "brandoutlet") are now recognised.
 • Marketplace chat monitor: new warning for the "accept my MB WAY / Bizum / Lydia / Zelle request to receive the money" trick. Accepting a request sends your money away.
 • Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT, Worten, Pingo Doce, Imovirtual and Standvirtual, and Germany's Deutsche Rentenversicherung.
 

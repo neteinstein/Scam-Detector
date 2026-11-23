@@ -231,6 +231,21 @@
             findings.push({ brand: b.name, reason: 'brand-in-domain', confidence: 0.9, evidence: `"${sld}" mimics "${kw}.${glued.slice(kw.length)}"`, evidenceKey: 'ev_glued', evidenceArgs: [sld, kw + '.' + glued.slice(kw.length)] });
           }
         }
+        // 3b. Typo of the brand next to a phishing word in a hyphenated name:
+        // "paypai-login.com", "amazom-refund.com", "netflx-billing.top".
+        if (kw.length >= 6 && !findings.some((f) => f.brand === b.name)) {
+          const parts = tokens(ownLabels);
+          if (parts.some((p) => ACTION.has(p))) {
+            for (const t of parts) {
+              if (t === kw || ACTION.has(t) || SUSPICIOUS.has(t) || GENERIC_SLDS.has(t) || Math.abs(t.length - kw.length) > 1) continue;
+              const dist = domain.levenshtein(skeleton(t), kw);
+              if (dist === 1 && typoMax(kw, 1) >= 1) {
+                findings.push({ brand: b.name, reason: 'typosquat', confidence: 0.8, evidence: `"${t}" is 1 edit away from "${kw}"`, evidenceKey: 'ev_typosquat', evidenceArgs: [t, '1', kw] });
+                break;
+              }
+            }
+          }
+        }
         // 4. Typo of a long brand name in a subdomain label: kits rotate
         // "allegrolokainie.<random>.sbs", "allegrolokalne.<random>.cfd".
         // Short names are left out: "stream" is not a typo of "steam".

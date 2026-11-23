@@ -295,7 +295,7 @@ The extension is live at [https://chromewebstore.google.com/detail/scam-detector
 
 ## Third-party sources and their terms
 
-Only sources whose published terms allow this use are called. PhishTank data is free to use, including commercially, per its published terms; Google Safe Browsing is free for non-commercial use with attribution. ScamAdviser (paid B2B API only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish (non-commercial, no redistribution) and the VirusTotal public API (no products) are deliberately not used.
+Only sources whose published terms allow this use are called. PhishTank data is free to use, including commercially, per its published terms; Google Safe Browsing is free for non-commercial use with attribution. ScamAdviser (paid B2B API only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish (non-commercial, no redistribution) and the VirusTotal public API (no products) are deliberately not used. The [Tranco](https://tranco-list.eu/) top-sites list (Le Pochat et al., NDSS 2019) is used only by the development sweep and CI to test for false alarms; it is downloaded when they run, never committed or shipped, and the extension itself never contacts Tranco.
 
 ## Limitations
 

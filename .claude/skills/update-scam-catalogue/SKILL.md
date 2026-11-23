@@ -44,6 +44,8 @@ the repo ends with a short review of them against current public reporting.
    unrelated namesake in `UNRELATED_DOMAINS`, or lower `TYPO_MAX` for a keyword that collides with real words. A new
    brand or keyword must not add hits; Volksbank was rejected this way (every regional bank is `volksbank-<region>.de`).
    Record the impersonation count in `catalogue/last-review.json`.
+   CI runs the same check on the top 10,000 for every push (job *No false alarms on top sites*); a red run there means a
+   real site now warns on its address alone.
 5. **Test.** Add or extend unit tests in `test/` for every addition (positive match and a
    benign near-miss). Run `npm test`; it must pass.
 6. **Record.** Update `catalogue/last-review.json`: `reviewedAt` (today), `sources`
