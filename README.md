@@ -282,6 +282,16 @@ Detection is only as good as the lists it ships. The `update-scam-catalogue` ski
 
 Every review also runs `npm run sweep -- --list <tranco top-1m.csv>` ([`tools/top-sites-sweep.js`](tools/top-sites-sweep.js)), which scores the most visited websites, both by address and as their own sign-in page, and lists any that would be flagged, so a new brand or keyword that would raise false alarms (a real country site such as `amazon.ae`, or every regional `volksbank-<region>.de`) is caught before it ships.
 
+## Useful links
+
+| | Chrome Web Store | Firefox Add-ons |
+| --- | --- | --- |
+| Store listing | [Scam Detector](https://chromewebstore.google.com/detail/scam-detector/lgppgajjfgffahljkkgcnjjelnbgjaod?authuser=0&hl=en) | [Scam Detector](https://addons.mozilla.org/en-US/firefox/addon/scam-detector-firefox/) |
+| Publisher view | [Developer dashboard](https://chrome.google.com/webstore/devconsole/ffb9802b-97f9-4f21-978e-592550146ba3/lgppgajjfgffahljkkgcnjjelnbgjaod/edit/status) | [Developer Hub](https://addons.mozilla.org/en-US/developers/addons) |
+| Stats | [Installs](https://chrome.google.com/webstore/devconsole/ffb9802b-97f9-4f21-978e-592550146ba3/lgppgajjfgffahljkkgcnjjelnbgjaod/analytics/installs) | [Statistics (last 365 days)](https://addons.mozilla.org/en-US/firefox/addon/scam-detector-firefox/statistics/?last=365) |
+
+Publisher views and stats need a signed-in maintainer account.
+
 ## Build pipeline
 
 Two GitHub Actions workflows in `.github/workflows/`:
