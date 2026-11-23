@@ -231,11 +231,11 @@
     { name: 'Adidas', keywords: ['adidas'], domains: [...cc('adidas', 'com co.uk de com.br fr es jp it pl co ca com.ar co.id cl mx com.tr pe co.in co.za gr pt nl com.au com.hk com.ph co.il at co.kr no com.eg com.tw cz hr com.sg co.ma dk sa ie ae com.cn com.my com.vn fi ch co.th ua se be sk co.nz ro kz ru'), 'adidas-group.com'] },
     { name: 'Ralph Lauren', keywords: ['ralphlauren'], domains: cc('ralphlauren', 'com co.uk co.jp global eu de com.sg fr ca com.au it es com.tw co.kr nl be com.my') },
     { name: 'Dr. Martens', keywords: ['drmartens'], domains: ['drmartens.com', 'drmartensplc.com'] },
-    { name: 'Crocs', keywords: ['crocs'], domains: cc('crocs', 'com in com.br com.mx co.uk co.jp com.ar ca fr com.au co.id com.tr de eu') },
+    { name: 'Crocs', keywords: ['crocs'], domains: [...cc('crocs', 'com in com.br com.mx co.uk co.jp com.ar ca fr com.au co.id com.tr de eu'), 'crocssa.co.za', 'crocs-email.com'] },
     { name: 'Massimo Dutti', keywords: ['massimodutti'], domains: ['massimodutti.com', 'massimodutti.net', 'massimodutti.cn', 'inditex.com'] },
     { name: 'Michael Kors', keywords: ['michaelkors'], domains: cc('michaelkors', 'com eu global it co.uk fr de') },
     { name: 'Aldi', keywords: ['aldi', 'aldisued', 'aldinord'], domains: [...cc('aldi', 'com us co.uk es nl com.au fr be hu pl it de ie pt ch'), 'aldi-sued.de', 'aldi-sued.com', 'aldi-nord.de', 'hofer.at'] },
-    { name: 'Lidl', keywords: ['lidl'], domains: cc('lidl', 'com de es fr it cz pl co.uk nl be ro sk pt se hr hu bg rs ie ch at fi si com.cy dk gr lt lv ee us') },
+    { name: 'Lidl', keywords: ['lidl'], domains: [...cc('lidl', 'com de es fr it cz pl co.uk nl be ro sk pt se hr hu bg rs ie ch at fi si com.cy dk gr lt lv ee us'), 'lidl-connect.de', 'lidl-hellas.gr', 'lidl-reisen.de', 'lidl-shop.com'] },
     // Germany (Verbraucherzentrale phishing radar, Nov 2026)
     { name: 'Deutsche Rentenversicherung', keywords: ['rentenversicherung'], domains: ['deutsche-rentenversicherung.de', 'eservice-drv.de'] },
   ];
@@ -292,7 +292,7 @@
     'gbooking.ru', 'paypay.ne.jp', 'finance.ua', 'finance.si', 'star-telegram.com', 'telegraf.rs', 'telegraf.com.ua', 'ymobile.jp',
     'intercom-messenger.com', 'idrive.com', 'hicloud.com', 'saicloud.com', 'stripes.com', 'stripo.email', 'correios.com.br',
     'grail.bz', 'vficloud.net', 'bkicloud.com', 'jsonline.com', 'chargepoint.com', 'deutschebahn.com', 'autosport.com', 'blockchair.com',
-    'mollygram.com', 'smbc-comics.com', 'imt-atlantique.fr', 'whats-on-netflix.com', 'nedbank.co.za', 'commercebank.com', 'dfinity.network', 'royalark.games', 'combway.com', 'mobile-bb.com',
+    'mollygram.com', 'smbc-comics.com', 'imt-atlantique.fr', 'whats-on-netflix.com', 'nedbank.co.za', 'commercebank.com', 'dfinity.network', 'royalark.games', 'combway.com', 'mobile-bb.com', 'solidlab.ru', 'dblidle.com', 'croc.ru',
   ]);
 
   const byDomain = new Map();
