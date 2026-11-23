@@ -280,7 +280,7 @@ store-listing/         Chrome Web Store submission kit (+ firefox.md for Firefox
 
 Detection is only as good as the lists it ships. The `update-scam-catalogue` skill ([`.claude/skills/update-scam-catalogue/SKILL.md`](.claude/skills/update-scam-catalogue/SKILL.md)) walks an agent through reviewing current reports from Banco de Portugal, PJ, CNCS, DECO, INCIBE, cybermalveillance.gouv.fr, Action Fraud, the FTC, APWG, Spamhaus and PhishTank's own target statistics, adding what is missing with tests in all four languages, and logging the review in [`catalogue/last-review.json`](catalogue/last-review.json). [`AGENTS.md`](AGENTS.md) requires it before finishing any change, and `npm test` warns when the last review is older than 30 days.
 
-Every review also runs `npm run sweep -- --list <tranco top-1m.csv>` ([`tools/top-sites-sweep.js`](tools/top-sites-sweep.js)), which scores the most visited websites and lists any that would be flagged, so a new brand or keyword that would raise false alarms (a real country site such as `amazon.ae`, or every regional `volksbank-<region>.de`) is caught before it ships.
+Every review also runs `npm run sweep -- --list <tranco top-1m.csv>` ([`tools/top-sites-sweep.js`](tools/top-sites-sweep.js)), which scores the most visited websites, both by address and as their own sign-in page, and lists any that would be flagged, so a new brand or keyword that would raise false alarms (a real country site such as `amazon.ae`, or every regional `volksbank-<region>.de`) is caught before it ships.
 
 ## Build pipeline
 

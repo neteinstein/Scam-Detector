@@ -39,7 +39,9 @@ the repo ends with a short review of them against current public reporting.
 4. **Sweep for false alarms.** Run the checks over the most visited websites:
    `curl -sSL -o /tmp/top.zip https://tranco-list.eu/top-1m.csv.zip && unzip -o /tmp/top.zip -d /tmp`, then
    `npm run sweep -- --list /tmp/top-1m.csv --top 50000 --check` (about a minute; `--top 200000` for a full review).
-   It fails if a top-10,000 site warns on its domain alone and lists every site flagged as impersonating a brand.
+   It fails if a top-10,000 site warns on its domain alone, or on its own sign-in page (unknown domain age, title
+   naming the site), and lists every site flagged as impersonating a brand. `EXPECTED_SUSPICIOUS` in the tool holds
+   the few popular look-alikes that should keep warning; never put a real site there.
    For each hit that is a real site: add the brand's own domain (country sites with `cc()`) to `brands.js`, put an
    unrelated namesake in `UNRELATED_DOMAINS`, or lower `TYPO_MAX` for a keyword that collides with real words. A new
    brand or keyword must not add hits; Volksbank was rejected this way (every regional bank is `volksbank-<region>.de`).

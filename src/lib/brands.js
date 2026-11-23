@@ -292,7 +292,7 @@
     'gbooking.ru', 'paypay.ne.jp', 'finance.ua', 'finance.si', 'star-telegram.com', 'telegraf.rs', 'telegraf.com.ua', 'ymobile.jp',
     'intercom-messenger.com', 'idrive.com', 'hicloud.com', 'saicloud.com', 'stripes.com', 'stripo.email', 'correios.com.br',
     'grail.bz', 'vficloud.net', 'bkicloud.com', 'jsonline.com', 'chargepoint.com', 'deutschebahn.com', 'autosport.com', 'blockchair.com',
-    'mollygram.com', 'smbc-comics.com', 'imt-atlantique.fr', 'whats-on-netflix.com', 'nedbank.co.za', 'commercebank.com', 'dfinity.network', 'royalark.games', 'combway.com', 'mobile-bb.com', 'solidlab.ru', 'dblidle.com', 'croc.ru',
+    'mollygram.com', 'smbc-comics.com', 'imt-atlantique.fr', 'whats-on-netflix.com', 'nedbank.co.za', 'commercebank.com', 'dfinity.network', 'royalark.games', 'combway.com', 'mobile-bb.com', 'solidlab.ru', 'dblidle.com', 'croc.ru', 'strip2.co', 'strip2.in', 'strip.chat', 'avple.tv', 'twister.porn',
   ]);
 
   const byDomain = new Map();
