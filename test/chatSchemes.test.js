@@ -79,3 +79,14 @@ test('whole-page fallback only uses strong schemes', () => {
 test('results are serialisable', () => {
   assert.doesNotThrow(() => JSON.stringify(chat.analyze('click the link to receive the payment', { hostname: 'www.olx.pt' })));
 });
+
+test('payment-request scam (MB WAY / Bizum / Lydia / Zelle) in four languages', () => {
+  for (const t of ['I sent you a payment request on Zelle, accept it so you receive the money',
+    'Enviei-te um pedido MB WAY, aceita para receberes o dinheiro', 'No MB WAY introduza o PIN para receber o pagamento',
+    'Te he enviado una solicitud de Bizum, acéptala para cobrar', "Je t'ai envoyé une demande Lydia, accepte-la pour recevoir le paiement"]) {
+    assert.ok(ids(t).includes('payment-request'), t);
+  }
+  for (const t of ['Paguei por MB WAY, já deve ter recebido', 'I accepted your offer, I will pay on collection', 'Aceito a proposta, pago no levantamento']) {
+    assert.ok(!ids(t).includes('payment-request'), t);
+  }
+});

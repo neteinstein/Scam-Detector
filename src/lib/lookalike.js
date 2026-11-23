@@ -148,17 +148,32 @@
     if (!parsed.host || parsed.isIP) return null;
     const allBrands = extraBrands && extraBrands.length ? brands.BRANDS.concat(extraBrands) : brands.BRANDS;
 
-    // The real thing (or a subdomain of it) is never an impersonation.
-    for (const b of allBrands) for (const d of b.domains) if (domain.isSubdomainOf(parsed.host, d)) return null;
+    // On a free hosting platform only the tenant's own labels are the site's name:
+    // "canva" in x.my.canva.site says nothing, "paypal" in paypal-login.github.io does.
+    const tenant = parsed.freeHosting && parsed.host !== parsed.suffix;
+    const ownLabels = tenant ? parsed.host.slice(0, -(parsed.suffix.length + 1)) : parsed.host;
+    // The real thing (or a subdomain of it) is never an impersonation. A brand that runs
+    // a hosting platform (Google's blogspot.com, Microsoft's github.io) does not own what
+    // its users publish there, so a tenant page is judged by its own name.
+    for (const b of allBrands) {
+      for (const d of b.domains) {
+        if (!domain.isSubdomainOf(parsed.host, d)) continue;
+        if (tenant && domain.isSubdomainOf(parsed.suffix, d)) continue;
+        return null;
+      }
+    }
+    if (parsed.freeHosting && !tenant) return null; // the platform's own front page
     // Neither is a government host: .gov, .gov.br, .gob.es, .gouv.fr names cannot be bought
     // (miseguridadsocial.gov.co is Colombia's own site, esocial.gov.br is Brazil's).
     if (GOVERNMENT_HOST.test(parsed.host)) return null;
+    // Nor is a well-known unrelated site that happens to share a brand's name.
+    for (const d of brands.UNRELATED_DOMAINS) if (domain.isSubdomainOf(parsed.host, d)) return null;
 
     const unicodeHost = punycode.toUnicode(parsed.host);
     const unicodeParsed = domain.parse(unicodeHost);
     const sldSkeleton = skeleton(unicodeParsed.sld || parsed.sld);
-    const hostTokens = tokens(parsed.host);
-    const unicodeTokens = tokens(unicodeHost).map(skeleton);
+    const hostTokens = tokens(ownLabels);
+    const unicodeTokens = tokens(tenant ? punycode.toUnicode(ownLabels) : unicodeHost).map(skeleton);
     const isIdn = punycode.isPunycode(parsed.host) || hasNonAscii(unicodeHost);
 
     const findings = [];
@@ -182,7 +197,7 @@
         // 2a. Brand name split by hyphens into one label: "seg-social.icu", "e-zpass.top", "pay-pal-login.com"
         const flatKw = kw.replace(/-/g, '');
         if (!findings.some((f) => f.brand === b.name)) {
-          for (const label of parsed.labels.slice(0, -1)) {
+          for (const label of (tenant ? ownLabels.split('.') : parsed.labels.slice(0, -1))) {
             if (!label.includes('-')) continue;
             const flat = label.replace(/-/g, '');
             if (flat === flatKw || label.split('-').some((part, i, all) => i < all.length - 1 && (part + all[i + 1]) === flatKw)) {
@@ -214,6 +229,21 @@
           const glued = sld.replace(/-/g, '');
           if (glued !== kw && glued.startsWith(kw) && /^(com|net|org|co|uk|de|fr|es|pt|it|nl|app|io|us|ca|au|br)$/.test(glued.slice(kw.length))) {
             findings.push({ brand: b.name, reason: 'brand-in-domain', confidence: 0.9, evidence: `"${sld}" mimics "${kw}.${glued.slice(kw.length)}"`, evidenceKey: 'ev_glued', evidenceArgs: [sld, kw + '.' + glued.slice(kw.length)] });
+          }
+        }
+        // 3b. Typo of the brand next to a phishing word in a hyphenated name:
+        // "paypai-login.com", "amazom-refund.com", "netflx-billing.top".
+        if (kw.length >= 6 && !findings.some((f) => f.brand === b.name)) {
+          const parts = tokens(ownLabels);
+          if (parts.some((p) => ACTION.has(p))) {
+            for (const t of parts) {
+              if (t === kw || ACTION.has(t) || SUSPICIOUS.has(t) || GENERIC_SLDS.has(t) || Math.abs(t.length - kw.length) > 1) continue;
+              const dist = domain.levenshtein(skeleton(t), kw);
+              if (dist === 1 && typoMax(kw, 1) >= 1) {
+                findings.push({ brand: b.name, reason: 'typosquat', confidence: 0.8, evidence: `"${t}" is 1 edit away from "${kw}"`, evidenceKey: 'ev_typosquat', evidenceArgs: [t, '1', kw] });
+                break;
+              }
+            }
           }
         }
         // 4. Typo of a long brand name in a subdomain label: kits rotate

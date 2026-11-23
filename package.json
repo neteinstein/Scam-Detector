@@ -9,7 +9,8 @@
     "icons": "node tools/make-icons.js",
     "e2e": "node tools/e2e.js",
     "package": "node tools/package.js",
-    "store-assets": "node tools/store-assets.js"
+    "store-assets": "node tools/store-assets.js",
+    "sweep": "node tools/top-sites-sweep.js"
   },
   "license": "MIT",
   "devDependencies": {

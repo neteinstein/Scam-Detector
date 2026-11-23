@@ -77,6 +77,9 @@
     'OLX': /\bolx\b/,
     'Ticketmaster': /\bticketmaster\b/,
     'Allegro': /\ballegro\s*(lokalnie|pay|smart|konto|logowanie)\b|\ballegrolokalnie\b/,
+    'Noon': /\bnoon\.com\b|\bnoon\s+(app|order|account|deals?|minutes|shopping)\b/,
+    'IMT': /\bimt\b.{0,40}\b(carta de conducao|multa|contraordenacao|regularizar|portal|online)\b|\binstituto da mobilidade\b/,
+    'Aramex': /\baramex\b/,
     'Optus': /\boptus\s+(bill|account|my ?optus|sign)/,
     'Free Mobile': /\bfree\s+mobile\b/,
     'Société Générale': /\bsociete generale\b/,
@@ -101,7 +104,7 @@
     'SNS 24': /\bsns ?24\b|\bservico nacional de saude\b/,
   };
   // Brands whose names are too generic to look for in page text at all.
-  const SKIP_IN_TEXT = new Set(['Continente', 'HOKA', 'E-ZPass', 'Via Verde', 'Allegro', 'Optus', 'SMBC', 'DBS', 'AEON', 'ABSA', 'Huntington', 'Raiffeisen', 'Hermes (DE)', 'Free Mobile', 'Postbank', 'DKB', 'Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
+  const SKIP_IN_TEXT = new Set(['Continente', 'Adidas', 'Ralph Lauren', 'Dr. Martens', 'Crocs', 'Massimo Dutti', 'Michael Kors', 'Aldi', 'Lidl', 'HOKA', 'E-ZPass', 'Via Verde', 'Allegro', 'Optus', 'SMBC', 'DBS', 'AEON', 'ABSA', 'Huntington', 'Raiffeisen', 'Hermes (DE)', 'Free Mobile', 'Postbank', 'DKB', 'Zoom', 'Slack', 'Stripe', 'Klarna', 'Uber', 'Temu', 'Shein', 'Canva', 'Kraken', 'Okta', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Wallapop', 'Leboncoin', 'Marktplaats', 'Gumtree', 'Craigslist', 'AliExpress', 'Walmart', 'Costco', 'eBay', 'Spotify', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'PayPal', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram']);
   // ...except these get the simple word-boundary check on their name.
   const SIMPLE_NAME = new Set(['PayPal', 'Netflix', 'Dropbox', 'DocuSign', 'Adobe', 'Telegram', 'LinkedIn', 'Nintendo', 'PlayStation', 'Roblox', 'Uniswap', 'OpenSea', 'MetaMask', 'Trezor', 'Coinbase', 'Binance', 'Revolut', 'N26', 'Zelle', 'Venmo', 'Norton', 'McAfee', 'Verizon', 'Vodafone', 'IRS', 'HMRC', 'DVLA', 'Medicare', 'USPS', 'FedEx', 'DHL', 'PostNL', 'Correos', 'Santander', 'BBVA', 'CaixaBank', 'HSBC', 'Barclays', 'Lloyds', 'NatWest', 'Halifax', 'RBC', 'MoneyGram', 'Spotify', 'eBay', 'Walmart', 'Costco', 'AliExpress', 'Netflix', 'Okta', 'Kraken', 'Yahoo', 'GitHub', 'Shopify', 'Airbnb', 'Vinted', 'Klarna', 'Stripe', 'Zoom', 'Slack']);
 

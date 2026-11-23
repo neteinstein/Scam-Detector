@@ -551,6 +551,12 @@
   "sig_lookalike_plain": {
     "message": "L'adresse du site se fait passer pour $1"
   },
+  "sig_brand_namesake": {
+    "message": "Le domaine porte le nom de $1 mais n'est pas l'un de ses sites connus"
+  },
+  "sig_brand_namesake_plain": {
+    "message": "L'adresse utilise le nom $1, mais ne figure pas dans la liste des sites de cette marque. Il peut s'agir d'un site d'un autre pays ; vérifiez l'adresse"
+  },
   "sig_idn": {
     "message": "Nom de domaine internationalisé (caractères non latins) pouvant masquer des lettres ressemblantes"
   },
@@ -1033,6 +1039,15 @@
   },
   "chat_fee_to_release_advice": {
     "message": "L'argent « bloqué jusqu'au paiement de l'assurance / du transport / de frais de vérification » n'existe pas. Les frais sont l'arnaque."
+  },
+  "chat_payment_request_title": {
+    "message": "On vous demande d'accepter une demande de paiement pour recevoir de l'argent"
+  },
+  "chat_payment_request_advice": {
+    "message": "Accepter une demande (Lydia, Wero, MB WAY, Bizum, PayPal) envoie VOTRE argent à l'autre personne. Pour recevoir de l'argent, il ne faut jamais accepter quoi que ce soit ni saisir de code."
+  },
+  "chat_payment_request_advice_plain": {
+    "message": "Si vous acceptez la « demande », c'est votre argent qui part. Pour être payé, vous n'avez jamais à accepter quoi que ce soit ni à taper un code."
   },
   "chat_sms_code_title": {
     "message": "On vous demande de transmettre un code de vérification"

@@ -158,3 +158,81 @@ test('typos of long brand names in a subdomain label', () => {
   // short names are not fuzzy-matched in subdomains
   assert.equal(lookalike.detect('stream.example.com'), null);
 });
+
+test('country storefronts of global brands are real (amazon.ae was flagged)', () => {
+  for (const h of ['www.amazon.ae', 'amazon.sa', 'amazon.eg', 'www.amazon.com.tr', 'amazon.sg', 'amazon.ie', 'amazon.co.za', 'www.amazon.com.be', 'amazon.cn',
+    'audible.co.uk', 'www.google.ae', 'google.com.sa', 'google.co.in', 'google.com.qa', 'youtube.de', 'ebay.at', 'www.ebay.com.sg', 'airbnb.ae', 'airbnb.co.kr',
+    'ticketmaster.de', 'nintendo.co.jp', 'vinted.ie', 'mercadolibre.cl', 'walmart.com.mx', 'hsbc.com.sg', 'vodafone.com.tr', 'olx.com.pk', 'visa.fr']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});
+
+test('lookalikes of country storefronts are still caught', () => {
+  for (const h of ['amazon-ae.com', 'amazon.ae.verify-login.top', 'amazonae-login.com', 'amazon.xyz', 'google-ae.top', 'ebay-at-payment.com']) {
+    assert.ok(lookalike.detect(h), h);
+  }
+});
+
+test('unrelated sites that share a brand word are not impersonations', () => {
+  for (const h of ['nos.nl', 'www.hermes.com', 'telegram.com', 'zoom.earth', 'kraken.io', 'halifax.ca', 'ups.edu.ec']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+  assert.equal(brandOf('hermes-delivery.top'), 'Evri');
+});
+
+test('Gulf couriers and shops, IMT and Deutsche Rentenversicherung (Nov 2026 review)', () => {
+  assert.equal(brandOf('aramex-uae-delivery.net'), 'Aramex');
+  assert.equal(brandOf('emiratespost-clearance.com'), 'Emirates Post');
+  assert.equal(brandOf('noon-deals.top'), 'Noon');
+  assert.equal(brandOf('imt-multas.com'), 'IMT');
+  assert.equal(brandOf('rentenversicherung-online.com'), 'Deutsche Rentenversicherung');
+  for (const h of ['www.aramex.com', 'emiratespost.ae', 'www.noon.com', 'www.imt-ip.pt', 'www.deutsche-rentenversicherung.de', 'afternoon.com', 'noonlight.com', 'limtech.com', 'volksbank-mittelhessen.de']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});
+
+test('brand infrastructure and near-namesakes found by the top-sites sweep are not flagged', () => {
+  for (const h of ['azurefd.net', 'cdn-apple.com', 'www.youtube-nocookie.com', 'amazon-adsystem.com', 'slack-imgs.com', 'telegra.ph',
+    'elle.com', 'www.lacoste.com', 'stern.de', 'optum.com', 'continental.com', 'optonline.net', 'www.etonline.com', 'deutschebahn.com']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+  // their phishing variants still are
+  assert.equal(brandOf('zelle-payment-verify.com'), 'Zelle');
+  assert.equal(brandOf('imtonline-multas.com'), 'IMT');
+});
+
+test('Portuguese retail and classifieds brands (catalogue gaps closed)', () => {
+  assert.equal(brandOf('worten-promocoes.top'), 'Worten');
+  assert.equal(brandOf('pingodoce-cartao.com'), 'Pingo Doce');
+  assert.equal(brandOf('imovirtual-reserva.com'), 'Imovirtual');
+  assert.equal(brandOf('standvirtual-pagamento.com'), 'Standvirtual');
+  for (const h of ['www.worten.pt', 'www.pingodoce.pt', 'www.imovirtual.com', 'www.standvirtual.com', 'jeronimomartins.com']) assert.equal(lookalike.detect(h), null, h);
+});
+
+test('phishing on a brand-owned hosting platform is judged by the tenant name', () => {
+  // blogspot.com (Google), github.io (Microsoft), firebaseapp.com (Google) host anyone's pages
+  assert.equal(brandOf('paypal-login.blogspot.com'), 'PayPal');
+  assert.equal(brandOf('paypal-login.github.io'), 'PayPal');
+  assert.equal(brandOf('paypal.firebaseapp.com'), 'PayPal');
+  assert.equal(brandOf('paypal-login.my.canva.site'), 'PayPal');
+  // the platform's name in the suffix is not a brand mention, and its own pages are fine
+  for (const h of ['equinor-landingpage.my.canva.site', 'myblog.blogspot.com', 'blogspot.com', 'canva.site', 'microsoft.github.io', 'google.github.io']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});
+
+test('a misspelt brand next to a phishing word is caught, ordinary words are not', () => {
+  assert.equal(brandOf('paypai-login.com'), 'PayPal');
+  assert.equal(brandOf('amazom-refund.com'), 'Amazon');
+  assert.equal(brandOf('netflx-billing.top'), 'Netflix');
+  assert.equal(brandOf('gooogle-verify.com'), 'Google');
+  for (const h of ['stem-support.org', 'my-stream-app.com', 'nedbank.co.za', 'commercebank.com', 'whats-on-netflix.com']) assert.equal(lookalike.detect(h), null, h);
+});
+
+test('Black Friday fake shops copying fashion brands and Aldi / Lidl (Nov 2026 reports)', () => {
+  for (const [h, b] of [['adidas-blackfriday.shop', 'Adidas'], ['adidasoutlet.com', 'Adidas'], ['ralphlauren-sale.top', 'Ralph Lauren'], ['drmartens-outlet.shop', 'Dr. Martens'],
+    ['crocsoutlet.store', 'Crocs'], ['massimoduttisale.com', 'Massimo Dutti'], ['michaelkors-outlet.com', 'Michael Kors'], ['aldi-blackfriday.shop', 'Aldi'], ['lidl-parkside.shop', 'Lidl'], ['lidlblackfriday.com', 'Lidl']]) {
+    assert.equal(brandOf(h), b, h);
+  }
+  for (const h of ['www.adidas.pt', 'www.ralphlauren.co.uk', 'lidl.pt', 'www.aldi-sued.de', 'hofer.at', 'waldi.com', 'baldinini.it', 'crocodile.com', 'salesforce.com']) assert.equal(lookalike.detect(h), null, h);
+});

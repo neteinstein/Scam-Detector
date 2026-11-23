@@ -24,7 +24,7 @@ WHAT IT CHECKS
 
 Domain
 • How recently the domain was registered (brand-new domains are the strongest scam signal)
-• Impersonation of ~190 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
+• Impersonation of ~210 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
 • Raw IP addresses, high-abuse top-level domains, phishing words in the address, missing HTTPS
 
 Page
@@ -45,7 +45,7 @@ GOOGLE SAFE BROWSING (on by default, needs your own API key)
 Once you enter your own Google API key, the extension also asks Google's Safe Browsing Lookup API about each page and shows "Advisory provided by Google" on any warning that comes from it. Non-commercial use only, per Google's terms.
 
 MARKETPLACE CHAT MONITOR (on by default)
-On OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista and many other classified sites, the extension watches the conversation for the standard scam scripts: "I'll send a courier, click the link to receive the payment", "enter your card details to receive the money", "the payment is held until you pay the insurance", "send me the SMS code", "pay the deposit before the viewing", overpayment refunds and look-alike payment links. A banner explains the scheme and what to do.
+On OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista and many other classified sites, the extension watches the conversation for the standard scam scripts: "I'll send a courier, click the link to receive the payment", "enter your card details to receive the money", "the payment is held until you pay the insurance", "send me the SMS code", "accept my MB WAY / Bizum / Lydia request to receive the money", "pay the deposit before the viewing", overpayment refunds and look-alike payment links. A banner explains the scheme and what to do.
 
 IN YOUR LANGUAGE, IN PLAIN WORDS
 The banner, popup, settings and every explanation are available in English, Portuguese, Spanish and French and follow your browser's language. "Non-tech terms" (on by default) explains every warning in simple words, without jargon such as domain, HTTP or favicon; turn it off in settings to see the technical wording.
@@ -61,7 +61,20 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.5.0)
+## What's new (version 1.5.1)
+
+• Fix: Amazon's country stores such as amazon.ae, amazon.sa, amazon.eg, amazon.com.tr, amazon.sg and amazon.ie were wrongly called fake. The extension now knows the country sites of about 40 global brands (Google's 190 country domains, eBay, Airbnb, Ticketmaster, Nintendo, Vinted, Mercado Libre, Walmart, HSBC, Vodafone and more), checked against the 200,000 most visited websites, and no longer flags well-known sites that merely share a brand's name (nos.nl, hermes.com).
+• Websites in more countries (Qatar, Costa Rica, El Salvador, Panama, Lebanon…) are now told apart correctly instead of being treated as one site.
+• New wording check in all four languages: fake "payment accepted – if this wasn't you, cancel here" messages.
+• Fewer false alarms on brand-named sites the extension does not know yet: a site that is exactly a brand's name on an ordinary country domain (like amazon.pk), or on a domain registered years ago, is now only noted, not called an impersonation. New or decorated look-alikes (amazon-pk.com, amazon.tk, a brand-new amazon.xx) are still flagged.
+• About 120 more popular sites are no longer flagged: the brands' own service domains (Microsoft Azure, Apple iCloud, YouTube, Slack…) and unrelated sites whose names are a letter or two from a brand (elle.com, lacoste.com, optum.com).
+• Fix: phishing pages on free hosting run by a big brand (Blogger/blogspot.com, GitHub Pages, Firebase, Canva sites) were not checked for impersonation, so a page like paypal-login.blogspot.com went unflagged. They now are, and ordinary Canva sites are no longer mistaken for fake Canva pages.
+• A one-letter typo of a short brand name (elle.com, stern.de) is no longer treated as impersonation on its own. It still is when anything else is off: a login form, a new domain, a risky ending or a phishing word. Misspelt brands joined to a phishing word (paypai-login.com, amazom-refund.com) are now caught.
+• Black Friday: fake shops copying Adidas, Ralph Lauren, Dr. Martens, Crocs, Massimo Dutti, Michael Kors, Aldi and Lidl ("brand-blackfriday.shop", "brandoutlet") are now recognised.
+• Marketplace chat monitor: new warning for the "accept my MB WAY / Bizum / Lydia / Zelle request to receive the money" trick. Accepting a request sends your money away.
+• Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT, Worten, Pingo Doce, Imovirtual and Standvirtual, and Germany's Deutsche Rentenversicherung.
+
+Version 1.5.0:
 
 • New: recognises "ClickFix" pages, the fake "verify you are human" or "fix this error" screens that tell you to press Win+R (or open Terminal) and paste a command, which installs password-stealing malware. Also flags "I'm not a robot" boxes that have no real CAPTCHA behind them, a gate phishing kits use to hide from security scanners.
 • New wording checks in English, Portuguese, Spanish and French: unpaid toll and traffic-fine demands (among the most reported scam text messages), "we can recover the money you lost" recovery scams, and fake closing-down sales with 70–99% off.

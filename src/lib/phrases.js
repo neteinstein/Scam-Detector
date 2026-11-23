@@ -28,6 +28,8 @@
         /\b(immediate|urgent) action (is )?required\b/,
         /\bact (now|immediately|fast)\b/,
         /\bfailure to (verify|respond|update|confirm|comply)\b/,
+        // Fake "payment accepted" SMS landing pages (Nov 2026): the visitor is meant to cancel a charge that never happened.
+        /\b(payment|transaction|purchase|debit|charge) (of \S+( \S+)? )?(accepted|approved|confirmed|authori[sz]ed)\b.{0,80}\b(if (this|it) (was|is) not you|if you did not (make|authori[sz]e|recogni[sz]e)|not you\?|cancel (this|the) (payment|transaction))/,
         /\b(offer|deal|sale) (ends|expires) (in|soon|today|tonight)\b/,
         /\bonly \d+ (items?|units?|spots?|seats?|licen[cs]es?) (left|remaining)\b/,
         /\byour (session|access|subscription) (will|has) (expire|expired|be terminated)\b/,
@@ -42,6 +44,7 @@
         /\b(oferta|promocao) (termina|expira|acaba) (em|hoje|brevemente)\b/,
         /\b(ultimo|ultima) (aviso|notificacao|lembrete)\b/,
         /\bapenas \d+ (unidades|vagas|itens|artigos) (restantes|disponiveis)\b/,
+        /\b(pagamento|transacao|compra|debito) (de \S+( \S+)? )?(aceite|aceito|aprovad[oa]|confirmad[oa]|autorizad[oa])\b.{0,80}\b(se nao foi (voce|o senhor|a senhora|tu)|se nao reconhece|nao reconhece|cancel(e|ar) (o|este) (pagamento|debito))/,
       ],
       es: [
         /\b(su|tu) cuenta (ha sido|sera|esta|fue) (suspendida|bloqueada|limitada|desactivada|restringida|cerrada|cancelada)\b/,
@@ -51,6 +54,7 @@
         /\b(la )?(oferta|promocion) (termina|expira|acaba|finaliza) (en|hoy|pronto)\b/,
         /\b(ultimo|ultima) (aviso|notificacion|advertencia|recordatorio)\b/,
         /\bsolo (quedan|hay) \d+ (unidades|plazas|articulos)\b/,
+        /\b(pago|transaccion|compra|cargo) (de \S+( \S+)? )?(aceptad[oa]|aprobad[oa]|confirmad[oa]|autorizad[oa])\b.{0,80}\b(si no (has sido|fuiste|ha sido) (tu|usted)|si no (lo )?reconoce|no reconoce|cancel(e|a|ar) (el|este) (pago|cargo))/,
       ],
       fr: [
         /\bvotre compte (a ete|sera|est|va etre) (suspendu|bloque|limite|desactive|restreint|ferme|cloture)\b/,
@@ -61,6 +65,7 @@
         /\b(dernier|derniere) (avis|avertissement|rappel|relance)\b/,
         /\bplus que \d+ (articles?|places?|unites?) (disponibles?|restants?)\b/,
         /\bagissez (maintenant|vite|immediatement)\b/,
+        /\b(paiement|transaction|achat|prelevement) (de \S+( \S+)? )?(accepte|valide|confirme|approuve|autorise)\b.{0,80}\b(si (ce n.est|ce n.etait) pas vous|si vous n.etes pas a l.origine|vous ne reconnaissez pas|annule[rz] (ce|le) (paiement|prelevement))/,
       ],
     },
     prize: {

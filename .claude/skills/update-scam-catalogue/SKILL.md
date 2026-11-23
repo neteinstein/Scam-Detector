@@ -36,13 +36,25 @@ the repo ends with a short review of them against current public reporting.
    - Phrases and chat schemes: write patterns **without accents**, for all four languages, with `\b` only next to ASCII letters. Keep the category weight unless there is a reason to change it.
    - Marketplaces, shared hosts, TLDs: add the registrable domain / TLD.
    - Remove entries that are no longer relevant only if they cause false positives.
-4. **Test.** Add or extend unit tests in `test/` for every addition (positive match and a
+4. **Sweep for false alarms.** Run the checks over the most visited websites:
+   `curl -sSL -o /tmp/top.zip https://tranco-list.eu/top-1m.csv.zip && unzip -o /tmp/top.zip -d /tmp`, then
+   `npm run sweep -- --list /tmp/top-1m.csv --top 50000 --check` (about a minute; `--top 200000` for a full review).
+   It fails if a top-10,000 site warns on its domain alone, or on its own sign-in page (unknown domain age, title
+   naming the site), and lists every site flagged as impersonating a brand. `EXPECTED_SUSPICIOUS` in the tool holds
+   the few popular look-alikes that should keep warning; never put a real site there.
+   For each hit that is a real site: add the brand's own domain (country sites with `cc()`) to `brands.js`, put an
+   unrelated namesake in `UNRELATED_DOMAINS`, or lower `TYPO_MAX` for a keyword that collides with real words. A new
+   brand or keyword must not add hits; Volksbank was rejected this way (every regional bank is `volksbank-<region>.de`).
+   Record the impersonation count in `catalogue/last-review.json`.
+   CI runs the same check on the top 10,000 for every push (job *No false alarms on top sites*); a red run there means a
+   real site now warns on its address alone.
+5. **Test.** Add or extend unit tests in `test/` for every addition (positive match and a
    benign near-miss). Run `npm test`; it must pass.
-5. **Record.** Update `catalogue/last-review.json`: `reviewedAt` (today), `sources`
+6. **Record.** Update `catalogue/last-review.json`: `reviewedAt` (today), `sources`
    (URLs you actually read), `added` (one line per change), `notes` for things checked
    and deliberately not added. Keep the file small; it is a log, not an archive.
-6. **Store listing.** If a user-visible category, language or monitored-site list changed,
+7. **Store listing.** If a user-visible category, language or monitored-site list changed,
    apply rule 1 of `AGENTS.md` (`listing.md` description / What's new; assets if the UI changed).
-7. **Report** in one short paragraph what was added and what was checked without changes.
+8. **Report** in one short paragraph what was added and what was checked without changes.
 
 If research finds nothing new, still update `reviewedAt` and `sources` so the review is recorded.

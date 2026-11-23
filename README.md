@@ -280,6 +280,8 @@ store-listing/         Chrome Web Store submission kit (+ firefox.md for Firefox
 
 Detection is only as good as the lists it ships. The `update-scam-catalogue` skill ([`.claude/skills/update-scam-catalogue/SKILL.md`](.claude/skills/update-scam-catalogue/SKILL.md)) walks an agent through reviewing current reports from Banco de Portugal, PJ, CNCS, DECO, INCIBE, cybermalveillance.gouv.fr, Action Fraud, the FTC, APWG, Spamhaus and PhishTank's own target statistics, adding what is missing with tests in all four languages, and logging the review in [`catalogue/last-review.json`](catalogue/last-review.json). [`AGENTS.md`](AGENTS.md) requires it before finishing any change, and `npm test` warns when the last review is older than 30 days.
 
+Every review also runs `npm run sweep -- --list <tranco top-1m.csv>` ([`tools/top-sites-sweep.js`](tools/top-sites-sweep.js)), which scores the most visited websites, both by address and as their own sign-in page, and lists any that would be flagged, so a new brand or keyword that would raise false alarms (a real country site such as `amazon.ae`, or every regional `volksbank-<region>.de`) is caught before it ships.
+
 ## Build pipeline
 
 Two GitHub Actions workflows in `.github/workflows/`:
@@ -293,7 +295,7 @@ The extension is live at [https://chromewebstore.google.com/detail/scam-detector
 
 ## Third-party sources and their terms
 
-Only sources whose published terms allow this use are called. PhishTank data is free to use, including commercially, per its published terms; Google Safe Browsing is free for non-commercial use with attribution. ScamAdviser (paid B2B API only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish (non-commercial, no redistribution) and the VirusTotal public API (no products) are deliberately not used.
+Only sources whose published terms allow this use are called. PhishTank data is free to use, including commercially, per its published terms; Google Safe Browsing is free for non-commercial use with attribution. ScamAdviser (paid B2B API only), ScamWise and ScamChecker.app (terms prohibit automated access), OpenPhish (non-commercial, no redistribution) and the VirusTotal public API (no products) are deliberately not used. The [Tranco](https://tranco-list.eu/) top-sites list (Le Pochat et al., NDSS 2019) is used only by the development sweep and CI to test for false alarms; it is downloaded when they run, never committed or shipped, and the extension itself never contacts Tranco.
 
 ## Limitations
 
@@ -301,7 +303,7 @@ Only sources whose published terms allow this use are called. PhishTank data is 
 - Some registries (notably `.de` and many ccTLDs) do not publish registration dates over RDAP, so domain age is unknown there.
 - The public-suffix list is a curated subset; unusual multi-label suffixes may be split incorrectly.
 - Chat-area detection relies on generic markup; on unusual sites only the strong schemes apply to the whole page.
-- Known catalogue gaps: Imovirtual, Standvirtual, Pingo Doce, Worten and the MB WAY request-versus-send chat pattern.
+- A domain that is exactly a brand's name on an ordinary country domain (`amazon.pk`) is treated as a probable country site when its age is unknown, because many country registries publish no RDAP data. Such a site is noted but not called an impersonation; a young or decorated look-alike still is.
 - E-ZPass is recognised only when the address uses the name itself (`ezpass-pay.top`, `e-zpass.com-…`), not from page titles: its ~40 member agencies run many unrelated official domains, and matching titles would flag them.
 - A phishing kit behind a fake "verify you are human" box is only fully analysed once the box is passed and the real page loads; until then only the fake check itself and the domain count.
 

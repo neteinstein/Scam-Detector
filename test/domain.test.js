@@ -69,3 +69,9 @@ test('AI / no-code site builders and free subdomains are free hosting', () => {
   assert.equal(domain.parse('maxis-al.biz.id').registrable, 'maxis-al.biz.id');
   assert.equal(domain.parse('maxis-al.biz.id').freeHosting, false);
 });
+
+test('country second-level suffixes give the shop its own registrable domain', () => {
+  assert.equal(domain.parse('www.google.com.qa').registrable, 'google.com.qa');
+  assert.equal(domain.parse('walmart.co.cr').registrable, 'walmart.co.cr');
+  assert.equal(domain.parse('www.amazon.com.be').registrable, 'amazon.com.be');
+});

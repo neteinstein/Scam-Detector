@@ -206,3 +206,48 @@ test('a Reddit r/Scams thread quoting scam texts is not flagged', () => {
   assert.ok(scam.score > r.score);
   assert.ok(scam.signals.some((s) => s.id === 'money-stack'));
 });
+
+test('a brand name on its own country domain is a namesake, not an impersonation (amazon.ae was flagged)', () => {
+  const login = page({ hasPasswordField: true, title: 'Amazon.pk Sign-In', titleBrands: ['Amazon'], bodyBrandCounts: { Amazon: 12 } });
+  for (const [hostname, ageDays] of [['www.amazon.pk', null], ['amazon.pk', 4000], ['smile.amazon.pk', null], ['amazon.com.pk', 5000]]) {
+    const r = scoring.evaluate({ hostname, ageDays, rdapStatus: ageDays ? 'ok' : 'unknown' }, login, {});
+    assert.ok(r.score < scoring.DEFAULT_SETTINGS.warnThreshold, `${hostname} scored ${r.score}: ${r.signals.map((s) => s.id).join(', ')}`);
+    assert.ok(r.signals.some((s) => s.id === 'brand-namesake'), hostname);
+    assert.ok(!r.signals.some((s) => s.id === 'lookalike' || s.id === 'cred-lookalike' || s.id === 'brand-title'), hostname);
+  }
+});
+
+test('a namesake that is young, on an abused TLD, generic without a known age, or decorated stays an impersonation', () => {
+  for (const [hostname, ageDays] of [['amazon.pk', 200], ['netflix.shop', 3000], ['amazon.tk', null], ['paypal.org', null], ['amazon-pk.com', 4000], ['amazonpk.com', 4000]]) {
+    const r = scoring.evaluate({ hostname, ageDays, rdapStatus: ageDays ? 'ok' : 'unknown' }, null, {});
+    assert.ok(r.signals.some((s) => s.id === 'lookalike'), `${hostname}: ${r.signals.map((s) => s.id).join(', ')}`);
+    assert.ok(!r.signals.some((s) => s.id === 'brand-namesake'), hostname);
+  }
+});
+
+test('phishing wording still counts on a namesake domain', () => {
+  const r = scoring.evaluate({ hostname: 'amazon.pk', ageDays: null, rdapStatus: 'unknown' }, page({ hasCardField: true, phrases: phrases.scan('Your package is on hold, pay the redelivery fee') }), {});
+  assert.ok(r.signals.some((s) => s.id.startsWith('phrase') || s.category === 'language'), r.signals.map((s) => s.id).join(', '));
+});
+
+test('a login form on a brand-named page of a free host is not a namesake', () => {
+  const r = scoring.evaluate({ hostname: 'paypal.firebaseapp.com', ageDays: null, rdapStatus: 'unknown' }, page({ hasPasswordField: true }), {});
+  assert.ok(r.signals.some((s) => s.id === 'lookalike') && r.signals.some((s) => s.id === 'cred-lookalike'), r.signals.map((s) => s.id).join(', '));
+  assert.ok(r.score >= scoring.DEFAULT_SETTINGS.warnThreshold, String(r.score));
+});
+
+test('a one-letter typo of a short brand name needs another warning sign', () => {
+  const login = page({ hasPasswordField: true });
+  // real words and names one letter from a short brand: no impersonation on their own
+  for (const hostname of ['steem.com', 'paypai.com', 'gooogle.com', 'amazom.com']) {
+    const r = scoring.evaluate({ hostname, ageDays: 5000, rdapStatus: 'ok' }, null, {});
+    assert.ok(!r.signals.some((s) => s.id === 'lookalike'), `${hostname}: ${r.signals.map((s) => s.id).join(', ')}`);
+  }
+  // with a login form, a new domain, an abused TLD or a phishing word they are
+  for (const [hostname, ageDays, p] of [['paypai.com', null, login], ['paypai.com', 30, null], ['gooogle.top', null, null], ['paypai-login.com', null, null]]) {
+    const r = scoring.evaluate({ hostname, ageDays, rdapStatus: ageDays ? 'ok' : 'unknown' }, p, {});
+    assert.ok(r.signals.some((s) => s.id === 'lookalike'), `${hostname}: ${r.signals.map((s) => s.id).join(', ')}`);
+  }
+  // long brand names are typo-checked as before
+  assert.ok(scoring.evaluate({ hostname: 'steamcommunlty.com', ageDays: null }, null, {}).signals.some((s) => s.id === 'lookalike'));
+});
