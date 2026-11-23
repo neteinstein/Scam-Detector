@@ -24,7 +24,7 @@ WHAT IT CHECKS
 
 Domain
 • How recently the domain was registered (brand-new domains are the strongest scam signal)
-• Impersonation of ~190 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
+• Impersonation of ~200 frequently abused brands: banks, payment apps, couriers, toll operators, tax and traffic authorities, crypto services, big tech and marketplaces – including typos (gooogle), look-alike characters (paypa1, Cyrillic letters), brand names hidden in subdomains or glued to phishing words, and "brand-com.xyz" tricks
 • Raw IP addresses, high-abuse top-level domains, phishing words in the address, missing HTTPS
 
 Page
@@ -61,7 +61,14 @@ This is a heuristic tool, not a blocklist. A carefully made scam on an old domai
 
 Open source: https://github.com/neteinstein/Scam-Detector
 
-## What's new (version 1.5.0)
+## What's new (version 1.5.1)
+
+• Fix: Amazon's country stores such as amazon.ae, amazon.sa, amazon.eg, amazon.com.tr, amazon.sg and amazon.ie were wrongly called fake. The extension now knows the country sites of about 40 global brands (Google's 190 country domains, eBay, Airbnb, Ticketmaster, Nintendo, Vinted, Mercado Libre, Walmart, HSBC, Vodafone and more), checked against the 200,000 most visited websites, and no longer flags well-known sites that merely share a brand's name (nos.nl, hermes.com).
+• Websites in more countries (Qatar, Costa Rica, El Salvador, Panama, Lebanon…) are now told apart correctly instead of being treated as one site.
+• New wording check in all four languages: fake "payment accepted – if this wasn't you, cancel here" messages.
+• Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT and Germany's Deutsche Rentenversicherung.
+
+Version 1.5.0:
 
 • New: recognises "ClickFix" pages, the fake "verify you are human" or "fix this error" screens that tell you to press Win+R (or open Terminal) and paste a command, which installs password-stealing malware. Also flags "I'm not a robot" boxes that have no real CAPTCHA behind them, a gate phishing kits use to hide from security scanners.
 • New wording checks in English, Portuguese, Spanish and French: unpaid toll and traffic-fine demands (among the most reported scam text messages), "we can recover the money you lost" recovery scams, and fake closing-down sales with 70–99% off.

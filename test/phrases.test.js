@@ -42,6 +42,7 @@ test('money-claim categories in four languages', () => {
     ['fakeregulator', 'XYZ Ltd, a UK-registered investment company authorised by the United Kingdom government', 'A XYZ é uma empresa de investimento autorizada pelo governo do Reino Unido', 'XYZ es una empresa de inversión autorizada por el gobierno del Reino Unido', "XYZ est une société d'investissement agréée par le gouvernement britannique"],
     ['brokerplatform', 'The leading CFD trading firm. Open a trading account and fund your account today', 'Plataforma de negociação de CFDs: abra uma conta de negociação', 'La mejor plataforma de trading de CFDs: abre una cuenta de trading', 'La plateforme de trading de CFD : ouvrez un compte de trading'],
     ['prize', 'Congratulations, you have been selected! Claim your prize', 'Parabéns, foi selecionado! Reclame o seu prémio', '¡Enhorabuena, has sido seleccionado! Reclama tu premio', 'Félicitations, vous avez été sélectionné ! Réclamez votre prix'],
+    ['urgency', 'Payment of 269 EUR accepted. If this was not you, cancel here', 'Pagamento de 269 € aceite. Se não foi você, cancele aqui', 'Pago de 269 € aceptado. Si no has sido tú, cancela aquí', "Paiement accepté 269 EUR. Si ce n'est pas vous, annulez ce paiement"],
   ];
   for (const [cat, ...texts] of cases) {
     texts.forEach((t, i) => {
@@ -103,4 +104,10 @@ test('closing-down sales with extreme discounts in four languages', () => {
   };
   for (const [lang, s] of Object.entries(t)) assert.ok(phrases.scan(s).some((p) => p.category === 'fakesale' && p.lang === lang && !p.money), lang);
   for (const s of ['Summer sale: up to 50% off selected items', 'Black Friday: 70% off everything', 'Our store is closing at 6pm today', 'Saldos: até 70% de desconto', 'Rebajas: hasta un 70% de descuento', 'Soldes : jusqu\'à -70%']) assert.ok(!cats(s).includes('fakesale'), s);
+});
+
+test('an ordinary payment confirmation is not urgency', () => {
+  for (const t of ['Your payment was accepted. Thank you for your order.', 'Pagamento aceite. Obrigado pela sua compra.', 'Pago aceptado. Gracias por su compra.', 'Paiement accepté. Merci pour votre commande.']) {
+    assert.ok(!phrases.scan(t).some((p) => p.category === 'urgency'), t);
+  }
 });

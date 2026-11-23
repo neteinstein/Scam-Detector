@@ -153,6 +153,8 @@
     // Neither is a government host: .gov, .gov.br, .gob.es, .gouv.fr names cannot be bought
     // (miseguridadsocial.gov.co is Colombia's own site, esocial.gov.br is Brazil's).
     if (GOVERNMENT_HOST.test(parsed.host)) return null;
+    // Nor is a well-known unrelated site that happens to share a brand's name.
+    for (const d of brands.UNRELATED_DOMAINS) if (domain.isSubdomainOf(parsed.host, d)) return null;
 
     const unicodeHost = punycode.toUnicode(parsed.host);
     const unicodeParsed = domain.parse(unicodeHost);

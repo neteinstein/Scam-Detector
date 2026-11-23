@@ -158,3 +158,35 @@ test('typos of long brand names in a subdomain label', () => {
   // short names are not fuzzy-matched in subdomains
   assert.equal(lookalike.detect('stream.example.com'), null);
 });
+
+test('country storefronts of global brands are real (amazon.ae was flagged)', () => {
+  for (const h of ['www.amazon.ae', 'amazon.sa', 'amazon.eg', 'www.amazon.com.tr', 'amazon.sg', 'amazon.ie', 'amazon.co.za', 'www.amazon.com.be', 'amazon.cn',
+    'audible.co.uk', 'www.google.ae', 'google.com.sa', 'google.co.in', 'google.com.qa', 'youtube.de', 'ebay.at', 'www.ebay.com.sg', 'airbnb.ae', 'airbnb.co.kr',
+    'ticketmaster.de', 'nintendo.co.jp', 'vinted.ie', 'mercadolibre.cl', 'walmart.com.mx', 'hsbc.com.sg', 'vodafone.com.tr', 'olx.com.pk', 'visa.fr']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});
+
+test('lookalikes of country storefronts are still caught', () => {
+  for (const h of ['amazon-ae.com', 'amazon.ae.verify-login.top', 'amazonae-login.com', 'amazon.xyz', 'google-ae.top', 'ebay-at-payment.com']) {
+    assert.ok(lookalike.detect(h), h);
+  }
+});
+
+test('unrelated sites that share a brand word are not impersonations', () => {
+  for (const h of ['nos.nl', 'www.hermes.com', 'telegram.com', 'zoom.earth', 'kraken.io', 'halifax.ca', 'ups.edu.ec']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+  assert.equal(brandOf('hermes-delivery.top'), 'Evri');
+});
+
+test('Gulf couriers and shops, IMT and Deutsche Rentenversicherung (Nov 2026 review)', () => {
+  assert.equal(brandOf('aramex-uae-delivery.net'), 'Aramex');
+  assert.equal(brandOf('emiratespost-clearance.com'), 'Emirates Post');
+  assert.equal(brandOf('noon-deals.top'), 'Noon');
+  assert.equal(brandOf('imt-multas.com'), 'IMT');
+  assert.equal(brandOf('rentenversicherung-online.com'), 'Deutsche Rentenversicherung');
+  for (const h of ['www.aramex.com', 'emiratespost.ae', 'www.noon.com', 'www.imt-ip.pt', 'www.deutsche-rentenversicherung.de', 'afternoon.com', 'noonlight.com', 'limtech.com', 'volksbank-mittelhessen.de']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});

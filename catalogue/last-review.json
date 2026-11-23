@@ -1,34 +1,32 @@
 {
-  "reviewedAt": "2026-11-18",
+  "reviewedAt": "2026-11-23",
   "sources": [
-    "https://isitspamchecker.com/reports/2026-10",
+    "https://tranco-list.eu/top-1m.csv.zip",
+    "https://www.google.com/supported_domains",
     "https://data.phishtank.com/data/online-valid.csv.gz",
-    "https://urlscan.io/api/v1/search/?q=page.title:%22verify%20you%20are%20human%22",
-    "https://www.incibe.es/ciudadania/avisos/correos-y-sms-suplantan-la-dgt-para-robar-tus-datos-con-falsas-multas",
-    "https://www.cybermalveillance.gouv.fr/tous-nos-contenus/actualites/campagne-de-messages-frauduleux-reclamant-le-paiement-dune-contravention",
-    "https://www.diariocoimbra.pt/2026/11/13/sns-alerta-para-circulacao-de-sms-com-sites-falsos-a-pedir-pagamentos/",
-    "https://consumer.ftc.gov/consumer-alerts",
-    "https://www.dmv.ca.gov/portal/news-and-media/dmv-warns-of-fraudulent-text-scam-asking-for-toll-payments/",
-    "https://www.aarp.org/money/scams-fraud/fake-traffic-violation-texts/",
-    "https://www.cyberfenceplatform.com/blog/clickfix-fake-captcha-attacks-2026/",
-    "https://malwaretips.com/blogs/fake-store-closing-sales-exposed/",
-    "https://www.e-zpassgroup.org/index.php",
-    "https://www.pkobp.pl/",
-    "https://inpost.eu/investors/press-releases",
-    "https://tranco-list.eu/top-1m.csv.zip"
+    "https://www.khaleejtimes.com/business/fake-shipment-tracking-scams-surge-in-uae-and-region-heres-how-to-protect-yourself",
+    "https://scamcheck.tech/scams/delivery-scam-uae",
+    "https://diariodistrito.sapo.pt/recebeu-sms-e-mail-ou-whatsapp-em-nome-do-imt-para-regularizar-ou-confirmar-dados-atencao-a-este-alerta/",
+    "https://4gnews.pt/gnr-deixa-alerta-as-burlas-por-sms-ja-nem-precisam-de-saber-o-teu-numero/",
+    "https://www.publico.pt/2026/11/23/enter/noticia/dez-cuidados-nao-cair-burlas-compras-online-black-friday-2195968",
+    "https://www.verbraucherzentrale.de/wissen/digitale-welt/phishingradar/phishingradar-aktuelle-warnungen-6059",
+    "https://kohenavocats.fr/2026/11/22/tinyurl-arnaque-ou-pas-sms-paiement-accepte-269-eur-lien-que-faire-banque/",
+    "https://info.signal-arnaques.com/actualites/flash-arnaques-23-novembre-2026-infrastructure-jetable/",
+    "https://www.incibe.es/index.php/ciudadania/avisos",
+    "https://www.microsoft.com/en-us/security/blog/2026/11/16/high-volume-phishing-campaign-uses-microsoft-365-outage-lures-target-multiple-industry-sectors-2/",
+    "https://www.bitdefender.com/en-us/blog/hotforsecurity/black-friday-scam-report-2026"
   ],
   "added": [
-    "ClickFix page signal (Win+R / Terminal + paste, also hidden or in a clipboard-writing script) and fake human-check signal (no real CAPTCHA provider); urlscan showed one Chinese-language fake Cloudflare gate kit on 4+ domains in front of courier/tax phishing",
-    "Phrase categories tollfine (E-ZPass/SunPass/DMV, DGT, ANTAI, Via Verde), recovery (fund-recovery scams, fake FTC/IC3) and fakesale (closing-down 70-99% off), all four languages",
-    "Scam-awareness pages (title/headings say scam, phishing, burla, estafa, arnaque; Reddit r/Scams) cap wording at 15 and build no money combinations: AARP's fake-traffic-ticket article went from 50 to 15",
-    "Brands E-ZPass, SunPass, DGT (trafico), Seguridad Social, SNS 24, InPost, PKO BP, WeTransfer, RuneScape (PhishTank top missing target), Poshmark; duplicate Trezor removed",
-    "41 hosting platforms as free hosting (wixstudio.com 309 feed hosts, start.page 205, myportfolio.com 156, framer.app 154, w3spaces.com 139, square.site 113, gitbook.io 103, lovable.app 70, bolt.host 62, ...); biz.id as a public suffix",
-    "Hostname matching: phishing words glued in compounds (one must be an action word), one-slip phishing words, hyphen-split brand names, typos of long brand names in subdomains (57 Allegro Lokalnie and 25 Kleinanzeigen feed hosts), government hosts never impersonations. Feed: +153 lookalike hits, +97 domain-only warnings; Tranco top 100k: 0 new lookalike hits, 5 fewer"
+    "False positive fix (user report: amazon.ae called fake): country domains for ~40 global brands via a cc() helper (Amazon 12 stores + Audible, Google's 186 supported_domains, eBay, Airbnb, Ticketmaster, Nintendo, Vinted, AutoScout24, Mercado Libre, Vodafone, Santander, Walmart, Costco, HSBC, BBVA, Visa, Mastercard, OLX, Orange, Shein...), plus Microsoft/Apple/Yahoo/Stripe/Spotify etc. alternates. Tranco top 200k: lookalike hits whose label is exactly a brand keyword went from 638 to 68 (rest are parked/vanity names such as netflix.shop, whatsapp.biz)",
+    "UNRELATED_DOMAINS: popular sites that only share a brand word (nos.nl, hermes.com, telegram.com, zoom.earth, kraken.io, halifax.ca, ups.edu.ec, ...)",
+    "~110 country second-level suffixes (com.qa, co.cr, com.sv, com.be, net.tr, gov.*/gob.* ...) so every site under them is no longer one registrable domain; canva.site / my.canva.site as free hosting (PhishTank had phishing on it)",
+    "Urgency pattern for fake 'payment accepted - if this wasn't you, cancel' SMS landing pages (FR TinyURL 269 EUR campaign, 21 Nov), all four languages",
+    "Brands Aramex, Emirates Post, Noon (UAE parcel-fee and fake-deal smishing), IMT (PT, impersonated after its Nov 2026 cyberattack), Deutsche Rentenversicherung (Verbraucherzentrale)"
   ],
   "notes": [
-    "Reddit could not be read directly (API and archive mirrors blocked here); r/Scams reports were reached through isitspamchecker's monthly aggregate and search results. Its October 2026 data: 365 reported domains, 30% registered within 90 days, only 1 on any threat feed; online-purchase scams dominate",
-    "Checked and not added: Maxis (MY), STP (MX) and Matsui Securities (JP) are frequent in PhishTank but outside the main markets; TSB, FTC and IC3 not added as brands because the acronyms are whole hostname labels of unrelated organisations (recovery wording covers fake FTC/IC3 sites); Aldi and British Gas (Which?, Nov 2026) are generic names with no feed volume; MB WAY security-update SMS (Millennium bcp, 3 Nov) and the Microsoft outage calls (CNCS) are already covered",
-    "E-ZPass matches only hostname labels ezpass/zpass and is skipped in page text: about 40 member agencies use unrelated official domains (e-zpassgroup.org list)",
+    "PhishTank feed (42,758 URLs): 17 fewer lookalike hits, all real Google open-redirect hosts (google.lt, maps.google.co.kr, ...) and itau.com.py; canva.site and binance.info deliberately not added as brand domains because the feed has phishing on them",
+    "Volksbank not added: regional banks use volksbank-<region>.de, which would all be flagged. Commerzbank, PayPal and Microsoft outage lures already covered",
+    "Checked and not added: PhishTank missing targets are low volume (Banco de Brasil spelling variant 7, TSB 3, Capitec 3); noon.ae and aramex.co.uk left out because ownership could not be confirmed",
     "Worten, Imovirtual, Standvirtual, Pingo Doce and the MB WAY request-vs-send chat pattern remain known gaps (see README limitations)"
   ]
 }

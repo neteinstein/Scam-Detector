@@ -16,7 +16,7 @@
     'gitbook.io', 'lovable.app', 'bolt.host', 'plutio.com', 'boxmode.io', 'typedream.app', 'eu.cc', 'edgeone.app', 'edgeone.dev',
     'iceiy.com', 'craftum.io', 'hstn.me', 'mybluehost.me', 'trycloudflare.com', 'webadorsite.com', 'zya.me', 'jimdofree.com',
     'jimdosite.com', 'dream.space', 'flazio.com', 'flazio.online', 'cfolks.pl', 'plesk.page', 'ddnss.de', 'ddnss.org',
-    'home-webserver.de', 'unaux.com', 'kesug.com', 'lovestoblog.com', 'page.gd', 'dpdns.org', 'qzz.io', 'us.kg',
+    'home-webserver.de', 'canva.site', 'my.canva.site', 'unaux.com', 'kesug.com', 'lovestoblog.com', 'page.gd', 'dpdns.org', 'qzz.io', 'us.kg',
   ];
 
   const MULTI_LABEL_SUFFIXES = new Set([
@@ -34,6 +34,16 @@
     'com.gr', 'co.il', 'org.il', 'ac.il', 'com.sa', 'com.ae', 'com.pk', 'com.bd', 'com.np', 'com.lk',
     'com.de', 'co.at', 'or.at', 'co.hu', 'com.ro', 'com.cy', 'com.mt', 'com.ee', 'com.lv', 'com.lt',
     'gov.in', 'nic.in', 'ac.in', 'edu.in', 'res.in',
+    // Country second levels where shops and brands register (google.com.qa, walmart.co.cr, amazon.com.be).
+    'com.af', 'com.ag', 'co.ao', 'com.bh', 'com.bn', 'co.bw', 'com.bz', 'co.ck', 'co.cr', 'com.cu', 'com.do', 'com.et',
+    'com.fj', 'com.gi', 'com.jm', 'com.kh', 'com.kw', 'com.lb', 'co.ls', 'com.ly', 'co.ma', 'com.mm', 'co.mz', 'com.na',
+    'com.ni', 'com.om', 'com.pa', 'com.pg', 'com.pr', 'com.qa', 'com.sb', 'com.sl', 'com.sv', 'com.tj', 'co.tz', 'co.ug',
+    'co.uz', 'com.vc', 'co.ve', 'co.vi', 'co.zm', 'co.zw', 'com.iq', 'com.tn', 'co.je', 'com.hn', 'com.be', 'net.tr',
+    'org.tr', 'gov.tr', 'net.in', 'org.in', 'or.ke', 'com.jo', 'com.dz', 'com.kz', 'com.az', 'com.ge', 'com.by',
+    'com.cl', 'net.pe', 'org.pe', 'net.co', 'org.co', 'com.mk', 'com.al', 'com.ba', 'com.hr', 'org.mx',
+    'net.il', 'gov.il', 'gov.za', 'net.za', 'gov.sg', 'edu.sg', 'gov.my', 'gov.ph', 'go.id', 'or.id', 'go.th', 'or.th',
+    'gov.vn', 'gov.ae', 'net.ae', 'gov.sa', 'net.sa', 'gov.eg', 'gov.ng', 'gov.pk', 'gov.bd', 'gov.ar', 'gob.ar', 'gob.mx',
+    'com.ai', 'com.nf', 'gob.pe', 'gob.cl', 'gov.co', 'gob.ve', 'gob.ec', 'gub.uy', 'gov.ua', 'gov.pl', 'gov.gr', 'gov.ro', 'gov.it',
     'github.io', 'gitlab.io', 'pages.dev', 'netlify.app', 'vercel.app', 'herokuapp.com', 'web.app', 'firebaseapp.com',
     'blogspot.com', 'wordpress.com', 'wixsite.com', 'weebly.com', 'webflow.io', 'glitch.me', 'repl.co', 'replit.app',
     'azurewebsites.net', 'cloudfront.net', 'amazonaws.com', 'appspot.com', 'surge.sh', 'carrd.co', 'notion.site',
