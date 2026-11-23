@@ -25,7 +25,8 @@
     "Scoring: brand namesakes. Exactly a brand name on an ordinary country domain (age unknown or 3+ years) or on any domain known to be 3+ years old gets a 5-point note instead of an impersonation; young, risky-TLD or decorated names stay impersonations",
     "tools/top-sites-sweep.js (npm run sweep) added to the procedure; it found 120 more false hits in the Tranco top 50k: brand service domains (Azure, iCloud, youtube-nocookie, slack-imgs, ...) added to brands, near-namesakes (elle.com, lacoste.com, optum.com, stern.de, ...) to UNRELATED_DOMAINS, .bradesco as a brand TLD, and TYPO_MAX imtonline: 0 (it matched optonline.net and etonline.com)",
     "Chat scheme payment-request (MB WAY / Bizum / Lydia / Zelle 'accept the request to receive'), all four languages",
-    "Brands Worten, Pingo Doce, Imovirtual, Standvirtual (known gaps closed)"
+    "Brands Worten, Pingo Doce, Imovirtual, Standvirtual (known gaps closed)",
+    "Lookalike: a tenant page on a brand-owned free host (blogspot.com, github.io, firebaseapp.com, my.canva.site) is judged by its own labels; before, paypal-login.blogspot.com was never flagged and every my.canva.site page looked like Canva. PhishTank feed lookalike hits 1512 -> 1537. Sweep: Tranco top 50k impersonation hits 199 -> 82, no top-10k site warns on its domain alone (--check passes); top 200k: new brands add only imt-atlantique.fr and mxvirtual.com, both fixed"
   ],
   "notes": [
     "PhishTank feed (42,758 URLs): 17 fewer lookalike hits, all real Google open-redirect hosts (google.lt, maps.google.co.kr, ...) and itau.com.py; canva.site and binance.info deliberately not added as brand domains because the feed has phishing on them",

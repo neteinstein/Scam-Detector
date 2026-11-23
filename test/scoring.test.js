@@ -229,3 +229,9 @@ test('phishing wording still counts on a namesake domain', () => {
   const r = scoring.evaluate({ hostname: 'amazon.pk', ageDays: null, rdapStatus: 'unknown' }, page({ hasCardField: true, phrases: phrases.scan('Your package is on hold, pay the redelivery fee') }), {});
   assert.ok(r.signals.some((s) => s.id.startsWith('phrase') || s.category === 'language'), r.signals.map((s) => s.id).join(', '));
 });
+
+test('a login form on a brand-named page of a free host is not a namesake', () => {
+  const r = scoring.evaluate({ hostname: 'paypal.firebaseapp.com', ageDays: null, rdapStatus: 'unknown' }, page({ hasPasswordField: true }), {});
+  assert.ok(r.signals.some((s) => s.id === 'lookalike') && r.signals.some((s) => s.id === 'cred-lookalike'), r.signals.map((s) => s.id).join(', '));
+  assert.ok(r.score >= scoring.DEFAULT_SETTINGS.warnThreshold, String(r.score));
+});

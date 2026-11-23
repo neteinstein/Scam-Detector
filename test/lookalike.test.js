@@ -208,3 +208,15 @@ test('Portuguese retail and classifieds brands (catalogue gaps closed)', () => {
   assert.equal(brandOf('standvirtual-pagamento.com'), 'Standvirtual');
   for (const h of ['www.worten.pt', 'www.pingodoce.pt', 'www.imovirtual.com', 'www.standvirtual.com', 'jeronimomartins.com']) assert.equal(lookalike.detect(h), null, h);
 });
+
+test('phishing on a brand-owned hosting platform is judged by the tenant name', () => {
+  // blogspot.com (Google), github.io (Microsoft), firebaseapp.com (Google) host anyone's pages
+  assert.equal(brandOf('paypal-login.blogspot.com'), 'PayPal');
+  assert.equal(brandOf('paypal-login.github.io'), 'PayPal');
+  assert.equal(brandOf('paypal.firebaseapp.com'), 'PayPal');
+  assert.equal(brandOf('paypal-login.my.canva.site'), 'PayPal');
+  // the platform's name in the suffix is not a brand mention, and its own pages are fine
+  for (const h of ['equinor-landingpage.my.canva.site', 'myblog.blogspot.com', 'blogspot.com', 'canva.site', 'microsoft.github.io', 'google.github.io']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+});

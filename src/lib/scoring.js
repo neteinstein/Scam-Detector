@@ -34,7 +34,7 @@
     if (la.reason !== 'brand-in-domain' || !la.all.every((f) => f.brand === la.brand && f.reason === 'brand-in-domain')) return false;
     const kw = (la.evidenceArgs || [])[0];
     if (!kw || parsed.sld !== kw) return false;
-    if (tlds.riskWeight(parsed.suffix)) return false;
+    if (parsed.freeHosting || tlds.riskWeight(parsed.suffix)) return false;
     const known = ageDays != null;
     if (known) return ageDays >= NAMESAKE_MIN_AGE_DAYS;
     return /^[a-z]{2}$/.test(parsed.suffix.split('.').pop());

@@ -68,6 +68,7 @@ Open source: https://github.com/neteinstein/Scam-Detector
 • New wording check in all four languages: fake "payment accepted – if this wasn't you, cancel here" messages.
 • Fewer false alarms on brand-named sites the extension does not know yet: a site that is exactly a brand's name on an ordinary country domain (like amazon.pk), or on a domain registered years ago, is now only noted, not called an impersonation. New or decorated look-alikes (amazon-pk.com, amazon.tk, a brand-new amazon.xx) are still flagged.
 • About 120 more popular sites are no longer flagged: the brands' own service domains (Microsoft Azure, Apple iCloud, YouTube, Slack…) and unrelated sites whose names are a letter or two from a brand (elle.com, lacoste.com, optum.com).
+• Fix: phishing pages on free hosting run by a big brand (Blogger/blogspot.com, GitHub Pages, Firebase, Canva sites) were not checked for impersonation, so a page like paypal-login.blogspot.com went unflagged. They now are, and ordinary Canva sites are no longer mistaken for fake Canva pages.
 • Marketplace chat monitor: new warning for the "accept my MB WAY / Bizum / Lydia / Zelle request to receive the money" trick. Accepting a request sends your money away.
 • Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT, Worten, Pingo Doce, Imovirtual and Standvirtual, and Germany's Deutsche Rentenversicherung.
 
