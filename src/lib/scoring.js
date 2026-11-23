@@ -28,6 +28,18 @@
     return out;
   }
 
+  const NAMESAKE_MIN_AGE_DAYS = 3 * 365;
+
+  function isBrandNamesake(la, parsed, ageDays) {
+    if (la.reason !== 'brand-in-domain' || !la.all.every((f) => f.brand === la.brand && f.reason === 'brand-in-domain')) return false;
+    const kw = (la.evidenceArgs || [])[0];
+    if (!kw || parsed.sld !== kw) return false;
+    if (tlds.riskWeight(parsed.suffix)) return false;
+    const known = ageDays != null;
+    if (known) return ageDays >= NAMESAKE_MIN_AGE_DAYS;
+    return /^[a-z]{2}$/.test(parsed.suffix.split('.').pop());
+  }
+
   /** English age text plus the message key/args for localisation. */
   function ageText(days) {
     if (days < 1) return { text: 'less than a day', key: 'age_lt_day', args: [] };
@@ -77,7 +89,18 @@
     // ---- Domain-level --------------------------------------------------
     if (parsed.isIP) signals.push(signal('ip-host', 'Site is addressed by a raw IP address instead of a domain name', 25, hostname, 'domain'));
 
-    const la = ownBrand ? null : lookalike.detect(hostname, settings.customBrands);
+    let la = ownBrand ? null : lookalike.detect(hostname, settings.customBrands);
+    // A domain that is exactly a brand's name on an ordinary country domain (amazon.ae,
+    // google.com.qa) or on any domain known to be years old is almost always the brand's
+    // own country site or a long-standing namesake, not a phishing kit: those use new,
+    // decorated names (amazon-ae-refund.top). Many country registries answer no RDAP, so
+    // an unknown age does not count against a country domain; a known young one does.
+    const namesake = la && isBrandNamesake(la, parsed, domainInfo.ageDays);
+    if (namesake) {
+      result.namesake = la.brand;
+      signals.push(signal('brand-namesake', `Domain is named after ${la.brand} but is not one of its known sites`, 5, '', 'domain', { args: [la.brand] }));
+      la = null;
+    }
     if (la) {
       result.lookalike = la;
       const w = { homoglyph: 35, 'brand-in-domain': 30, 'brand-in-subdomain': 32, typosquat: 28 }[la.reason] || 25;
@@ -152,7 +175,7 @@
 
       // Brand references that do not match the domain
       // A site naming its own brand ("Google" on google.com) is not a mismatch.
-      const isOwn = (n) => !!ownBrand && ownBrand.name === n;
+      const isOwn = (n) => (!!ownBrand && ownBrand.name === n) || result.namesake === n;
       const titleBrands = (pageInfo.titleBrands || []).filter((n) => !isOwn(n));
       if (titleBrands.length) {
         const b = titleBrands[0];

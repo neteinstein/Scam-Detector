@@ -125,6 +125,30 @@
       ],
     },
     {
+      // MB WAY / Bizum / Lydia "request" scam: the "buyer" sends a payment REQUEST, not a payment,
+      // and tells the seller to accept it (or enter the PIN) to "receive" the money.
+      id: 'payment-request', weight: 22, strong: true,
+      title: 'Told to accept a payment request to receive money',
+      advice: 'Accepting a request (MB WAY, Bizum, Lydia, Zelle, PayPal) sends YOUR money to the other person. To receive money you never need to accept anything or enter a PIN.',
+      en: [
+        /\b(i('ve| have)?|i'll|i will|i just) (sent|send|sending|made) (you )?(a |the )?(payment |money |zelle |paypal |cash ?app )?request\b.{0,60}\b(accept|confirm|approve|authori[sz]e)\b/,
+        /\b(accept|confirm|approve|authori[sz]e) (the |my |this )?(payment |money )?request\b.{0,40}\b(to (receive|get)|so (that )?you (can )?(receive|get)|and you('ll| will) (receive|get))\b/,
+      ],
+      pt: [
+        /\b(enviei|mandei|fiz|vou enviar|vou mandar|envio|mando)(-te|-lhe)? (um |o )?pedido( de (pagamento|dinheiro|mb ?way))?\b.{0,60}\b(aceit|confirm|autoriz)[a-z]*\b/,
+        /\b(aceita|aceite|aceitar|confirma|confirme|confirmar|autoriza|autorize|autorizar) (o |esse |este )?(pedido|pagamento)\b.{0,60}\b(para|e|depois) (ja )?(receber|recebe|recebes)\b/,
+        /\bmb ?way\b.{0,60}\b(aceita|aceite|confirma|confirme|autoriza|autorize|introduz|introduza|insere|insira|coloca|coloque) (o |a )?(pedido|pin|codigo)\b.{0,60}\b(receber|recebe|recebes|dinheiro|pagamento)\b/,
+      ],
+      es: [
+        /\b(te )?(he enviado|envie|mande|te mando|te envio|voy a enviar|hice)(te)? (una |la )?(solicitud|peticion)( de (pago|dinero|bizum))?\b.{0,60}\b(acept|confirm|autoriz)[a-z]*\b/,
+        /\b(acepta|acepte|aceptar|confirma|confirme|confirmar|autoriza|autorice|autorizar) (la |el |esa |esta )?(solicitud|peticion|bizum|pago)\b.{0,60}\b(para|y) (recibir|cobrar|recibes|cobras)\b/,
+      ],
+      fr: [
+        /\b(je t'ai|je vous ai|j'ai) (envoye|fait|envoyee|lance) (une |la )?(demande|requete)( de (paiement|virement|lydia|wero|paylib))?\b.{0,60}\b(accept|valid|confirm)[a-z]*\b/,
+        /\b(accepte|acceptez|accepter|valide|validez|valider|confirme|confirmez|confirmer) (la |ma |cette )?(demande|requete)\b.{0,60}\b(pour|et tu|et vous) (recevoir|toucher|encaisser|recevras|recevrez)\b/,
+      ],
+    },
+    {
       id: 'sms-code', weight: 20, strong: true,
       title: 'Asked to forward a verification code',
       advice: 'The code is being used to take over an account (WhatsApp, Google Voice, the marketplace itself) in your name. Never share codes you receive by SMS.',

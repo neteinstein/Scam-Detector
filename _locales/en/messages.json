@@ -551,6 +551,12 @@
   "sig_lookalike_plain": {
     "message": "The website address pretends to be $1"
   },
+  "sig_brand_namesake": {
+    "message": "Domain is named after $1 but is not one of its known sites"
+  },
+  "sig_brand_namesake_plain": {
+    "message": "The address uses the name $1 but is not on the list of that brand's own sites. It may be a country site; check the address"
+  },
   "sig_idn": {
     "message": "Internationalised domain name (non-Latin characters) can hide look-alike letters"
   },
@@ -1033,6 +1039,15 @@
   },
   "chat_fee_to_release_advice": {
     "message": "Money that is \"blocked until you pay insurance / transport / a verification fee\" does not exist. The fee is the scam."
+  },
+  "chat_payment_request_title": {
+    "message": "Told to accept a payment request to receive money"
+  },
+  "chat_payment_request_advice": {
+    "message": "Accepting a request (MB WAY, Bizum, Lydia, Zelle, PayPal) sends your money to the other person. To receive money you never need to accept anything or enter a PIN."
+  },
+  "chat_payment_request_advice_plain": {
+    "message": "Accepting the \"payment request\" would send YOUR money to them. Getting paid never needs you to accept anything or type a PIN."
   },
   "chat_sms_code_title": {
     "message": "Asked to forward a verification code"

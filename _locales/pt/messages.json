@@ -551,6 +551,12 @@
   "sig_lookalike_plain": {
     "message": "O endereço do site finge ser $1"
   },
+  "sig_brand_namesake": {
+    "message": "O domínio tem o nome de $1 mas não é um dos seus sites conhecidos"
+  },
+  "sig_brand_namesake_plain": {
+    "message": "O endereço usa o nome $1, mas não está na lista de sites dessa marca. Pode ser um site de outro país; confirme o endereço"
+  },
   "sig_idn": {
     "message": "Nome de domínio internacionalizado (caracteres não latinos) pode esconder letras parecidas"
   },
@@ -1033,6 +1039,15 @@
   },
   "chat_fee_to_release_advice": {
     "message": "Dinheiro \"bloqueado até pagar o seguro / transporte / taxa de verificação\" não existe. A taxa é a burla."
+  },
+  "chat_payment_request_title": {
+    "message": "Pedem-lhe para aceitar um pedido de pagamento para receber dinheiro"
+  },
+  "chat_payment_request_advice": {
+    "message": "Aceitar um pedido (MB WAY, Bizum, Lydia, Zelle, PayPal) envia o SEU dinheiro para a outra pessoa. Para receber dinheiro nunca precisa de aceitar nada nem de introduzir o PIN."
+  },
+  "chat_payment_request_advice_plain": {
+    "message": "Se aceitar o \"pedido\", é o seu dinheiro que sai da conta. Para receber, nunca tem de aceitar nada nem marcar o PIN."
   },
   "chat_sms_code_title": {
     "message": "Pedem-lhe para reenviar um código de verificação"

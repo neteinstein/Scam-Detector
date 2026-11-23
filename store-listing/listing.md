@@ -45,7 +45,7 @@ GOOGLE SAFE BROWSING (on by default, needs your own API key)
 Once you enter your own Google API key, the extension also asks Google's Safe Browsing Lookup API about each page and shows "Advisory provided by Google" on any warning that comes from it. Non-commercial use only, per Google's terms.
 
 MARKETPLACE CHAT MONITOR (on by default)
-On OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista and many other classified sites, the extension watches the conversation for the standard scam scripts: "I'll send a courier, click the link to receive the payment", "enter your card details to receive the money", "the payment is held until you pay the insurance", "send me the SMS code", "pay the deposit before the viewing", overpayment refunds and look-alike payment links. A banner explains the scheme and what to do.
+On OLX, Vinted, Wallapop, Leboncoin, Marktplaats, eBay, Facebook Marketplace, Idealista and many other classified sites, the extension watches the conversation for the standard scam scripts: "I'll send a courier, click the link to receive the payment", "enter your card details to receive the money", "the payment is held until you pay the insurance", "send me the SMS code", "accept my MB WAY / Bizum / Lydia request to receive the money", "pay the deposit before the viewing", overpayment refunds and look-alike payment links. A banner explains the scheme and what to do.
 
 IN YOUR LANGUAGE, IN PLAIN WORDS
 The banner, popup, settings and every explanation are available in English, Portuguese, Spanish and French and follow your browser's language. "Non-tech terms" (on by default) explains every warning in simple words, without jargon such as domain, HTTP or favicon; turn it off in settings to see the technical wording.
@@ -66,7 +66,10 @@ Open source: https://github.com/neteinstein/Scam-Detector
 • Fix: Amazon's country stores such as amazon.ae, amazon.sa, amazon.eg, amazon.com.tr, amazon.sg and amazon.ie were wrongly called fake. The extension now knows the country sites of about 40 global brands (Google's 190 country domains, eBay, Airbnb, Ticketmaster, Nintendo, Vinted, Mercado Libre, Walmart, HSBC, Vodafone and more), checked against the 200,000 most visited websites, and no longer flags well-known sites that merely share a brand's name (nos.nl, hermes.com).
 • Websites in more countries (Qatar, Costa Rica, El Salvador, Panama, Lebanon…) are now told apart correctly instead of being treated as one site.
 • New wording check in all four languages: fake "payment accepted – if this wasn't you, cancel here" messages.
-• Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT and Germany's Deutsche Rentenversicherung.
+• Fewer false alarms on brand-named sites the extension does not know yet: a site that is exactly a brand's name on an ordinary country domain (like amazon.pk), or on a domain registered years ago, is now only noted, not called an impersonation. New or decorated look-alikes (amazon-pk.com, amazon.tk, a brand-new amazon.xx) are still flagged.
+• About 120 more popular sites are no longer flagged: the brands' own service domains (Microsoft Azure, Apple iCloud, YouTube, Slack…) and unrelated sites whose names are a letter or two from a brand (elle.com, lacoste.com, optum.com).
+• Marketplace chat monitor: new warning for the "accept my MB WAY / Bizum / Lydia / Zelle request to receive the money" trick. Accepting a request sends your money away.
+• Catalogue: Aramex, Emirates Post and Noon (Gulf parcel and shopping scams), Portugal's IMT, Worten, Pingo Doce, Imovirtual and Standvirtual, and Germany's Deutsche Rentenversicherung.
 
 Version 1.5.0:
 

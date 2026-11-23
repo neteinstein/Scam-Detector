@@ -190,3 +190,21 @@ test('Gulf couriers and shops, IMT and Deutsche Rentenversicherung (Nov 2026 rev
     assert.equal(lookalike.detect(h), null, h);
   }
 });
+
+test('brand infrastructure and near-namesakes found by the top-sites sweep are not flagged', () => {
+  for (const h of ['azurefd.net', 'cdn-apple.com', 'www.youtube-nocookie.com', 'amazon-adsystem.com', 'slack-imgs.com', 'telegra.ph',
+    'elle.com', 'www.lacoste.com', 'stern.de', 'optum.com', 'continental.com', 'optonline.net', 'www.etonline.com', 'deutschebahn.com']) {
+    assert.equal(lookalike.detect(h), null, h);
+  }
+  // their phishing variants still are
+  assert.equal(brandOf('zelle-payment-verify.com'), 'Zelle');
+  assert.equal(brandOf('imtonline-multas.com'), 'IMT');
+});
+
+test('Portuguese retail and classifieds brands (catalogue gaps closed)', () => {
+  assert.equal(brandOf('worten-promocoes.top'), 'Worten');
+  assert.equal(brandOf('pingodoce-cartao.com'), 'Pingo Doce');
+  assert.equal(brandOf('imovirtual-reserva.com'), 'Imovirtual');
+  assert.equal(brandOf('standvirtual-pagamento.com'), 'Standvirtual');
+  for (const h of ['www.worten.pt', 'www.pingodoce.pt', 'www.imovirtual.com', 'www.standvirtual.com', 'jeronimomartins.com']) assert.equal(lookalike.detect(h), null, h);
+});

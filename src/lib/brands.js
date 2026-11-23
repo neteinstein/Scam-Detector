@@ -65,24 +65,24 @@
     { name: 'OpenSea', keywords: ['opensea'], domains: ['opensea.io'] },
     { name: 'Uniswap', keywords: ['uniswap'], domains: ['uniswap.org', 'app.uniswap.org'] },
     // Tech / cloud
-    { name: 'Apple', keywords: ['apple', 'icloud', 'appleid', 'itunes'], domains: ['apple.com', 'icloud.com', 'apple.co', 'itunes.com', 'me.com', 'mac.com', 'apple-dns.net', 'mzstatic.com', 'apple.news', 'icloud.com.cn', 'apple.com.cn', 'apple.cn', 'apple.co.jp'] },
-    { name: 'Microsoft', keywords: ['microsoft', 'office365', 'outlook', 'onedrive', 'sharepoint', 'hotmail', 'msonline', 'azure', 'xbox'], domains: ['microsoft.com', 'live.com', 'office.com', 'office365.com', 'outlook.com', 'microsoftonline.com', 'sharepoint.com', 'onedrive.com', 'hotmail.com', 'azure.com', 'windows.com', 'msn.com', 'bing.com', 'xbox.com', 'skype.com', 'visualstudio.com', 'azurewebsites.net', 'windows.net', 'microsoft.net', 'msftconnecttest.com', 'linkedin.com', 'github.com', 'microsoftstore.com', 'msauth.net', 'microsoftonline-p.com', 'onmicrosoft.com', 'sharepointonline.com', 'office.net', 'powerbi.com', 'dynamics.com', 'microsoftazuread-sso.com', 'office365.us', 'azure.net', 'microsoft.us', 'azure.us', 'sharepoint.us', 'azure.cn', 'outlook.cn', 'sharepoint.cn', 'office365.cn', 'outlook.de', 'microsoft.ai', 'onedrive.us', 'sharepoint.de', 'microsoft.de'] },
-    { name: 'Google', keywords: ['google', 'gmail', 'youtube', 'gdrive'], domains: ['google.com', 'gmail.com', 'youtube.com', 'googleapis.com', 'gstatic.com', 'googleusercontent.com', 'goo.gl', 'g.co', 'google.co.uk', 'google.pt', 'google.de', 'google.fr', 'google.es', 'google.it', 'google.ca', 'google.com.au', 'google.com.br', 'withgoogle.com', 'googleadservices.com', 'googlesyndication.com', 'google-analytics.com', 'googletagmanager.com', 'youtu.be', 'android.com', 'blogger.com', 'blogspot.com', 'firebase.com', 'firebaseapp.com', 'appspot.com', 'googleblog.com', 'ggpht.com', 'googlevideo.com', 'doubleclick.net', 'chrome.com', 'googledrive.com', 'google.play', ...cc('google', 'ad ae com.af com.ag al am co.ao com.ar as at az ba com.bd be bf bg com.bh bi bj com.bn com.bo bs bt co.bw by com.bz cd cf cg ch ci co.ck cl cm cn com.co co.cr com.cu cv com.cy cz dj dk dm com.do dz com.ec ee com.eg com.et fi com.fj fm ga ge gg com.gh com.gi gl gm gr com.gt gy com.hk hn hr ht hu co.id ie co.il im co.in iq is je com.jm jo co.jp co.ke com.kh ki kg co.kr com.kw kz la com.lb li lk co.ls lt lu lv com.ly co.ma md me mg mk ml com.mm mn com.mt mu mv mw com.mx com.my co.mz com.na com.ng com.ni ne nl no com.np nr nu co.nz com.om com.pa com.pe com.pg com.ph com.pk pl pn com.pr ps com.py com.qa ro ru rw com.sa com.sb sc se com.sg sh si sk com.sl sn so sm sr st com.sv td tg co.th com.tj tl tm tn to com.tr tt com.tw co.tz com.ua co.ug com.uy co.uz com.vc co.ve co.vi com.vn vu ws rs co.za co.zm co.zw cat com.ai vg ms tk gp com.nf us net org eu dev in hk jp ac ng com.iq com.tn co.je'), ...cc('youtube', 'de com.br ru co fr be')] },
-    { name: 'Amazon', keywords: ['amazon', 'primevideo', 'audible'], domains: ['amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.fr', 'amazon.es', 'amazon.it', 'amazon.ca', 'amazon.com.au', 'amazon.co.jp', 'amazon.in', 'amazon.com.br', 'amazon.com.mx', 'amazon.nl', 'amazon.se', 'amazon.pl', 'amazonaws.com', 'aws.amazon.com', 'primevideo.com', 'audible.com', 'a2z.com', 'amazon.jobs', 'media-amazon.com', 'ssl-images-amazon.com', 'amazonpay.com', 'amazon.dev', 'awsstatic.com', 'cloudfront.net', 'amazontrust.com', 'images-amazon.com', ...cc('amazon', 'ae sa eg com.tr sg ie co.za cn eu com.be jp at work science'), ...cc('audible', 'co.uk de fr it es ca com.au co.jp in com.br')] },
-    { name: 'Facebook / Meta', keywords: ['facebook', 'instagram', 'whatsapp', 'messenger', 'metamail'], domains: ['facebook.com', 'fb.com', 'fb.me', 'instagram.com', 'whatsapp.com', 'whatsapp.net', 'messenger.com', 'meta.com', 'fbcdn.net', 'cdninstagram.com', 'facebook.net', 'oculus.com', 'threads.net', 'workplace.com', 'facebook.de', 'facebook.com.br', 'facebook.fr', 'facebook.pl', 'instagram.com.br', 'instagram.de'] },
-    { name: 'X / Twitter', keywords: ['twitter'], domains: ['twitter.com', 'x.com', 't.co', 'twimg.com'] },
+    { name: 'Apple', keywords: ['apple', 'icloud', 'appleid', 'itunes'], domains: ['apple.com', 'icloud.com', 'apple.co', 'itunes.com', 'me.com', 'mac.com', 'apple-dns.net', 'mzstatic.com', 'apple.news', 'icloud.com.cn', 'apple.com.cn', 'apple.cn', 'apple.co.jp', 'cdn-apple.com', 'icloud-content.com', 'apple-cloudkit.com', 'apple-mapkit.com', 'apple-dns.cn', 'icloud-content.com.cn'] },
+    { name: 'Microsoft', keywords: ['microsoft', 'office365', 'outlook', 'onedrive', 'sharepoint', 'hotmail', 'msonline', 'azure', 'xbox'], domains: ['microsoft.com', 'live.com', 'office.com', 'office365.com', 'outlook.com', 'microsoftonline.com', 'sharepoint.com', 'onedrive.com', 'hotmail.com', 'azure.com', 'windows.com', 'msn.com', 'bing.com', 'xbox.com', 'skype.com', 'visualstudio.com', 'azurewebsites.net', 'windows.net', 'microsoft.net', 'msftconnecttest.com', 'linkedin.com', 'github.com', 'microsoftstore.com', 'msauth.net', 'microsoftonline-p.com', 'onmicrosoft.com', 'sharepointonline.com', 'office.net', 'powerbi.com', 'dynamics.com', 'microsoftazuread-sso.com', 'office365.us', 'azure.net', 'microsoft.us', 'azure.us', 'sharepoint.us', 'azure.cn', 'outlook.cn', 'sharepoint.cn', 'office365.cn', 'outlook.de', 'microsoft.ai', 'onedrive.us', 'sharepoint.de', 'microsoft.de', 'azurefd.net', 'azure-dns.com', 'azure-dns.net', 'azure-dns.org', 'azure-dns.info', 'azure-devices.net', 'azure-api.net', 's-microsoft.com', 'xboxservices.com', 'microsoft365.com', 'tm-azurefd.net', 'azurefd.us', 'azure-devices-provisioning.net', 'azurecr.io', 'azure-apim.net', 'microsoftonline.us', 'microsoftonline.cn', 'microsoftapp.net', 'azure-dns.de', 'azure-dns.cn', 'microsoftonline-p.net', 'azure-automation.net', 'azureml.ms', 'azure-apihub.net'] },
+    { name: 'Google', keywords: ['google', 'gmail', 'youtube', 'gdrive'], domains: ['google.com', 'gmail.com', 'youtube.com', 'googleapis.com', 'gstatic.com', 'googleusercontent.com', 'goo.gl', 'g.co', 'google.co.uk', 'google.pt', 'google.de', 'google.fr', 'google.es', 'google.it', 'google.ca', 'google.com.au', 'google.com.br', 'withgoogle.com', 'googleadservices.com', 'googlesyndication.com', 'google-analytics.com', 'googletagmanager.com', 'youtu.be', 'android.com', 'blogger.com', 'blogspot.com', 'firebase.com', 'firebaseapp.com', 'appspot.com', 'googleblog.com', 'ggpht.com', 'googlevideo.com', 'doubleclick.net', 'chrome.com', 'googledrive.com', 'google.play', ...cc('google', 'ad ae com.af com.ag al am co.ao com.ar as at az ba com.bd be bf bg com.bh bi bj com.bn com.bo bs bt co.bw by com.bz cd cf cg ch ci co.ck cl cm cn com.co co.cr com.cu cv com.cy cz dj dk dm com.do dz com.ec ee com.eg com.et fi com.fj fm ga ge gg com.gh com.gi gl gm gr com.gt gy com.hk hn hr ht hu co.id ie co.il im co.in iq is je com.jm jo co.jp co.ke com.kh ki kg co.kr com.kw kz la com.lb li lk co.ls lt lu lv com.ly co.ma md me mg mk ml com.mm mn com.mt mu mv mw com.mx com.my co.mz com.na com.ng com.ni ne nl no com.np nr nu co.nz com.om com.pa com.pe com.pg com.ph com.pk pl pn com.pr ps com.py com.qa ro ru rw com.sa com.sb sc se com.sg sh si sk com.sl sn so sm sr st com.sv td tg co.th com.tj tl tm tn to com.tr tt com.tw co.tz com.ua co.ug com.uy co.uz com.vc co.ve co.vi com.vn vu ws rs co.za co.zm co.zw cat com.ai vg ms tk gp com.nf us net org eu dev in hk jp ac ng com.iq com.tn co.je'), ...cc('youtube', 'de com.br ru co fr be'), 'youtube-nocookie.com'] },
+    { name: 'Amazon', keywords: ['amazon', 'primevideo', 'audible'], domains: ['amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.fr', 'amazon.es', 'amazon.it', 'amazon.ca', 'amazon.com.au', 'amazon.co.jp', 'amazon.in', 'amazon.com.br', 'amazon.com.mx', 'amazon.nl', 'amazon.se', 'amazon.pl', 'amazonaws.com', 'aws.amazon.com', 'primevideo.com', 'audible.com', 'a2z.com', 'amazon.jobs', 'media-amazon.com', 'ssl-images-amazon.com', 'amazonpay.com', 'amazon.dev', 'awsstatic.com', 'cloudfront.net', 'amazontrust.com', 'images-amazon.com', ...cc('amazon', 'ae sa eg com.tr sg ie co.za cn eu com.be jp at work science'), ...cc('audible', 'co.uk de fr it es ca com.au co.jp in com.br'), 'amazon-adsystem.com', 'payments-amazon.com', 'assoc-amazon.com'] },
+    { name: 'Facebook / Meta', keywords: ['facebook', 'instagram', 'whatsapp', 'messenger', 'metamail'], domains: ['facebook.com', 'fb.com', 'fb.me', 'instagram.com', 'whatsapp.com', 'whatsapp.net', 'messenger.com', 'meta.com', 'fbcdn.net', 'cdninstagram.com', 'facebook.net', 'oculus.com', 'threads.net', 'workplace.com', 'facebook.de', 'facebook.com.br', 'facebook.fr', 'facebook.pl', 'instagram.com.br', 'instagram.de', 'instagr.am'] },
+    { name: 'X / Twitter', keywords: ['twitter'], domains: ['twitter.com', 'x.com', 't.co', 'twimg.com', 'ads-twitter.com'] },
     { name: 'LinkedIn', keywords: ['linkedin'], domains: ['linkedin.com', 'licdn.com', 'lnkd.in', 'linkedin.cn'] },
     { name: 'Netflix', keywords: ['netflix'], domains: ['netflix.com', 'nflxext.com', 'nflximg.net', 'nflxvideo.net', 'netflix.net'] },
     { name: 'Spotify', keywords: ['spotify'], domains: ['spotify.com', 'scdn.co', 'spotifycdn.com', 'spotify.dev', 'spotify.net', 'spotify.link'] },
     { name: 'Disney+', keywords: ['disneyplus'], domains: ['disneyplus.com', 'disney.com', 'disney.co.uk', 'disney.pt', 'bamgrid.com'] },
-    { name: 'Dropbox', keywords: ['dropbox'], domains: ['dropbox.com', 'dropboxusercontent.com', 'db.tt', 'dropboxstatic.com', 'dropbox.tech'] },
+    { name: 'Dropbox', keywords: ['dropbox'], domains: ['dropbox.com', 'dropboxusercontent.com', 'db.tt', 'dropboxstatic.com', 'dropbox.tech', 'dropbox-dns.com'] },
     { name: 'WeTransfer', keywords: ['wetransfer'], domains: ['wetransfer.com', 'we.tl', 'wetransfer.net'] },
     { name: 'DocuSign', keywords: ['docusign'], domains: ['docusign.com', 'docusign.net'] },
-    { name: 'Adobe', keywords: ['adobe', 'acrobat'], domains: ['adobe.com', 'adobelogin.com', 'acrobat.com', 'adobe.io', 'typekit.net', 'adobesign.com', 'adobe.net', 'adobe.co.jp', 'adobe.ly', 'adobe.de'] },
+    { name: 'Adobe', keywords: ['adobe', 'acrobat'], domains: ['adobe.com', 'adobelogin.com', 'acrobat.com', 'adobe.io', 'typekit.net', 'adobesign.com', 'adobe.net', 'adobe.co.jp', 'adobe.ly', 'adobe.de', 'adobe-identity.com'] },
     { name: 'Zoom', keywords: ['zoom'], domains: ['zoom.us', 'zoom.com', 'zoomgov.com', 'zoom.com.br', 'zoom.com.cn', 'zoom.co.jp'] },
-    { name: 'Slack', keywords: ['slack'], domains: ['slack.com', 'slack-edge.com', 'slack.dev', 'slack.engineering'] },
+    { name: 'Slack', keywords: ['slack'], domains: ['slack.com', 'slack-edge.com', 'slack.dev', 'slack.engineering', 'slack-imgs.com', 'slack-redir.net', 'slack-files.com', 'slackb.com'] },
     { name: 'Discord', keywords: ['discord', 'discordapp', 'dicord', 'nitro'], domains: ['discord.com', 'discord.gg', 'discordapp.com', 'discordapp.net', 'discord.gift', 'discord.new', 'discord.media', 'discord.me'] },
-    { name: 'Telegram', keywords: ['telegram'], domains: ['telegram.org', 't.me', 'telegram.me', 'telegram.dog', 'telesco.pe'] },
+    { name: 'Telegram', keywords: ['telegram'], domains: ['telegram.org', 't.me', 'telegram.me', 'telegram.dog', 'telesco.pe', 'telegra.ph'] },
     { name: 'Steam', keywords: ['steam', 'steamcommunity', 'steampowered'], domains: ['steampowered.com', 'steamcommunity.com', 'steamgames.com', 'steamstatic.com', 'valvesoftware.com', 'steam-chat.com', 'steamcontent.com', 'steamusercontent.com', 'steam.tv'] },
     { name: 'Roblox', keywords: ['roblox', 'robux'], domains: ['roblox.com', 'rbxcdn.com', 'roblox.net'] },
     { name: 'RuneScape', keywords: ['runescape'], fillers: ['osrs', 'oldschool', 'jagex'], domains: ['runescape.com', 'jagex.com', 'runescape.wiki'] },
@@ -90,22 +90,22 @@
     { name: 'PlayStation', keywords: ['playstation'], domains: ['playstation.com', 'sony.com', 'playstation.net', 'sonyentertainmentnetwork.com'] },
     { name: 'Nintendo', keywords: ['nintendo'], domains: ['nintendo.com', 'nintendo.net', 'nintendo.co.uk', 'nintendo.pt', ...cc('nintendo', 'co.jp de be nl it fr es co.kr com.au eu ch com.hk at')] },
     { name: 'eBay', keywords: ['ebay'], domains: ['ebay.com', 'ebay.co.uk', 'ebay.de', 'ebay.fr', 'ebay.es', 'ebay.it', 'ebaystatic.com', 'ebayimg.com', 'ebay.ca', 'ebay.com.au', ...cc('ebay', 'at be ie nl pl ch us com.hk com.sg com.my ph in')] },
-    { name: 'Walmart', keywords: ['walmart'], domains: ['walmart.com', 'walmart.ca', 'walmartimages.com', ...cc('walmart', 'com.mx co.cr com.gt com.sv')] },
+    { name: 'Walmart', keywords: ['walmart'], domains: ['walmart.com', 'walmart.ca', 'walmartimages.com', ...cc('walmart', 'com.mx co.cr com.gt com.sv'), 'wal-mart.com'] },
     { name: 'Costco', keywords: ['costco'], domains: ['costco.com', 'costco.ca', 'costco.co.uk', ...cc('costco', 'co.jp com.mx com.tw co.kr com.au')] },
     { name: 'Target', keywords: ['targetstore'], domains: ['target.com'] },
     { name: 'Best Buy', keywords: ['bestbuy'], domains: ['bestbuy.com', 'bestbuy.ca'] },
-    { name: 'AliExpress', keywords: ['aliexpress', 'alibaba'], domains: ['aliexpress.com', 'alibaba.com', 'aliexpress.us', 'alicdn.com', 'alipay.com', 'taobao.com', 'aliexpress.ru'] },
+    { name: 'AliExpress', keywords: ['aliexpress', 'alibaba'], domains: ['aliexpress.com', 'alibaba.com', 'aliexpress.us', 'alicdn.com', 'alipay.com', 'taobao.com', 'aliexpress.ru', 'aliexpress-media.com', 'alibaba-inc.com', 'alibabacloud.com'] },
     { name: 'Temu', keywords: ['temu'], domains: ['temu.com'] },
     { name: 'Shein', keywords: ['shein'], domains: ['shein.com', 'shein.co.uk', 'sheincorp.com', ...cc('shein', 'com.mx com.co tw se com.vn')] },
     { name: 'HOKA', keywords: ['hoka', 'hokaone', 'hokaoneone'], domains: ['hoka.com', 'hokaoneone.com'] },
-    { name: 'Shopify', keywords: ['shopify'], domains: ['shopify.com', 'myshopify.com', 'shopifycdn.com', 'shopify.dev', 'shopify.io', 'shopify.engineering', 'shopify.co.uk'] },
+    { name: 'Shopify', keywords: ['shopify'], domains: ['shopify.com', 'myshopify.com', 'shopifycdn.com', 'shopify.dev', 'shopify.io', 'shopify.engineering', 'shopify.co.uk', 'shopifycloud.com'] },
     { name: 'Booking.com', keywords: ['booking'], domains: ['booking.com', 'bstatic.com'] },
     { name: 'Airbnb', keywords: ['airbnb'], domains: ['airbnb.com', 'airbnb.co.uk', 'airbnb.pt', 'airbnb.es', 'airbnb.fr', 'airbnb.de', ...cc('airbnb', 'net ie at be ch nl it se no dk fi pl cz gr ru cn jp mx cl ca ae org co.in co.kr co.nz co.za co.id com.br com.au com.ar com.sg com.co com.tr com.ro com.mt com.ec com.tw com.pe gy')] },
     { name: 'Uber', keywords: ['uber', 'ubereats'], domains: ['uber.com', 'ubereats.com'] },
     { name: 'Ticketmaster', keywords: ['ticketmaster'], domains: ['ticketmaster.com', 'ticketmaster.co.uk', 'ticketmaster.pt', 'livenation.com', ...cc('ticketmaster', 'com.br ca com.mx de nl es ie com.au fr ph pe be se no dk it co.nz gr cl co sg cz eu co.za pl fi ch co.th at net')] },
     // Shipping & postal services (parcel-delivery smishing is huge)
     { name: 'USPS', keywords: ['usps'], domains: ['usps.com', 'usps.gov'] },
-    { name: 'UPS', keywords: ['ups'], domains: ['ups.com'] },
+    { name: 'UPS', keywords: ['ups'], domains: ['ups.com', 'ups.com.cn'] },
     { name: 'FedEx', keywords: ['fedex'], domains: ['fedex.com'] },
     { name: 'DHL', keywords: ['dhl'], domains: ['dhl.com', 'dhl.de', 'dhl.co.uk', 'dhlparcel.com', 'dhlexpress.com', 'dhl.pt', 'mydhl.express.dhl', 'dhlecommerce.com', 'dhl.es'] },
     { name: 'Royal Mail', keywords: ['royalmail'], domains: ['royalmail.com', 'royalmailgroup.com'] },
@@ -139,8 +139,8 @@
     // Telecom / utilities
     { name: 'Verizon', keywords: ['verizon'], domains: ['verizon.com', 'verizonwireless.com', 'vzw.com', 'verizon.net'] },
     { name: 'AT&T', keywords: ['att'], domains: ['att.com', 'att.net'] },
-    { name: 'T-Mobile', keywords: ['tmobile'], domains: ['t-mobile.com', 't-mobile.pl', 'telekom.de', 't-mobile.nl'] },
-    { name: 'Vodafone', keywords: ['vodafone'], domains: ['vodafone.com', 'vodafone.co.uk', 'vodafone.pt', 'vodafone.de', 'vodafone.es', 'vodafone.it', ...cc('vodafone', 'com.tr cz com.au nl net.tr com.eg ua ro gr ie hu qa om al')] },
+    { name: 'T-Mobile', keywords: ['tmobile'], domains: ['t-mobile.com', 't-mobile.pl', 'telekom.de', 't-mobile.nl', 't-mobile.cz'] },
+    { name: 'Vodafone', keywords: ['vodafone'], domains: ['vodafone.com', 'vodafone.co.uk', 'vodafone.pt', 'vodafone.de', 'vodafone.es', 'vodafone.it', ...cc('vodafone', 'com.tr cz com.au nl net.tr com.eg ua ro gr ie hu qa om al'), 'vodafonemail.de'] },
     { name: 'MEO', keywords: ['meo'], domains: ['meo.pt', 'altice.pt'] },
     { name: 'NOS', keywords: ['nos'], domains: ['nos.pt'] },
     { name: 'EDP', keywords: ['edp'], domains: ['edp.pt', 'edp.com'] },
@@ -155,7 +155,7 @@
     { name: 'Yahoo', keywords: ['yahoo'], domains: ['yahoo.com', 'yahoo.co.jp', 'yimg.com', 'yahoo.co.uk', 'aol.com', ...cc('yahoo', 'net de com.tw fr com.br ca es')] },
     { name: 'Proton', keywords: ['protonmail'], domains: ['proton.me', 'protonmail.com', 'protonmail.ch'] },
     { name: 'GitHub', keywords: ['github'], domains: ['github.com', 'github.io', 'githubusercontent.com', 'githubassets.com', 'github.blog', 'github.dev'] },
-    { name: 'Canva', keywords: ['canva'], domains: ['canva.com', 'canva.link', 'canva.cn', 'canva.in'] },
+    { name: 'Canva', keywords: ['canva'], domains: ['canva.com', 'canva.link', 'canva.cn', 'canva.in', 'canva-apps.com'] },
     { name: 'OLX', keywords: ['olx'], domains: ['olx.pt', 'olx.com', 'olx.pl', 'olx.ro', 'olx.ua', 'olx.com.br', 'olx.in', 'olxstatic.com', ...cc('olx', 'com.pk co.id kz uz bg ba com.lb com.eg')] },
     { name: 'Vinted', keywords: ['vinted'], domains: ['vinted.com', 'vinted.pt', 'vinted.fr', 'vinted.co.uk', 'vinted.de', 'vinted.es', 'vinted.it', 'vinted.nl', 'vinted.pl', 'vinted.lt', ...cc('vinted', 'net be cz hu ie com.au at dk ro se lu fi sk gr si hr lv ee bg')] },
     { name: 'Poshmark', keywords: ['poshmark'], domains: ['poshmark.com', 'poshmark.ca', 'posh.mk'] },
@@ -169,7 +169,7 @@
     { name: 'Milanuncios', keywords: ['milanuncios'], domains: ['milanuncios.com'] },
     { name: 'CustoJusto', keywords: ['custojusto'], domains: ['custojusto.pt'] },
     { name: 'Idealista', keywords: ['idealista'], domains: ['idealista.com', 'idealista.pt', 'idealista.it', 'idealista.fr'] },
-    { name: 'Mercado Libre', keywords: ['mercadolibre', 'mercadolivre', 'mercadopago'], domains: ['mercadolibre.com', 'mercadolibre.com.ar', 'mercadolibre.com.mx', 'mercadolivre.com.br', 'mercadopago.com', 'mercadopago.com.br', 'mlstatic.com', 'mercadolivre.com', ...cc('mercadolibre', 'cl com.co com.ve com.uy com.pe com.ec com.do co.cr com.hn com.bo com.pa'), ...cc('mercadopago', 'com.ar com.mx com.co cl com.pe com.uy')] },
+    { name: 'Mercado Libre', keywords: ['mercadolibre', 'mercadolivre', 'mercadopago'], domains: ['mercadolibre.com', 'mercadolibre.com.ar', 'mercadolibre.com.mx', 'mercadolivre.com.br', 'mercadopago.com', 'mercadopago.com.br', 'mlstatic.com', 'mercadolivre.com', ...cc('mercadolibre', 'cl com.co com.ve com.uy com.pe com.ec com.do co.cr com.hn com.bo com.pa'), ...cc('mercadopago', 'com.ar com.mx com.co cl com.pe com.uy'), 'meli.com'] },
     { name: 'Depop', keywords: ['depop'], domains: ['depop.com'] },
     { name: 'Etsy', keywords: ['etsy'], domains: ['etsy.com', 'etsystatic.com', 'etsy.me'] },
     { name: 'Shpock', keywords: ['shpock'], domains: ['shpock.com'] },
@@ -182,7 +182,7 @@
     { name: 'MoneyGram', keywords: ['moneygram'], domains: ['moneygram.com'] },
     // Added from PhishTank most-targeted brands (2026-11 review)
     { name: 'Allegro', keywords: ['allegro', 'allegrolokalnie'], domains: ['allegro.pl', 'allegrolokalnie.pl', 'allegro.cz', 'allegro.sk', 'allegro.hu', 'allegroimg.com', 'allegrostatic.com', 'allegro.com'] },
-    { name: 'Bradesco', keywords: ['bradesco'], domains: ['bradesco.com.br', 'bradesco.com', 'bradescoseguros.com.br', 'next.me'] },
+    { name: 'Bradesco', keywords: ['bradesco'], domains: ['bradesco.com.br', 'bradesco.com', 'bradescoseguros.com.br', 'next.me', 'bradescopj.com.br'] },
     { name: 'Banco do Brasil', keywords: ['bancodobrasil'], domains: ['bb.com.br', 'bancodobrasil.com.br'] },
     { name: 'Itaú', keywords: ['itau'], domains: ['itau.com.br', 'itau.com', 'itaucard.com.br', 'itau.com.py', 'itau.com.uy'] },
     { name: 'Nubank', keywords: ['nubank'], domains: ['nubank.com.br', 'nu.com.br', 'nubank.com.mx'] },
@@ -221,6 +221,11 @@
     { name: 'Noon', keywords: ['noon'], domains: ['noon.com', 'nooncdn.com', 'noon.partners'] },
     // Portugal: IMT impersonated after its November 2026 cyberattack
     { name: 'IMT', keywords: ['imt', 'imtonline'], domains: ['imt-ip.pt', 'imtonline.pt'] },
+    // Portugal: retail and classifieds brands used in fake-shop and fake-ad scams
+    { name: 'Worten', keywords: ['worten'], domains: ['worten.pt', 'worten.es'] },
+    { name: 'Pingo Doce', keywords: ['pingodoce'], domains: ['pingodoce.pt', 'jeronimomartins.com', 'jeronimomartins.pt'] },
+    { name: 'Imovirtual', keywords: ['imovirtual'], domains: ['imovirtual.com', 'imovirtual.pt'] },
+    { name: 'Standvirtual', keywords: ['standvirtual'], domains: ['standvirtual.com', 'standvirtual.pt'] },
     // Germany (Verbraucherzentrale phishing radar, Nov 2026)
     { name: 'Deutsche Rentenversicherung', keywords: ['rentenversicherung'], domains: ['deutsche-rentenversicherung.de', 'eservice-drv.de'] },
   ];
@@ -232,7 +237,7 @@
   // Keywords whose spelling sits one or two letters from unrelated real names
   // (An Post / InPost, Enpass / E-ZPass, UN ESCAP / RuneScape, WebMoney's
   // wmtransfer / WeTransfer): maximum typo distance, 0 = no typo matching.
-  const TYPO_MAX = { inpost: 0, ezpass: 0, zpass: 0, segsocial: 0, wetransfer: 0, runescape: 1 };
+  const TYPO_MAX = { imtonline: 0, inpost: 0, ezpass: 0, zpass: 0, segsocial: 0, wetransfer: 0, runescape: 1 };
 
   // Words that commonly accompany a brand name in phishing hostnames.
   const SUSPICIOUS_TOKENS = [
@@ -268,6 +273,14 @@
   const UNRELATED_DOMAINS = new Set([
     'nos.nl', 'hermes.com', 'telegram.com', 'zoom.earth', 'kraken.io', 'aeon.co', 'halifax.ca', 'uber.space', 'huntington.org',
     'att.ne.jp', 'ups.edu.ec', 'impots.bj', 'ctt.ec', 'correos.cl', 'att.com.mx', 'blockchain.news', 'telegram.hr',
+    // One or two letters from a brand name, found by tools/top-sites-sweep.js (Tranco top 50k)
+    'elle.com', 'elle.fr', 'elle.de', 'zello.com', 'stern.de', 'stream.cz', 'stream.ru', 'stream.ne.jp', 'stem.org.uk', 'lexpress.fr',
+    'allenpress.com', 'lacoste.com', 'felissimo.co.jp', 'optum.com', 'opus.pro', 'continental.com', 'klara.com', 'idealist.org',
+    'minted.com', 'medex.com.bd', 'ludia.net', 'lithub.com', 'tbank.ru', 'exitgames.com', 'pcgames.de', 'fitauto.ru', 'bitauto.com',
+    'gbooking.ru', 'paypay.ne.jp', 'finance.ua', 'finance.si', 'star-telegram.com', 'telegraf.rs', 'telegraf.com.ua', 'ymobile.jp',
+    'intercom-messenger.com', 'idrive.com', 'hicloud.com', 'saicloud.com', 'stripes.com', 'stripo.email', 'correios.com.br',
+    'grail.bz', 'vficloud.net', 'bkicloud.com', 'jsonline.com', 'chargepoint.com', 'deutschebahn.com', 'autosport.com', 'blockchair.com',
+    'mollygram.com', 'smbc-comics.com',
   ]);
 
   const byDomain = new Map();
@@ -280,7 +293,7 @@
     google: 'Google', youtube: 'Google', gmail: 'Google', android: 'Google', chrome: 'Google',
     apple: 'Apple', amazon: 'Amazon', aws: 'Amazon', netflix: 'Netflix', barclays: 'Barclays', hsbc: 'HSBC', citi: 'Citi',
     americanexpress: 'American Express', amex: 'American Express', bnpparibas: 'BNP Paribas', santander: 'Santander', bbva: 'BBVA',
-    dhl: 'DHL', fedex: 'FedEx', ups: 'UPS', ebay: 'eBay', walmart: 'Walmart',
+    dhl: 'DHL', fedex: 'FedEx', ups: 'UPS', ebay: 'eBay', walmart: 'Walmart', bradesco: 'Bradesco',
   };
   const byName = new Map(BRANDS.map((b) => [b.name, b]));
 
